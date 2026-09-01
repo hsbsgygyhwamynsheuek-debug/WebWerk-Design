@@ -3,22 +3,37 @@
 Richard Baumgart, 14 Jahre, Jena. Baut kostenlose Websites für kleine
 Handwerks- und Gewerbebetriebe, um Erfahrung zu sammeln.
 
-## Stand: 01.09.2026 – nur noch Telefon
+## Stand: 01.09.2026 – Telefon zuerst, Mail nur mit Erlaubnis
 
 Nach einem Widerspruch nach Art. 21 DSGVO wurde die Arbeitsweise umgestellt.
-Richards Entscheidung: **Es werden keine Verkaufsmails mehr geschrieben.**
-Kontakt zu Betrieben ausschließlich per Telefon.
+**Der erste Kontakt läuft immer über das Telefon.** Eine E-Mail folgt nur,
+wenn der Betrieb sie am Telefon ausdrücklich erlaubt hat.
 
-Das ist keine Einschränkung, sondern der sichere Weg. Am Telefon merkt man
-sofort, ob jemand will oder nicht, und es entsteht nichts Schriftliches, das
-falsch verstanden werden kann.
+Das ist keine Schikane, sondern schlicht die Rechtslage: Kaltakquise per
+Telefon ist gegenüber Gewerbebetrieben zulässig, per E-Mail nicht. Mit einer
+Erlaubnis aus dem Telefonat ist die Mail dann völlig in Ordnung – und wird
+sogar gelesen, weil man schon miteinander gesprochen hat.
 
 ## Die vier Regeln
 
-### 1. Keine Verkaufsmails. Nie.
-Es gibt keine Mailvorlage mehr, und es wird keine gebaut. Wer nach einer
-fragt, bekommt diesen Hinweis. Antwortmails an Betriebe, die sich von sich
-aus gemeldet haben, sind etwas anderes und in Ordnung.
+### 1. Eine Mail nur, wenn der Betrieb sie erlaubt hat
+Eine Werbemail ohne vorherige Einwilligung ist nach § 7 Abs. 2 Nr. 2 UWG
+unzulässig – auch von Betrieb zu Betrieb. Das ist kein Formulierungsproblem
+und lässt sich durch keinen noch so guten Text heilen.
+
+Der erlaubte Weg ist immer derselbe:
+
+1. **Anrufen.** Telefonisch ist die Ansprache von Gewerbebetrieben zulässig
+   (§ 7 Abs. 2 Nr. 1 UWG, mutmaßliche Einwilligung).
+2. **Fragen:** „Darf ich Ihnen das per E-Mail schicken?"
+3. **Ja eintragen:** `node scripts/erlaubnis.js "<Firma>" "<E-Mail>"`
+4. **Erst dann mailen:** `node scripts/mail-nach-anruf.js "<Firma>"`
+
+`scripts/darf-ich-mailen.sh "<Firma>"` sagt vor jeder Mail, ob es erlaubt ist.
+Rückgabe 1 heißt: nicht mailen. Es gibt keinen Schalter, der das überspringt.
+
+Antwortmails an Betriebe, die sich von sich aus gemeldet haben, und Mails an
+bestehende Kunden sind etwas anderes und jederzeit in Ordnung.
 
 ### 2. Nichts wird veröffentlicht, bevor der Betrieb zustimmt
 Kundenseiten liegen in `entwuerfe/` – das ist nicht öffentlich und steht in
@@ -52,6 +67,14 @@ node scripts/anrufliste.js jena     # nur ein Ort
 Ergebnis: `ANRUFLISTE.md`. In `daten/anrufliste.json` stehen bewusst **keine
 E-Mail-Adressen**. Was nicht da ist, kann auch nicht versehentlich
 angeschrieben werden.
+
+## Wann eine Seite online gehen darf
+
+Erst wenn der Betrieb ausdrücklich zugestimmt hat. Eintragen mit
+`node scripts/erlaubnis.js "<Firma>" "<E-Mail>" --seite-online`.
+Ohne dieses Flag bleibt die Seite in `entwuerfe/` und geht nicht nach `docs/`.
+
+Im Impressum steht dann trotzdem Richard, nicht der Betrieb.
 
 ## Was am Telefon gesagt wird
 

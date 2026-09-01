@@ -21,9 +21,15 @@ echo "4) Fremde Server eingebunden (Schriften, Zaehler, Karten)"
 t=$(grep -rhoE 'src="https?://[^"]+|href="https?://[^"]+\.(css|js)' docs/*.html 2>/dev/null | sort -u)
 [ -n "$t" ] && { echo "   GEFUNDEN:"; echo "$t" | sed 's/^/     /'; fehler=1; } || echo "   in Ordnung"
 
-echo "5) Gibt es wieder eine Mailvorlage? (soll es nicht)"
-t=$(ls scripts 2>/dev/null | grep -iE "^mail")
-[ -n "$t" ] && { echo "   GEFUNDEN:"; echo "$t" | sed 's/^/     /'; fehler=1; } || echo "   in Ordnung"
+echo "5) Mailvorlagen: nur die mit Erlaubnispruefung erlaubt"
+schlecht=$(ls scripts 2>/dev/null | grep -iE "^mail" | grep -v "^mail-nach-anruf.js$")
+if [ -n "$schlecht" ]; then
+  echo "   NICHT ERLAUBTE VORLAGE:"; echo "$schlecht" | sed 's/^/     /'; fehler=1
+elif [ -f scripts/mail-nach-anruf.js ] && ! grep -q "mail_erlaubt" scripts/mail-nach-anruf.js; then
+  echo "   mail-nach-anruf.js prueft die Erlaubnis nicht mehr"; fehler=1
+else
+  echo "   in Ordnung"
+fi
 
 echo
 [ $fehler -eq 0 ] && echo "ALLES SAUBER - pushen ist in Ordnung." || echo "NICHT PUSHEN."
