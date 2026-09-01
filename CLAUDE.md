@@ -1,39 +1,78 @@
-# Projekt-Regeln
+# WebWerk Design – Projekt-Regeln
 
-## Stand: 01.09.2026 – WebWerk Design ist eingestellt
+Richard Baumgart, 14 Jahre, Jena. Baut kostenlose Websites für kleine
+Handwerks- und Gewerbebetriebe, um Erfahrung zu sammeln.
 
-Richard hat das Geschäft beendet. Grund: Nach einem Widerspruch nach Art. 21
-DSGVO war ihm das rechtliche Risiko zu hoch.
+## Stand: 01.09.2026 – nur noch Telefon
 
-**Gelöscht wurden:**
-- alle Kundenseiten und Entwürfe
-- alle Betriebsdaten, Telefon- und Anruflisten
-- alle Verkaufs- und Nachfassdateien
-- alle erzeugten Verkaufsmails
-- sämtliche Skripte zum Bauen und Anschreiben
-- die öffentliche Website; unter der bisherigen Adresse steht nur noch ein
-  neutraler Hinweis
+Nach einem Widerspruch nach Art. 21 DSGVO wurde die Arbeitsweise umgestellt.
+Richards Entscheidung: **Es werden keine Verkaufsmails mehr geschrieben.**
+Kontakt zu Betrieben ausschließlich per Telefon.
 
-**Was bleibt:** der Ordner `schule/` mit Richards eigenen Schularbeiten.
-Der hat mit dem Geschäft nichts zu tun.
+Das ist keine Einschränkung, sondern der sichere Weg. Am Telefon merkt man
+sofort, ob jemand will oder nicht, und es entsteht nichts Schriftliches, das
+falsch verstanden werden kann.
 
-## Wenn das Thema je wieder aufgegriffen wird
+## Die vier Regeln
 
-Dann nicht so wie vorher. Was damals falsch war:
+### 1. Keine Verkaufsmails. Nie.
+Es gibt keine Mailvorlage mehr, und es wird keine gebaut. Wer nach einer
+fragt, bekommt diesen Hinweis. Antwortmails an Betriebe, die sich von sich
+aus gemeldet haben, sind etwas anderes und in Ordnung.
 
-1. Kundenentwürfe standen **öffentlich** im Netz, mit Namen, Anschrift und
-   Telefonnummer des Betriebs – ohne dass der Betrieb zugestimmt hatte.
-2. Im Impressum dieser Entwürfe stand **der Betrieb** als verantwortlicher
-   Diensteanbieter, nicht Richard. Der Betrieb haftete damit für eine Seite,
-   die er nicht kannte.
-3. Es wurde **nicht mitgeteilt**, woher die Kontaktdaten stammten
-   (Art. 14 DSGVO).
-4. Die Mails behaupteten, die Website sei fertig und abrufbar. Das machte
-   Empfängern Angst.
+### 2. Nichts wird veröffentlicht, bevor der Betrieb zustimmt
+Kundenseiten liegen in `entwuerfe/` – das ist nicht öffentlich und steht in
+`.gitignore`. Erst wenn ein Betrieb am Telefon ausdrücklich zugestimmt hat,
+darf seine Seite nach `docs/`.
 
-Richtig wäre: Entwurf nur privat zeigen, Impressum auf Richard, Herkunft der
-Daten nennen, Widerspruch sofort und ohne Rückfrage umsetzen, und vor jeder
-Mail prüfen, ob das Impressum des Betriebs Werbe-E-Mails untersagt.
+### 3. Im Impressum steht immer Richard
+Solange die Seite Richard gehört, ist **er** der Diensteanbieter nach § 5 DDG
+– niemals der Betrieb. Sonst haftet jemand für Inhalte, die er nicht kennt.
+
+### 4. Ein Nein wird sofort umgesetzt
+Sagt jemand Nein oder will nicht wieder angerufen werden: Nummer sofort in
+`daten/sperrliste.json`, ohne Rückfrage, ohne Überredungsversuch.
+
+## Vor jedem Anruf
+
+```
+./scripts/pruefe-anruf.sh "03641 123456"
+```
+Meldet, ob die Nummer gesperrt ist. Rückgabe 1 heißt: nicht anrufen.
+
+Die Sperrliste enthält **keine Namen und keine lesbaren Nummern**, nur
+Prüfsummen. So lässt sich prüfen, ohne die Personen zu speichern.
+
+## Anrufliste erzeugen
+
+```
+node scripts/anrufliste.js          # alle
+node scripts/anrufliste.js jena     # nur ein Ort
+```
+Ergebnis: `ANRUFLISTE.md`. In `daten/anrufliste.json` stehen bewusst **keine
+E-Mail-Adressen**. Was nicht da ist, kann auch nicht versehentlich
+angeschrieben werden.
+
+## Was am Telefon gesagt wird
+
+Ehrlich und kurz:
+
+> „Guten Tag, mein Name ist Richard Baumgart, ich bin 14 und aus Jena.
+> Ich baue kostenlos Websites für Handwerksbetriebe, weil ich Erfahrung
+> sammeln möchte. Ich habe gesehen, dass Sie noch keine Seite haben –
+> darf ich Ihnen einen Entwurf bauen und zeigen? Das kostet nichts und
+> Sie gehen keine Verpflichtung ein."
+
+Nicht sagen: dass schon etwas im Internet steht. Es steht nichts im Internet,
+solange der Betrieb nicht zugestimmt hat.
+
+## Was früher falsch war
+
+1. Entwürfe standen **öffentlich** im Netz, mit Name, Anschrift und Telefon –
+   ohne Zustimmung des Betriebs.
+2. Im Impressum stand **der Betrieb** als Diensteanbieter statt Richard.
+3. Es wurde nicht mitgeteilt, woher die Kontaktdaten stammten (Art. 14 DSGVO).
+4. Die Mails behaupteten, die Website sei fertig und abrufbar.
 
 ## Grundsatz
 

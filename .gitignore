@@ -1,2 +1,6 @@
+# Kundenentwuerfe und Betriebsdaten bleiben lokal - nicht ins oeffentliche Repository.
+entwuerfe/
+daten/
+ANRUFLISTE.md
 schule/
 *.tar.gz
