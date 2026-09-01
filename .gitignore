@@ -1,6 +1,10 @@
-# Kundenentwuerfe und Betriebsdaten bleiben lokal - nicht ins oeffentliche Repository.
+# Alles mit Daten fremder Betriebe bleibt lokal und kommt nicht ins
+# oeffentliche Repository. Grund: Widerspruch nach Art. 21 DSGVO, 01.09.2026.
 entwuerfe/
 daten/
-ANRUFLISTE.md
+unterlagen/
+ANRUFLISTE*.md
+
+# Persoenliches
 schule/
 *.tar.gz
