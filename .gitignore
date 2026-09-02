@@ -8,3 +8,7 @@ ANRUFLISTE*.md
 # Persoenliches
 schule/
 *.tar.gz
+
+# Hilfsmittel, gehoeren nicht ins Repository
+node_modules/
+package*.json
