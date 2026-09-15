@@ -101,3 +101,14 @@ solange der Betrieb nicht zugestimmt hat.
 
 Keine personenbezogenen Daten Dritter in ein öffentliches Repository.
 Weder in `docs/`, noch sonst wo, noch in der Versionsgeschichte.
+
+## Design-Skills (ab 15.09.2026)
+
+Bei allem Gestalterischen – Websites, Präsentationen, Handouts, E-Mail-Layouts –
+gelten immer die drei Skills in `.claude/skills/`:
+
+- `impeccable-design` – Abstände, Typografie, Farbe, Kontrast, nichts überlappt
+- `taste` – was weggelassen wird, kein KI-Ton, konkret statt Werbesprache
+- `emil-kowalski` – Animationen: kurz, `transform`/`opacity`, reduced-motion
+
+Sie sind nicht optional und müssen nicht extra angefordert werden.
