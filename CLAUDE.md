@@ -105,10 +105,16 @@ Weder in `docs/`, noch sonst wo, noch in der Versionsgeschichte.
 ## Design-Skills (ab 15.09.2026)
 
 Bei allem Gestalterischen – Websites, Präsentationen, Handouts, E-Mail-Layouts –
-gelten immer die drei Skills in `.claude/skills/`:
+gelten immer diese Skills, ohne dass sie extra angefordert werden müssen:
+
+Von Emil Kowalski (`npx skills@latest add emilkowalski/skills`, liegt in
+`.agents/skills/`, verlinkt nach `.claude/skills/`):
+
+- `emil-design-eng` – UI-Politur, Komponenten, die unsichtbaren Details
+- `animate`, `review-animations`, `improve-animations`, `animation-vocabulary`
+- `apple-design`, `pick-ui-library`, `prototype`
+
+Eigene:
 
 - `impeccable-design` – Abstände, Typografie, Farbe, Kontrast, nichts überlappt
 - `taste` – was weggelassen wird, kein KI-Ton, konkret statt Werbesprache
-- `emil-kowalski` – Animationen: kurz, `transform`/`opacity`, reduced-motion
-
-Sie sind nicht optional und müssen nicht extra angefordert werden.
