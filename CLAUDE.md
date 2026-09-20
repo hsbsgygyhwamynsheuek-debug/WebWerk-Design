@@ -118,3 +118,17 @@ Eigene:
 
 - `impeccable-design` – Abstände, Typografie, Farbe, Kontrast, nichts überlappt
 - `taste` – was weggelassen wird, kein KI-Ton, konkret statt Werbesprache
+
+## oh-my-claude-code (ab 20.09.2026)
+
+Die Skills und Agenten aus `Yeachan-Heo/oh-my-claudecode` (MIT) liegen fest im
+Repo: 40 Skills in `.claude/skills/`, 19 Agenten in `.claude/agents/`. Sie sind
+damit in jeder Sitzung hier verfuegbar, ohne dass etwas installiert werden muss.
+
+Nuetzlich sind vor allem `review`, `verify`, `research`, `plan` und
+`minimal-code-discipline`.
+
+Nicht automatisch starten: `autopilot`, `ralph`, `self-improve`, `team`. Die
+arbeiten ohne Rueckfrage weiter. In diesem Projekt haengen Kundendaten, Mails
+und oeffentliche Seiten dran - hier wird nichts vollautomatisch veroeffentlicht
+oder verschickt. Nur auf ausdrueckliche Ansage von Richard.
