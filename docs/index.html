@@ -3,23 +3,331 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>WebWerk Design · Jena</title>
+<title>WebWerk Design – Websites für Handwerksbetriebe aus Jena</title>
+<meta name="description" content="Ich baue Websites für kleine Handwerks- und Gewerbebetriebe. Vier sind schon online. 250 € einmalig, keine monatlichen Kosten.">
+<meta property="og:title" content="WebWerk Design – Websites für Handwerksbetriebe">
+<meta property="og:description" content="Vier Seiten sind online. 250 € einmalig, keine monatlichen Kosten.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23C2410C'/><text x='16' y='23' font-size='19' font-family='system-ui' font-weight='700' fill='%23FAF9F6' text-anchor='middle'>W</text></svg>">
 <style>
-  :root { color-scheme: light; }
-  body { margin:0; min-height:100vh; display:flex; justify-content:center;
-         background:#FAF9F6; color:#1A1A1B;
-         font:16px/1.7 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; }
-  main { max-width:32rem; padding:2rem 1.5rem; text-align:center; }
-  h1 { font-size:1.5rem; margin:0 0 1rem; }
-  p { margin:0 0 1rem; color:#3A3A3B; }
+:root{
+  --paper:#FAF9F6; --ink:#1A1A1B; --grau:#5C5A57; --linie:#E2DFD9;
+  --akzent:#C2410C; --dunkel:#1A1A1B; --sand:#F3F1EC;
+  --ease:cubic-bezier(.32,.72,0,1);
+  --rand:clamp(1.25rem,6vw,5rem);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font:17px/1.6 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:var(--rand)}
+section{padding-block:clamp(4rem,9vw,7.5rem)}
+h1,h2,h3{letter-spacing:-.025em;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.6rem,7.5vw,5rem);line-height:1.02}
+h2{font-size:clamp(1.9rem,4.2vw,3rem);line-height:1.08}
+h3{font-size:1.1875rem;line-height:1.3}
+p{text-wrap:pretty}
+.lab{font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--akzent);font-weight:700;margin:0 0 1rem}
+.lead{font-size:clamp(1.0625rem,1.7vw,1.3125rem);line-height:1.6;color:var(--grau);max-width:56ch}
+.hair{height:1px;background:var(--linie);border:0;margin:0}
+
+/* Navigation als schwebende Insel */
+nav{position:fixed;top:clamp(.6rem,2vw,1.1rem);left:50%;transform:translateX(-50%);z-index:100;
+  display:flex;align-items:center;gap:1.75rem;width:max-content;max-width:calc(100% - 2rem);
+  padding:.5rem .5rem .5rem 1.35rem;border-radius:999px;
+  background:rgba(250,249,246,.82);border:1px solid rgba(26,26,27,.08);
+  backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);
+  box-shadow:0 1px 0 rgba(255,255,255,.7) inset,0 18px 40px -24px rgba(26,26,27,.4)}
+nav .marke{font-weight:700;font-size:.9375rem;letter-spacing:-.01em;white-space:nowrap}
+nav .links{display:flex;gap:1.5rem}
+nav a{color:var(--grau);text-decoration:none;font-size:.875rem;transition:color .4s var(--ease)}
+nav a:hover{color:var(--ink)}
+nav .tel{background:var(--ink);color:var(--paper);padding:.55rem 1.15rem;border-radius:999px;
+  font-size:.875rem;font-weight:600;white-space:nowrap;transition:background .5s var(--ease)}
+nav .tel:hover{background:var(--akzent);color:#fff}
+@media(max-width:800px){nav{width:calc(100% - 2rem);justify-content:space-between;padding-left:1.1rem}
+  nav .links{display:none}}
+
+/* Hero */
+#start{padding-top:clamp(8rem,15vw,12rem);padding-bottom:clamp(3.5rem,7vw,6rem)}
+.herogrid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,.8fr);
+  gap:clamp(2rem,5vw,4.5rem);align-items:end}
+@media(max-width:900px){.herogrid{grid-template-columns:1fr;align-items:start;gap:2.5rem}}
+.pille{display:inline-flex;align-items:center;gap:.55rem;padding:.4rem .9rem;border-radius:999px;
+  background:rgba(194,65,12,.08);border:1px solid rgba(194,65,12,.18);
+  font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--akzent);font-weight:600}
+.punkt{width:5px;height:5px;border-radius:999px;background:currentColor}
+.herolead{margin:1.5rem 0 0}
+.cta{display:flex;flex-wrap:wrap;align-items:center;gap:1rem 1.75rem;margin-top:2.5rem}
+.knopf{display:inline-flex;align-items:center;gap:.9rem;padding:.6rem .6rem .6rem 1.6rem;
+  background:var(--ink);color:var(--paper);text-decoration:none;border-radius:999px;
+  font-weight:600;font-size:1rem;
+  transition:background .5s var(--ease),transform .5s var(--ease)}
+.knopf:hover{background:var(--akzent);color:#fff}
+.knopf:active{transform:scale(.98)}
+.ring{width:2.1rem;height:2.1rem;border-radius:999px;background:rgba(250,249,246,.16);
+  display:inline-flex;align-items:center;justify-content:center;flex:none;
+  transition:transform .5s var(--ease),background .5s var(--ease)}
+.knopf:hover .ring{transform:translate(2px,-1px) scale(1.06);background:rgba(255,255,255,.26)}
+.ring svg{width:15px;height:15px;stroke:currentColor;stroke-width:1.4;fill:none}
+.text-link{color:var(--akzent);text-decoration:none;font-weight:600;font-size:.9375rem;
+  border-bottom:1px solid currentColor;padding-bottom:3px;transition:color .4s var(--ease)}
+.text-link:hover{color:var(--ink)}
+/* Doppelrand */
+.schale{padding:.5rem;border-radius:1.75rem;background:rgba(26,26,27,.035);
+  border:1px solid rgba(26,26,27,.07);box-shadow:0 40px 80px -50px rgba(26,26,27,.55)}
+.kern{background:#fff;border:1px solid rgba(26,26,27,.06);border-radius:1.25rem;padding:1.5rem;
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.9)}
+.kern dt{font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--grau);margin:0}
+.kern dd{margin:.35rem 0 1.4rem;font-size:1rem;line-height:1.5}
+.kern dd:last-of-type{margin-bottom:0}
+.kern dl{margin:0}
+.nummer{font-size:1.45rem;font-weight:700;letter-spacing:-.01em;font-variant-numeric:tabular-nums;
+  color:var(--ink);text-decoration:none;display:inline-block;transition:color .4s var(--ease)}
+.nummer:hover{color:var(--akzent)}
+.fakten{display:flex;flex-wrap:wrap;gap:.6rem 2.25rem;margin:3rem 0 0;padding-top:1.4rem;
+  border-top:1px solid var(--linie);list-style:none;
+  font-size:.8125rem;letter-spacing:.08em;text-transform:uppercase;color:var(--grau)}
+
+/* Referenzen */
+.karten{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));
+  gap:clamp(1.25rem,2.5vw,2rem);margin-top:clamp(2rem,4vw,3rem)}
+.karte{display:block;text-decoration:none;color:inherit;background:#fff;
+  border:1px solid var(--linie);border-radius:14px;overflow:hidden;
+  transition:box-shadow .55s var(--ease),border-color .55s var(--ease),transform .55s var(--ease)}
+.karte:hover{box-shadow:0 30px 60px -34px rgba(26,26,27,.45);border-color:#d4d0c8;transform:translateY(-3px)}
+.karte img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;object-position:top center;
+  border-bottom:1px solid var(--linie);background:var(--sand)}
+.karte .k-txt{padding:1.1rem 1.25rem 1.3rem}
+.karte b{display:block}
+.karte span{display:block;color:var(--grau);font-size:.9375rem;margin-top:.15rem}
+.karte em{display:inline-block;font-style:normal;color:var(--akzent);font-weight:600;
+  font-size:.9375rem;margin-top:.8rem}
+
+/* Ablauf */
+.schritte{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));
+  gap:clamp(1.5rem,3vw,2.5rem);margin-top:clamp(2rem,4vw,3rem);list-style:none;padding:0}
+.schritte li{padding-top:1.1rem;border-top:2px solid var(--ink)}
+.schritte .nr{font-size:.75rem;letter-spacing:.16em;color:var(--akzent);font-weight:700;
+  display:block;margin-bottom:.6rem}
+.schritte p{margin:.45rem 0 0;color:var(--grau);font-size:.9375rem;line-height:1.55}
+
+/* Preis */
+#preis{background:var(--dunkel);color:var(--paper)}
+#preis .lab{color:#FF8A5B}
+#preis .lead{color:#D9D4CB}
+.preisgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:clamp(2rem,5vw,4rem);align-items:start}
+@media(max-width:800px){.preisgrid{grid-template-columns:1fr}}
+.zahl{font-size:clamp(3.5rem,10vw,6.5rem);line-height:1;font-weight:800;letter-spacing:-.04em;
+  font-variant-numeric:tabular-nums;margin:1rem 0 .5rem}
+.dabei{list-style:none;padding:0;margin:0}
+.dabei li{padding:.85rem 0;border-bottom:1px solid rgba(250,249,246,.14);
+  display:flex;gap:.9rem;align-items:baseline;font-size:1rem}
+.dabei li:last-child{border-bottom:0}
+.dabei .h{color:#FF8A5B;flex:none}
+
+/* Über / Kontakt */
+.zwei{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,5vw,4rem)}
+@media(max-width:800px){.zwei{grid-template-columns:1fr}}
+.kontaktkarte{background:var(--sand);border-radius:14px;padding:clamp(1.5rem,3vw,2.25rem)}
+.kontaktkarte a{color:var(--ink)}
+
+/* Recht */
+#recht{background:var(--sand);font-size:.9375rem;color:var(--grau)}
+#recht h2{font-size:1.5rem;color:var(--ink)}
+#recht h3{font-size:1rem;margin-top:1.75rem;color:var(--ink)}
+#recht p{margin:.5rem 0 0;max-width:72ch}
+footer{padding-block:2.5rem;border-top:1px solid var(--linie);font-size:.875rem;color:var(--grau)}
+
+a:focus-visible,button:focus-visible{outline:2px solid var(--akzent);outline-offset:3px}
+
+/* Auftritt beim Scrollen */
+.auf{opacity:0;transform:translateY(26px);
+  transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.auf.da{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .auf{opacity:1!important;transform:none!important}
+  *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}
+}
 </style>
 </head>
 <body>
-<main style="padding-top:3rem">
-  <h1>WebWerk Design</h1>
-  <p>Ich baue kostenlos Websites für kleine Handwerksbetriebe aus Jena und Umgebung, weil ich Erfahrung sammeln möchte.</p>
-  <p>Ich melde mich telefonisch. Entwürfe stelle ich nicht ins Netz – ich zeige sie dem Betrieb direkt, und nur wenn er einverstanden ist, geht die Seite online.</p><p style="margin-top:2rem;font-size:.95rem"><strong>Richard Baumgart</strong><br>WebWerk Design · Jena<br><a href="tel:015144164431" style="color:#C2410C">0151 44164431</a><br><a href="mailto:richardbaumgart65@gmail.com" style="color:#C2410C">richardbaumgart65@gmail.com</a></p>
-</main><section style="max-width:32rem;margin:0 auto;padding:0 1.5rem 3rem;text-align:left;font-size:.9rem;line-height:1.7;color:#3A3A3B"><h2 style="font-size:1.05rem;color:#1A1A1B;margin:2rem 0 .5rem">Impressum</h2><p>Angaben gemäß § 5 DDG<br>WebWerk Design<br>Richard Baumgart<br>Illmitzer Dorfstraße 9<br>07751 Jena<br>Telefon: 0151 44164431<br>E-Mail: richardbaumgart65@gmail.com</p><p>Richard Baumgart ist minderjährig. Gesetzlich vertreten durch die Erziehungsberechtigten unter derselben Anschrift.</p><h2 style="font-size:1.05rem;color:#1A1A1B;margin:2rem 0 .5rem">Datenschutz</h2><p><strong>Verantwortlich</strong> ist der oben genannte Anbieter.</p><p><strong>Diese Website.</strong> Sie wird bei GitHub Pages gehostet. Beim Aufruf verarbeitet der Anbieter technische Daten wie IP-Adresse und Zeitpunkt in Server-Logfiles, Art. 6 Abs. 1 lit. f DSGVO. Es werden keine Cookies gesetzt, nichts gezählt und nichts von fremden Servern nachgeladen.</p><p><strong>Wenn ich Betriebe anrufe.</strong> Ich spreche Handwerks- und Gewerbebetriebe telefonisch an, um ihnen kostenlos eine Website anzubieten. Firmenname, Ort und Telefonnummer stammen aus öffentlichen Branchenverzeichnissen. Rechtsgrundlage ist mein berechtigtes Interesse nach Art. 6 Abs. 1 lit. f DSGVO. Diese Information erhalten Sie hiermit nach Art. 14 DSGVO. <strong>Werbe-E-Mails verschicke ich nicht.</strong></p><p><strong>Entwürfe sind nicht öffentlich.</strong> Ein Entwurf geht erst dann online, wenn der Betrieb ausdrücklich zugestimmt hat. Im Impressum eines Entwurfs stehe ich als Diensteanbieter – niemals der Betrieb.</p><p><strong>Sie möchten das nicht?</strong> Ein Satz am Telefon oder eine kurze Nachricht genügt. Ich lösche Ihre Daten sofort und vollständig und melde mich nicht wieder. Sie können der Verarbeitung zu Werbezwecken jederzeit nach Art. 21 Abs. 2 DSGVO widersprechen. Ihnen stehen außerdem Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit und die Beschwerde bei der Aufsichtsbehörde zu.</p><p><strong>Künstliche Intelligenz.</strong> Texte, Gestaltung und Grafiken dieser Seite und der Entwürfe entstehen mit Unterstützung künstlicher Intelligenz – Artikel 50 der Verordnung (EU) 2024/1689.</p></section>
+
+<nav>
+  <span class="marke">WebWerk Design</span>
+  <span class="links">
+    <a href="#arbeiten">Arbeiten</a>
+    <a href="#ablauf">Ablauf</a>
+    <a href="#preis">Preis</a>
+    <a href="#kontakt">Kontakt</a>
+  </span>
+  <a class="tel" href="tel:015144164431">Anrufen</a>
+</nav>
+
+<main>
+
+<section id="start">
+  <div class="wrap">
+    <div class="herogrid">
+      <div>
+        <p class="pille"><span class="punkt"></span>Aus Jena</p>
+        <h1>Websites für Handwerker, die keine wollen.</h1>
+        <p class="lead herolead">Die meisten Betriebe haben keine Seite, weil das immer teuer ist und ewig dauert. Bei mir kostet es 250 € und ist in einer Woche fertig. Vier Betriebe haben es schon gemacht.</p>
+        <div class="cta">
+          <a class="knopf" href="tel:015144164431">0151 44164431 anrufen
+            <span class="ring" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.5 12h11M12.5 7l5 5-5 5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </a>
+          <a class="text-link" href="#arbeiten">Arbeiten ansehen</a>
+        </div>
+        <ul class="fakten">
+          <li>250 € einmalig</li>
+          <li>Keine monatlichen Kosten</li>
+          <li>Fertig in einer Woche</li>
+        </ul>
+      </div>
+      <aside class="schale">
+        <div class="kern">
+          <dl>
+            <dt>Telefon</dt>
+            <dd><a class="nummer" href="tel:015144164431">0151 44164431</a></dd>
+            <dt>E-Mail</dt>
+            <dd><a href="mailto:richardbaumgart65@gmail.com" style="color:inherit">richardbaumgart65@gmail.com</a></dd>
+            <dt>Erreichbar</dt>
+            <dd>Ab 16 Uhr, vorher Schule</dd>
+          </dl>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<hr class="hair">
+
+<section id="arbeiten">
+  <div class="wrap auf">
+    <p class="lab">Arbeiten</p>
+    <h2>Vier Seiten, die online sind.</h2>
+    <p class="lead">Keine Bildchen aus einer Vorlage. Das sind echte Betriebe, die Seiten laufen.</p>
+    <div class="karten">
+      <a class="karte" href="kuenzel-klempnerei.html">
+        <img src="vorschau/kuenzel-klempnerei.jpg" alt="Website der Klempnerei Marco Künzel" loading="lazy">
+        <div class="k-txt"><b>Klempnerei Marco Künzel</b><span>Heizung und Sanitär · Jena</span><em>Ansehen →</em></div>
+      </a>
+      <a class="karte" href="friedrich-dach.html">
+        <img src="vorschau/friedrich-dach.jpg" alt="Website von Dachdeckermeister Thomas Friedrich" loading="lazy">
+        <div class="k-txt"><b>Thomas Friedrich</b><span>Dachdeckermeister · Schlöben</span><em>Ansehen →</em></div>
+      </a>
+      <a class="karte" href="lorenz-maler.html">
+        <img src="vorschau/lorenz-maler.jpg" alt="Website vom Malergeschäft Sören Lorenz" loading="lazy">
+        <div class="k-txt"><b>Malergeschäft Sören Lorenz</b><span>Malerhandwerk · Schkölen</span><em>Ansehen →</em></div>
+      </a>
+      <a class="karte" href="pfeifer-maler.html">
+        <img src="vorschau/pfeifer-maler.jpg" alt="Website der Malerwerkstätte Pfeifer" loading="lazy">
+        <div class="k-txt"><b>Malerwerkstätte Pfeifer</b><span>Malerhandwerk · Rothenstein</span><em>Ansehen →</em></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<hr class="hair">
+
+<section id="ablauf">
+  <div class="wrap auf">
+    <p class="lab">Ablauf</p>
+    <h2>Sie sagen was, ich baue.</h2>
+    <ol class="schritte">
+      <li><span class="nr">SCHRITT 1</span><h3>Wir telefonieren</h3><p>Zehn Minuten. Was macht Ihr Betrieb, wen wollen Sie erreichen, was soll draufstehen.</p></li>
+      <li><span class="nr">SCHRITT 2</span><h3>Ich baue den Entwurf</h3><p>Dauert zwei bis drei Tage. Sie kriegen einen Link und sehen die fertige Seite.</p></li>
+      <li><span class="nr">SCHRITT 3</span><h3>Sie sagen, was anders soll</h3><p>So oft Sie wollen. Farben, Texte, Reihenfolge. Änderungen am selben Tag.</p></li>
+      <li><span class="nr">SCHRITT 4</span><h3>Die Seite geht online</h3><p>Erst wenn Sie ja sagen. Vorher sieht sie niemand außer Ihnen.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section id="preis">
+  <div class="wrap auf">
+    <div class="preisgrid">
+      <div>
+        <p class="lab">Preis</p>
+        <h2>250 € und fertig.</h2>
+        <p class="zahl">250 €</p>
+        <p class="lead">Einmalig. Danach kommt nichts mehr. Bezahlt wird erst, wenn die Seite online ist und Ihnen gefällt.</p>
+      </div>
+      <ul class="dabei">
+        <li><span class="h">✓</span><span><b>Die komplette Seite.</b> Leistungen, Öffnungszeiten, Telefonnummer, Anfahrt.</span></li>
+        <li><span class="h">✓</span><span><b>Läuft auf dem Handy.</b> Da schauen die meisten drauf.</span></li>
+        <li><span class="h">✓</span><span><b>Impressum und Datenschutz.</b> Muss sein, mache ich mit.</span></li>
+        <li><span class="h">✓</span><span><b>Änderungen im ersten Monat.</b> Kostenlos, so oft Sie wollen.</span></li>
+        <li><span class="h">–</span><span><b>Domain und Hosting</b> zahlen Sie selbst, ungefähr 15 € im Jahr. Läuft auf Ihren Namen, damit die Seite Ihnen gehört.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="ueber">
+  <div class="wrap auf">
+    <div class="zwei">
+      <div>
+        <p class="lab">Wer das macht</p>
+        <h2>Ich bin Richard, 14.</h2>
+        <p class="lead">Ich baue Websites, weil es mir Spaß macht und ich besser werden will. Deswegen der Preis – eine Agentur nimmt das Zehnfache.</p>
+        <p style="margin-top:1.25rem;color:var(--grau);max-width:56ch">Die vier Seiten oben habe ich gebaut. Ich bin schnell erreichbar, weil ich nebenbei keine zwanzig anderen Aufträge habe. Und wenn etwas nicht passt, ändere ich es, bis es passt.</p>
+        <p style="margin-top:1.25rem;color:var(--grau);max-width:56ch">Ich arbeite mit KI-Unterstützung. Das sage ich vorher, nicht hinterher.</p>
+      </div>
+      <div class="kontaktkarte" id="kontakt">
+        <p class="lab" style="margin-bottom:.75rem">Kontakt</p>
+        <h3 style="font-size:1.35rem;margin-bottom:1.1rem">Rufen Sie einfach an.</h3>
+        <p style="margin:0 0 1.5rem;color:var(--grau)">Bis 16 Uhr bin ich in der Schule. Danach erreichen Sie mich. Eine E-Mail können Sie jederzeit schreiben, ich antworte am selben Tag.</p>
+        <p style="margin:0 0 .35rem"><a class="nummer" href="tel:015144164431">0151 44164431</a></p>
+        <p style="margin:0"><a href="mailto:richardbaumgart65@gmail.com">richardbaumgart65@gmail.com</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="recht">
+  <div class="wrap">
+    <h2>Impressum</h2>
+    <h3>Angaben gemäß § 5 DDG</h3>
+    <p>Richard Baumgart<br>Illmitzer Dorfstraße 9<br>07751 Jena<br>Deutschland</p>
+    <h3>Kontakt</h3>
+    <p>Telefon: 0151 44164431<br>E-Mail: richardbaumgart65@gmail.com</p>
+    <h3>Hinweis</h3>
+    <p>Der Anbieter ist minderjährig. Rechtsgeschäfte bedürfen der Zustimmung der Erziehungsberechtigten (§ 107 BGB). Verantwortlich für den Inhalt dieser Seite ist Richard Baumgart.</p>
+
+    <h2 style="margin-top:3rem">Datenschutz</h2>
+    <h3>Verantwortlicher</h3>
+    <p>Richard Baumgart, Illmitzer Dorfstraße 9, 07751 Jena, richardbaumgart65@gmail.com</p>
+    <h3>Welche Daten erhoben werden</h3>
+    <p>Diese Seite hat kein Kontaktformular, keine Cookies, kein Analysewerkzeug und lädt keine Schriften oder Skripte von fremden Servern. Beim Aufruf speichert der Hostinganbieter GitHub Pages technisch bedingt die IP-Adresse, Datum und Uhrzeit sowie die aufgerufene Seite. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO – das berechtigte Interesse am sicheren Betrieb der Seite.</p>
+    <h3>Wenn Sie anrufen oder schreiben</h3>
+    <p>Ihre Angaben verwende ich ausschließlich, um Ihre Anfrage zu bearbeiten (Art. 6 Abs. 1 lit. b DSGVO). Ich gebe sie nicht weiter und lösche sie, sobald sie nicht mehr gebraucht werden.</p>
+    <h3>Ihre Rechte</h3>
+    <p>Sie können Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung verlangen sowie der Verarbeitung widersprechen (Art. 15–21 DSGVO). Eine kurze Nachricht genügt. Außerdem können Sie sich beim Thüringer Landesbeauftragten für den Datenschutz beschweren.</p>
+    <h3>Einsatz künstlicher Intelligenz</h3>
+    <p>Diese Seite wurde mit Unterstützung künstlicher Intelligenz erstellt – Artikel 50 der Verordnung (EU) 2024/1689.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p style="margin:0">WebWerk Design · Richard Baumgart, Jena · <a href="tel:015144164431" style="color:var(--ink)">0151 44164431</a></p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var z=document.querySelectorAll('.auf');
+  var o=new IntersectionObserver(function(es){
+    es.forEach(function(x){ if(x.isIntersecting){ x.target.classList.add('da'); o.unobserve(x.target); } });
+  },{rootMargin:'0px 0px -10% 0px'});
+  z.forEach(function(e){o.observe(e)});
+})();
+</script>
 </body>
 </html>
