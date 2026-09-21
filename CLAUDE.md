@@ -132,3 +132,30 @@ Nicht automatisch starten: `autopilot`, `ralph`, `self-improve`, `team`. Die
 arbeiten ohne Rueckfrage weiter. In diesem Projekt haengen Kundendaten, Mails
 und oeffentliche Seiten dran - hier wird nichts vollautomatisch veroeffentlicht
 oder verschickt. Nur auf ausdrueckliche Ansage von Richard.
+
+## Abmahn-Checkliste (ab 21.09.2026)
+
+Gilt fuer jede Seite, die ich baue - eigene wie Kundenseiten. Vor dem
+Veroeffentlichen jeden Punkt pruefen.
+
+1. **Datenschutzerklaerung** vorhanden, mit Verantwortlichem und Rechtsgrundlage.
+2. **Keine Google Fonts** und keine anderen Schriften, Karten, Videos oder
+   Zaehler von fremden Servern. Alles liegt lokal. (LG Muenchen 3 O 17493/20)
+3. **Jedes Bild hat ein alt-Attribut**, das beschreibt, was zu sehen ist.
+4. **Impressum** nach Paragraph 5 DDG: Richard Baumgart, Illmitzer Dorfstrasse 9,
+   07751 Jena, Telefon, E-Mail. Nie der Betrieb.
+5. **Widerrufsbelehrung**, sobald ueber die Seite etwas bestellt oder gebucht
+   werden kann und der Kunde Verbraucher ist. Reine Visitenkartenseiten
+   brauchen keine.
+6. **Kein Analytics, keine Cookies.** Wenn doch, erst nach Einwilligung laden -
+   nie vorher. (Paragraph 25 TDDG)
+7. **Bilder nur mit Lizenz.** Pexels, Unsplash oder eigene Fotos des Betriebs.
+   Lizenz und Quelle notieren. Nie ein Bild aus der Google-Suche.
+8. **Keine Behauptungen ohne Beleg**: kein "Testsieger", kein "Nummer 1",
+   keine erfundenen Jahreszahlen, keine erfundene Mitarbeiterzahl.
+9. **Keine erfundenen Bewertungen.** Nur echte, und nur mit Erlaubnis.
+10. **Keine offenen Verzeichnisse.** Was hochgeladen wird, darf nicht per
+    Direktlink fuer jeden erreichbar sein.
+
+Zusaetzlich immer: Hinweis auf den Einsatz kuenstlicher Intelligenz
+(Artikel 50 der Verordnung (EU) 2024/1689).
