@@ -173,3 +173,24 @@ Nicht installiert: `adkaushik/hyperpowers-claude`. Dieser Installer
 entschluesselt ein mitgeliefertes Paket und richtet daraus eine lokale
 Quelle ein. Was da entschluesselt wird, laesst sich vorher nicht lesen -
 deshalb nicht angefasst.
+
+## Zusatz-Skills fuers Geschaeft (ab 22.09.2026)
+
+Aus zwei weiteren Sammlungen wurden gezielt 14 Skills uebernommen, nicht die
+vollen 128 - mehr Skills heisst nicht besser, sondern nur unuebersichtlicher.
+
+Aus `rampstackco/claude-skills` (MIT):
+`accessibility-audit`, `content-and-copy`, `design-standards`,
+`landing-page-copy`, `performance-optimization`, `seo-onpage`,
+`logo-design`, `form-strategy`, `editorial-qa`
+
+Aus `AgricIDaniel/claude-seo` (MIT):
+`seo-local`, `seo-schema`, `seo-technical`, `seo-page`, `seo-audit`
+
+`seo-local` und `seo-schema` sind die wichtigsten: Handwerksbetriebe leben
+davon, in der Umgebung gefunden zu werden. Ein sauberes LocalBusiness-Schema
+und ein Google-Unternehmensprofil bringen mehr als jede Gestaltung.
+
+Nicht uebernommen wurden Skills, die kostenpflichtige Zugaenge brauchen
+(DataForSEO, Ahrefs, Google Ads) oder die zu einem Betrieb dieser Groesse
+nicht passen.
