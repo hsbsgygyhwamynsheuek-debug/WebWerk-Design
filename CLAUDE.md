@@ -159,3 +159,17 @@ Veroeffentlichen jeden Punkt pruefen.
 
 Zusaetzlich immer: Hinweis auf den Einsatz kuenstlicher Intelligenz
 (Artikel 50 der Verordnung (EU) 2024/1689).
+
+## hyperpowers (ab 22.09.2026)
+
+Aus `withzombies/hyperpowers` (MIT) liegen 24 Skills in `.claude/skills/` und
+5 Agenten in `.claude/agents/`. Der gleichnamige Agent des anderen Plugins
+heisst hier `hyper-code-reviewer.md`, damit sich nichts ueberschreibt.
+
+Nuetzlich: `writing-plans`, `verification-before-completion`,
+`root-cause-tracing`, `debugging-with-tools`, `review-implementation`.
+
+Nicht installiert: `adkaushik/hyperpowers-claude`. Dieser Installer
+entschluesselt ein mitgeliefertes Paket und richtet daraus eine lokale
+Quelle ein. Was da entschluesselt wird, laesst sich vorher nicht lesen -
+deshalb nicht angefasst.
