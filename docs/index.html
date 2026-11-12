@@ -103,6 +103,18 @@ nav .tel:hover{background:var(--akzent);color:#fff}
 .karte span{display:block;color:var(--grau);font-size:.9375rem;margin-top:.15rem}
 .karte em{display:inline-block;font-style:normal;color:var(--akzent);font-weight:600;
   font-size:.9375rem;margin-top:.8rem}
+/* Beispiel-Vorschau (reine CSS-Nachbildung, keine echten Kunden, keine Fotos) */
+.vorschau{aspect-ratio:4/3;border-bottom:1px solid var(--linie);padding:.85rem;
+  display:flex;flex-direction:column;gap:.45rem;background:var(--sand)}
+.vorschau .bar{display:flex;gap:.3rem;align-items:center}
+.vorschau .bar i{width:.42rem;height:.42rem;border-radius:999px;background:#cfccc4;display:block}
+.vorschau .hero{border-radius:8px;padding:.8rem;flex:1;display:flex;flex-direction:column;
+  justify-content:center;gap:.4rem;color:#fff}
+.vorschau .t{height:.55rem;width:72%;background:currentColor;border-radius:3px}
+.vorschau .s{height:.38rem;width:50%;background:currentColor;border-radius:3px;opacity:.6}
+.vorschau .b{margin-top:.35rem;height:.95rem;width:42%;background:#fff;border-radius:999px;opacity:.95}
+.vorschau .row{display:flex;gap:.4rem}
+.vorschau .row span{height:1.15rem;flex:1;background:#fff;border:1px solid var(--linie);border-radius:5px}
 
 /* Ablauf */
 .schritte{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));
@@ -158,6 +170,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--akzent);outline-off
 <nav>
   <span class="marke">WebWerk Design</span>
   <span class="links">
+    <a href="#beispiele">Beispiele</a>
     <a href="#ablauf">Ablauf</a>
     <a href="#preis">Preis</a>
     <a href="#kontakt">Kontakt</a>
@@ -206,6 +219,66 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--akzent);outline-off
 
 <hr class="hair">
 
+<section id="beispiele">
+  <div class="wrap auf">
+    <p class="lab">Beispiele</p>
+    <h2>So könnte Ihre Seite aussehen.</h2>
+    <p class="lead">Muster-Entwürfe für verschiedene Gewerke – keine echten Kunden, nur zur Ansicht, damit Sie ein Gefühl dafür bekommen. Ihre Seite wird natürlich auf Ihren Betrieb zugeschnitten.</p>
+    <div class="karten">
+      <article class="karte">
+        <div class="vorschau">
+          <div class="bar"><i></i><i></i><i></i></div>
+          <div class="hero" style="background:#1f5fa6"><span class="t"></span><span class="s"></span><span class="b"></span></div>
+          <div class="row"><span></span><span></span><span></span></div>
+        </div>
+        <div class="k-txt"><b>Malerbetrieb</b><span>Beispiel · Leistungen, Referenzfotos, Kontakt</span></div>
+      </article>
+      <article class="karte">
+        <div class="vorschau">
+          <div class="bar"><i></i><i></i><i></i></div>
+          <div class="hero" style="background:#334155"><span class="t"></span><span class="s"></span><span class="b"></span></div>
+          <div class="row"><span></span><span></span><span></span></div>
+        </div>
+        <div class="k-txt"><b>Dachdecker</b><span>Beispiel · Gewerke, Einzugsgebiet, Anfrage</span></div>
+      </article>
+      <article class="karte">
+        <div class="vorschau">
+          <div class="bar"><i></i><i></i><i></i></div>
+          <div class="hero" style="background:#8a5a2b"><span class="t"></span><span class="s"></span><span class="b"></span></div>
+          <div class="row"><span></span><span></span><span></span></div>
+        </div>
+        <div class="k-txt"><b>Café &amp; Bäckerei</b><span>Beispiel · Karte, Öffnungszeiten, Anfahrt</span></div>
+      </article>
+      <article class="karte">
+        <div class="vorschau">
+          <div class="bar"><i></i><i></i><i></i></div>
+          <div class="hero" style="background:#26242a"><span class="t"></span><span class="s"></span><span class="b"></span></div>
+          <div class="row"><span></span><span></span><span></span></div>
+        </div>
+        <div class="k-txt"><b>Friseur &amp; Barbershop</b><span>Beispiel · Preise, Termin, Galerie</span></div>
+      </article>
+      <article class="karte">
+        <div class="vorschau">
+          <div class="bar"><i></i><i></i><i></i></div>
+          <div class="hero" style="background:#3f7d4e"><span class="t"></span><span class="s"></span><span class="b"></span></div>
+          <div class="row"><span></span><span></span><span></span></div>
+        </div>
+        <div class="k-txt"><b>Blumenladen</b><span>Beispiel · Sortiment, Anlässe, Kontakt</span></div>
+      </article>
+      <article class="karte">
+        <div class="vorschau">
+          <div class="bar"><i></i><i></i><i></i></div>
+          <div class="hero" style="background:#b45309"><span class="t"></span><span class="s"></span><span class="b"></span></div>
+          <div class="row"><span></span><span></span><span></span></div>
+        </div>
+        <div class="k-txt"><b>Elektriker &amp; Installateur</b><span>Beispiel · Leistungen, Notdienst, Anfrage</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<hr class="hair">
+
 <section id="ablauf">
   <div class="wrap auf">
     <p class="lab">Ablauf</p>
@@ -246,7 +319,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--akzent);outline-off
         <p class="lab">Wer das macht</p>
         <h2>Ich bin Richard, 14.</h2>
         <p class="lead">Ich baue Websites, weil es mir Spaß macht und ich besser werden will. Deswegen der Preis – eine Agentur nimmt das Zehnfache.</p>
-        <p style="margin-top:1.25rem;color:var(--grau);max-width:56ch">Die vier Seiten oben habe ich gebaut. Ich bin schnell erreichbar, weil ich nebenbei keine zwanzig anderen Aufträge habe. Und wenn etwas nicht passt, ändere ich es, bis es passt.</p>
+        <p style="margin-top:1.25rem;color:var(--grau);max-width:56ch">Die Beispiele oben sind Muster – echte Kundenseiten zeige ich nur mit deren Erlaubnis. Ich bin schnell erreichbar, weil ich nebenbei keine zwanzig anderen Aufträge habe. Und wenn etwas nicht passt, ändere ich es, bis es passt.</p>
         <p style="margin-top:1.25rem;color:var(--grau);max-width:56ch">Ich arbeite mit KI-Unterstützung. Das sage ich vorher, nicht hinterher.</p>
       </div>
       <div class="kontaktkarte" id="kontakt">
