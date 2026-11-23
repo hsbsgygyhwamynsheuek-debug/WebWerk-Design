@@ -106,3 +106,67 @@ die 970 hat einfach andere regeln 💀 #67 #sixseven #fyp #foryou #fürdich #vir
 
 Beim Hochladen in TikTok den Schalter **„KI-generierte Inhalte"**
 einschalten. Kostet nichts, dauert einen Tipp, und erspart Ärger.
+
+---
+
+## Klassenzimmer-Reihe, Teil 1 bis 3 (23.11.2026)
+
+Drei Clips aus **einem einzigen bezahlten Bild**. Keine weiteren
+Credits verbraucht.
+
+| Datei | Länge | Erzählung |
+|---|---|---|
+| `klassenzimmer-1-status.mp4` | 15,4 s | Regel erklären → 67 und 88 → 970 → die Zeile |
+| `klassenzimmer-2-die-970.mp4` | 15,6 s | Legende um die 970, endet mit „Sie schaut gerade dich an" |
+| `klassenzimmer-3-deine-zahl.mp4` | 13,6 s | Rangordnung, endet mit „Und du? Schreib deine Zahl" |
+
+Alle drei enden mit **„Wollt ihr Part 2?"** und der Aufforderung,
+„Part 2" zu kommentieren.
+
+### Der Trick: ein Bild, vier Einstellungen
+
+`quelle/pixar/serie/kino.js` schneidet aus dem Standbild echte
+Kameraeinstellungen — Totale, Tuschel-Nahaufnahme, Kartoffel von
+unten. Die Funktion `kamera(cx, cy, z)` setzt einen Punkt des Bildes
+in die Bildmitte und hält den Ausschnitt dabei immer innerhalb des
+Bildes, damit nie schwarze Ränder entstehen.
+
+Jede Einstellung hat eine eigene langsame Fahrt, harte Schnitte
+dazwischen, ein kurzer Aufblitz auf dem Schnitt, bei der Kartoffel
+ein leichtes Kamerazittern. Dazu durchgehend aufsteigender Staub und
+Untertitel Wort für Wort.
+
+Die Zahlen 67, 88 und 970 liegen im selben Rahmen wie das Bild —
+dadurch wachsen sie bei einer Nahaufnahme automatisch mit.
+
+Grenze: Der Zoom bleibt unter 2,3-fach. Darüber wird das Bild
+sichtbar matschig, weil die Vorlage nur 1360 × 1712 Pixel hat. Ein
+leichtes Nachschärfen (`unsharp`) beim Rendern fängt den Rest ab.
+
+### Ton
+
+`quelle/pixar/serie/ton-spannung.py` baut pro Clip ein Spannungsbett:
+tiefes Brummen, Herzschlag, dessen Takt zum Ende hin anzieht, vor
+jedem Schnitt ein Aufzieher und auf dem Schnitt ein Einschlag. Alles
+aus Sinus und gefiltertem Rauschen erzeugt, also keine Musiklizenz.
+Normalisiert auf −16 LUFS.
+
+Wer einen Trend-Sound drüberlegen will, nimmt `out/*-stumm.mp4` aus
+dem Build oder stellt die Lautstärke in der App herunter.
+
+### Beschriftungen zum Kopieren
+
+Teil 1:
+```
+in dieser klasse hat jeder eine zahl 💀 part 2? #67 #sixseven #fyp #foryou #fürdich #viral #ai #brainrot
+```
+Teil 2:
+```
+keiner weiß woher die 970 kommt 😳 #67 #sixseven #fyp #foryou #fürdich #viral #ai #brainrot
+```
+Teil 3:
+```
+welche zahl hättest du? 👀 schreib sie in die kommentare #67 #sixseven #fyp #foryou #fürdich #viral #ai
+```
+
+Beim Hochladen den Schalter **„KI-generierte Inhalte"** einschalten.
