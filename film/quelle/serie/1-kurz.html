@@ -1,0 +1,70 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Kurzfassung</title>
+<link rel="stylesheet" href="kern.css">
+<style>
+#s1 .feld{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:calc(1140px * var(--k))}
+#stage.port #s1 .feld{width:calc(880px * var(--k))}
+#s1 .bar{display:flex;align-items:center;gap:calc(26px * var(--k));
+  height:calc(116px * var(--k));padding:0 calc(38px * var(--k));border-radius:999px;
+  background:#1E1E20;border:1px solid #303033;box-shadow:0 40px 90px -40px #000}
+#s1 .lupe{width:calc(36px * var(--k));height:calc(36px * var(--k));flex:none;
+  border:calc(3.3px * var(--k)) solid #6E6B66;border-radius:50%;position:relative}
+#s1 .lupe::after{content:"";position:absolute;right:calc(-11px * var(--k));bottom:calc(-5px * var(--k));
+  width:calc(15px * var(--k));height:calc(3.3px * var(--k));background:#6E6B66;transform:rotate(45deg)}
+#s1 .txt{font-size:calc(42px * var(--k));color:#F2EFE9;white-space:nowrap}
+#s1 .leer{margin-top:calc(34px * var(--k));display:flex;align-items:center;
+  gap:calc(24px * var(--k));padding:calc(32px * var(--k)) calc(34px * var(--k));
+  border-radius:calc(18px * var(--k));background:rgba(194,65,12,.13);
+  border:1px solid rgba(255,138,91,.5)}
+#s1 .leer .ico{width:calc(50px * var(--k));height:calc(50px * var(--k));flex:none;
+  border-radius:calc(13px * var(--k));background:rgba(255,138,91,.22)}
+#s1 .leer b{font-size:calc(32px * var(--k));color:#FFBFA3;font-weight:600}
+#s3 .zahl{font-family:"Inter Display","Inter",sans-serif;font-weight:800;
+  font-size:calc(250px * var(--k));line-height:.88;letter-spacing:-.055em;font-variant-numeric:tabular-nums}
+#s3 ul{list-style:none;margin-top:calc(34px * var(--k))}
+#s3 li{font-size:calc(32px * var(--k));color:#EDE9E2;padding:calc(15px * var(--k)) 0;
+  display:flex;gap:calc(18px * var(--k))}
+#s3 li span{color:var(--glut);font-weight:700}
+</style></head><body>
+<div id="stage" class="land">
+  <div class="scene dark" id="s1">
+    <div class="feld">
+      <div class="bar"><span class="lupe"></span><span class="txt"></span></div>
+      <div class="leer"><span class="ico"></span><b>Ihr Betrieb — nicht dabei</b></div>
+    </div>
+    <div class="vig"></div>
+  </div>
+  <div class="scene" id="s2"><div class="pad">
+    <h1 class="h-xl"><span class="ln"><i>Websites für</i></span><span class="ln"><i>Handwerker, die</i></span><span class="ln"><i>keine haben.</i></span></h1>
+  </div><div class="korn"></div></div>
+  <div class="scene dark" id="s3"><div class="pad">
+    <div class="zahl">250 €</div>
+    <ul>
+      <li><span>✓</span>Einmalig, keine monatlichen Kosten</li>
+      <li><span>✓</span>Fertig in einer Woche</li>
+    </ul>
+  </div><div class="vig"></div></div>
+</div>
+<script src="kern.js"></script>
+<script>
+stage.insertAdjacentHTML('beforeend', ABSPANN_HTML);
+const SZ=[{id:'s1',a:0,b:3.7},{id:'s2',a:3.7,b:7.2},{id:'s3',a:7.2,b:11.4},{id:'abspann',a:11.4,b:16.4}];
+starteFilm(SZ,(id,lt,t)=>{
+  const k=K();
+  if(id==='s1'){
+    const f=q('#s1 .feld'), e=eOut(pr(lt,0.1,0.9));
+    f.style.transform=`translate(-50%,-50%) scale(${0.96+0.04*e})`; f.style.opacity=cl(e*1.6);
+    q('#s1 .txt').innerHTML=tippe('dachdecker jena',lt,0.55,2.25);
+    const l=q('#s1 .leer'), le=eSpr(pr(lt,2.45,3.3));
+    put(l,{o:cl(pr(lt,2.45,2.75)),y:(1-le)*24*k});
+  }
+  if(id==='s2') zeilen(q('#s2 h1'),lt,0.12,0.13,1.0);
+  if(id==='s3'){
+    const zp=eExp(pr(lt,0.2,1.5));
+    q('#s3 .zahl').textContent=Math.round(250*zp)+' €';
+    steig(q('#s3 .zahl'),lt,0.15,0.9,28);
+    qa('#s3 li').forEach((li,i)=>steig(li,lt,1.0+i*0.28,0.85,24));
+  }
+  if(id==='abspann') malAbspann(lt);
+},{abspann:0.3,s2:0.0});
+</script></body></html>

@@ -1,0 +1,113 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Ihre Website 1998</title>
+<link rel="stylesheet" href="kern.css">
+<style>
+/* --- Szene 1: der Internetauftritt von früher.
+       Absichtlich hässlich. Blinken bewusst langsam (unter 2 Hz),
+       keine Vollbild-Blitze – das soll niemandem wehtun. --- */
+#s1{background:#0B9D3A;font-family:"Liberation Serif","FreeSerif",serif;color:#00008B}
+#s1 .tapete{position:absolute;inset:0;opacity:.18;
+  background-image:repeating-linear-gradient(45deg,#fff 0 14px,transparent 14px 28px)}
+#s1 .blatt{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:calc(1180px * var(--k));background:#FFFFCC;border:calc(6px * var(--k)) ridge #C0C0C0;
+  padding:calc(40px * var(--k))}
+#stage.port #s1 .blatt{width:calc(900px * var(--k))}
+#s1 h1{font-family:"Liberation Serif",serif;font-weight:700;color:#C00000;text-align:center;
+  font-size:calc(66px * var(--k));letter-spacing:0;line-height:1.1;white-space:nowrap;
+  text-shadow:calc(3px * var(--k)) calc(3px * var(--k)) 0 #FFD700}
+#s1 .lauf{overflow:hidden;margin-top:calc(22px * var(--k));border-top:calc(3px * var(--k)) double #00008B;
+  border-bottom:calc(3px * var(--k)) double #00008B;padding:calc(10px * var(--k)) 0}
+#s1 .lauf span{display:inline-block;white-space:nowrap;font-size:calc(34px * var(--k));color:#008080}
+#s1 .mitte2{display:flex;gap:calc(34px * var(--k));margin-top:calc(30px * var(--k))}
+#stage.port #s1 .mitte2{flex-direction:column}
+#s1 ul{margin-left:calc(40px * var(--k));font-size:calc(30px * var(--k));line-height:1.9}
+#s1 a{color:#0000EE;text-decoration:underline}
+#s1 .neu{color:#C00000;font-weight:700}
+#s1 .bau{flex:none;width:calc(300px * var(--k));text-align:center;font-size:calc(24px * var(--k))}
+#s1 .bau .schild{background:#FFD700;border:calc(4px * var(--k)) solid #000;padding:calc(16px * var(--k));
+  font-weight:700;color:#000;line-height:1.3}
+#s1 .zaehler{margin-top:calc(24px * var(--k));background:#000;color:#0F0;font-family:"Courier 10 Pitch","DejaVu Sans Mono",monospace;
+  font-size:calc(30px * var(--k));padding:calc(10px * var(--k));letter-spacing:.3em}
+#s1 .fuss{margin-top:calc(26px * var(--k));text-align:center;font-size:calc(22px * var(--k));color:#555}
+/* --- Szene 3: heute --- */
+#s3{background:var(--sand)}
+#s3 .buehne{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  padding-bottom:calc(150px * var(--k))}
+#s3 .fenster{width:calc(900px * var(--k));background:#fff;border-radius:calc(18px * var(--k));
+  overflow:hidden;box-shadow:0 60px 110px -55px rgba(26,26,27,.55)}
+#s3 .kopf{height:calc(52px * var(--k));background:#F6F4F0;border-bottom:1px solid var(--linie);
+  display:flex;align-items:center;gap:calc(10px * var(--k));padding:0 calc(22px * var(--k))}
+#s3 .kopf i{width:calc(11px * var(--k));height:calc(11px * var(--k));border-radius:99px;background:#D5D1C9}
+#s3 .held{background:var(--ink);padding:calc(48px * var(--k));display:flex;flex-direction:column;gap:calc(16px * var(--k))}
+#s3 .held span{height:calc(26px * var(--k));background:#fff;border-radius:calc(6px * var(--k));display:block}
+#s3 .held .b{width:72%} #s3 .held .c{width:50%}
+#s3 .held .d{height:calc(14px * var(--k));width:62%;background:rgba(255,255,255,.45)}
+#s3 .held .kn{height:calc(44px * var(--k));width:calc(220px * var(--k));background:var(--akzent);
+  border-radius:999px;margin-top:calc(10px * var(--k))}
+#s3 .reihe{display:flex;gap:calc(16px * var(--k));padding:calc(30px * var(--k)) calc(48px * var(--k))}
+#s3 .reihe span{flex:1;height:calc(96px * var(--k));background:var(--sand);border:1px solid var(--linie);
+  border-radius:calc(10px * var(--k));display:block}
+#s3 .unten{position:absolute;left:calc(150px * var(--k));bottom:calc(84px * var(--k))}
+#stage.port #s3 .unten{left:calc(88px * var(--k));bottom:calc(160px * var(--k))}
+</style></head><body>
+<div id="stage" class="land">
+  <div class="scene" id="s1">
+    <div class="tapete"></div>
+    <div class="blatt">
+      <h1>★ HERZLICH WILLKOMMEN ★</h1>
+      <div class="lauf"><span>+++ Diese Homepage wird laufend erweitert +++ Bitte haben Sie Geduld +++</span></div>
+      <div class="mitte2">
+        <ul>
+          <li><a href="#">Startseite</a></li>
+          <li><a href="#">Über uns</a> <span class="neu">NEU!</span></li>
+          <li><a href="#">Gästebuch</a></li>
+          <li><a href="#">Kontakt</a></li>
+        </ul>
+        <div class="bau">
+          <div class="schild">⚠ BAUSTELLE ⚠<br>Diese Seite ist<br>noch im Aufbau</div>
+          <div class="zaehler">000<span class="z">0</span>7</div>
+        </div>
+      </div>
+      <p class="fuss">Optimiert für 800 × 600 — Beste Ansicht mit Netscape Navigator</p>
+    </div>
+  </div>
+
+  <div class="scene" id="s2"><div class="pad">
+    <h2 class="h-l"><span class="ln"><i>Kein Wunder, dass Sie</i></span><span class="ln"><i>nie eine wollten.</i></span></h2>
+  </div><div class="korn"></div></div>
+
+  <div class="scene" id="s3">
+    <div class="buehne"><div class="fenster">
+      <div class="kopf"><i></i><i></i><i></i></div>
+      <div class="held"><span class="b"></span><span class="c"></span><span class="d"></span><span class="kn"></span></div>
+      <div class="reihe"><span></span><span></span><span></span></div>
+    </div></div>
+    <div class="unten">
+      <h2 class="h-m"><span class="ln"><i>So sieht sie heute aus.</i></span></h2>
+    </div><div class="korn"></div>
+  </div>
+</div>
+<script src="kern.js"></script>
+<script>
+stage.insertAdjacentHTML('beforeend', ABSPANN_HTML);
+const SZ=[{id:'s1',a:0,b:7.0},{id:'s2',a:7.0,b:10.4},{id:'s3',a:10.4,b:14.6},{id:'abspann',a:14.6,b:19.6}];
+starteFilm(SZ,(id,lt)=>{
+  const k=K();
+  if(id==='s1'){
+    const b=q('#s1 .blatt'), e=eOut(pr(lt,0.05,0.5));
+    b.style.transform=`translate(-50%,-50%) scale(${0.97+0.03*e})`; b.style.opacity=cl(e*2);
+    /* Lauftext von rechts nach links */
+    q('#s1 .lauf span').style.transform=`translateX(${(1-((lt*0.11)%1.35))*100}%)`;
+    /* "NEU!" blinkt langsam – 1,25 Hz, kein harter Blitz */
+    q('#s1 .neu').style.opacity = (Math.sin(lt*Math.PI*1.25)>0)?'1':'0.15';
+    /* Besucherzähler zählt genau einen Besucher hoch: Sie */
+    q('#s1 .zaehler .z').textContent = lt>4.2 ? '8' : '7';
+  }
+  if(id==='s2') zeilen(q('#s2 h2'),lt,0.12,0.12,1.0);
+  if(id==='s3'){
+    const f=q('#s3 .fenster'), e=eSpr(pr(lt,0.08,1.0));
+    put(f,{o:cl(pr(lt,0.08,0.4)),y:(1-e)*40*k});
+    zeilen(q('#s3 .unten'),lt,0.6,0.1,1.0);
+  }
+  if(id==='abspann') malAbspann(lt);
+},{abspann:0.3});
+</script></body></html>

@@ -1,0 +1,61 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Die Ausreden</title>
+<link rel="stylesheet" href="kern.css">
+<style>
+#s2 .liste{display:flex;flex-direction:column;gap:calc(42px * var(--k));margin-top:calc(50px * var(--k))}
+#s2 .a{position:relative}
+#s2 .a q{font-family:"Inter Display","Inter",sans-serif;font-size:calc(62px * var(--k));
+  font-weight:700;letter-spacing:-.034em;quotes:"„" "“";display:inline-block;position:relative}
+#stage.port #s2 .a q{font-size:calc(72px * var(--k))}
+#stage.port #s2 .a .antw{font-size:calc(36px * var(--k))}
+#stage.port #s1 h1{font-size:calc(104px * var(--k))}
+#stage.port #s3 .schluss{font-size:calc(92px * var(--k))}
+#s2 .a .strich{position:absolute;left:0;top:52%;height:calc(5px * var(--k));width:100%;
+  background:var(--akzent);transform:scaleX(0);transform-origin:left;border-radius:3px}
+#s2 .a .antw{display:block;font-size:calc(31px * var(--k));color:var(--grau);
+  margin-top:calc(10px * var(--k))}
+#s3 .schluss{font-family:"Inter Display","Inter",sans-serif;font-size:calc(84px * var(--k));
+  font-weight:700;letter-spacing:-.036em;line-height:1.08}
+</style></head><body>
+<div id="stage" class="land">
+  <div class="scene" id="s1"><div class="pad">
+    <p class="lab">Ehrlich gesagt</p>
+    <h1 class="h-l" style="margin-top:calc(26px * var(--k))"><span class="ln"><i>Warum Sie noch keine</i></span><span class="ln"><i>Website haben.</i></span></h1>
+  </div><div class="korn"></div></div>
+
+  <div class="scene sand" id="s2"><div class="pad">
+    <div class="liste">
+      <div class="a"><q>Zu teuer.</q><span class="strich"></span><span class="antw">250 € einmalig. Danach nichts mehr.</span></div>
+      <div class="a"><q>Keine Zeit.</q><span class="strich"></span><span class="antw">Zehn Minuten am Telefon. Den Rest mache ich.</span></div>
+      <div class="a"><q>Mundpropaganda reicht.</q><span class="strich"></span><span class="antw">Die Leute googeln Sie trotzdem. Vorher.</span></div>
+      <div class="a"><q>Versteh ich eh nicht.</q><span class="strich"></span><span class="antw">Müssen Sie auch nicht. Dafür bin ich da.</span></div>
+    </div>
+  </div><div class="korn"></div></div>
+
+  <div class="scene dark" id="s3"><div class="pad">
+    <p class="lab">Bleibt eine</p>
+    <div class="schluss" style="margin-top:calc(26px * var(--k))">
+      <span class="ln"><i>„Ich habe noch</i></span><span class="ln"><i>nicht angerufen.“</i></span></div>
+  </div><div class="vig"></div></div>
+</div>
+<script src="kern.js"></script>
+<script>
+stage.insertAdjacentHTML('beforeend', ABSPANN_HTML);
+const SZ=[{id:'s1',a:0,b:3.1},{id:'s2',a:3.1,b:15.8},{id:'s3',a:15.8,b:19.4},{id:'abspann',a:19.4,b:24.4}];
+starteFilm(SZ,(id,lt)=>{
+  if(id==='s1'){ steig(q('#s1 .lab'),lt,0.1,0.8,20); zeilen(q('#s1 h1'),lt,0.26,0.12,1.0); }
+  if(id==='s2'){
+    qa('#s2 .a').forEach((a,i)=>{
+      const st=0.2+i*2.9;
+      steig(a,lt,st,0.8,28);
+      /* Ausrede erscheint, wird durchgestrichen, dann kommt die Antwort */
+      const breite=q('q',a).offsetWidth;
+      const str=q('.strich',a);
+      str.style.width=breite+'px';
+      str.style.transform=`scaleX(${eOut(pr(lt,st+0.85,st+1.45))})`;
+      steig(q('.antw',a),lt,st+1.25,0.8,16);
+    });
+  }
+  if(id==='s3'){ steig(q('#s3 .lab'),lt,0.1,0.8,20); zeilen(q('#s3 .schluss'),lt,0.3,0.13,1.0); }
+  if(id==='abspann') malAbspann(lt);
+},{abspann:0.3,s3:0.25});
+</script></body></html>

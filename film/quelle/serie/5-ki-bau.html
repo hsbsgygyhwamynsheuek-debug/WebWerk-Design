@@ -1,0 +1,88 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><title>So baue ich</title>
+<link rel="stylesheet" href="kern.css">
+<style>
+#s2{background:var(--nacht)}
+#s2 .split{position:absolute;inset:0;display:flex}
+#stage.port #s2 .split{flex-direction:column}
+#s2 .term{width:52%;padding:calc(84px * var(--k)) calc(72px * var(--k));display:flex;flex-direction:column}
+#stage.port #s2 .term{width:100%;height:46%;padding:calc(70px * var(--k)) calc(60px * var(--k))}
+#s2 .prompt{font-family:"JetBrains Mono",monospace;font-size:calc(30px * var(--k));
+  color:#F2EFE9;line-height:1.5}
+#s2 .prompt .pf{color:var(--glut)}
+#s2 .code{margin-top:calc(40px * var(--k));font-family:"JetBrains Mono",monospace;
+  font-size:calc(22px * var(--k));line-height:1.85;color:#6E6B66;white-space:pre}
+#s2 .code b{color:#A8A39B;font-weight:400}
+#s2 .code u{color:var(--glut);text-decoration:none}
+#s2 .seite{flex:1;background:var(--sand);display:flex;align-items:center;justify-content:center;
+  padding:calc(70px * var(--k))}
+#s2 .fenster{width:100%;max-width:calc(700px * var(--k));background:#fff;border-radius:calc(18px * var(--k));
+  overflow:hidden;box-shadow:0 60px 110px -50px rgba(0,0,0,.5)}
+#s2 .kopf{height:calc(52px * var(--k));background:#F6F4F0;border-bottom:1px solid var(--linie);
+  display:flex;align-items:center;gap:calc(10px * var(--k));padding:0 calc(22px * var(--k))}
+#s2 .kopf i{width:calc(11px * var(--k));height:calc(11px * var(--k));border-radius:99px;background:#D5D1C9}
+#s2 .held{background:var(--ink);padding:calc(44px * var(--k));display:flex;flex-direction:column;
+  gap:calc(17px * var(--k))}
+#s2 .held span{height:calc(28px * var(--k));background:#fff;border-radius:calc(6px * var(--k));
+  transform-origin:left;transform:scaleX(0);display:block}
+#s2 .held .s2b{height:calc(15px * var(--k));background:rgba(255,255,255,.45)}
+#s2 .held .kn{height:calc(46px * var(--k));width:calc(230px * var(--k));background:var(--akzent);
+  border-radius:999px;margin-top:calc(10px * var(--k))}
+#s2 .reihe{display:flex;gap:calc(18px * var(--k));padding:calc(32px * var(--k)) calc(44px * var(--k))}
+#s2 .reihe span{flex:1;height:calc(104px * var(--k));background:var(--sand);border:1px solid var(--linie);
+  border-radius:calc(11px * var(--k));transform-origin:bottom;transform:scaleY(0);display:block}
+</style></head><body>
+<div id="stage" class="land">
+  <div class="scene dark" id="s1"><div class="pad">
+    <p class="lab">Mit KI gebaut</p>
+    <h1 class="h-l" style="margin-top:calc(26px * var(--k))"><span class="ln"><i>Wie das so</i></span><span class="ln"><i>schnell geht.</i></span></h1>
+  </div><div class="vig"></div></div>
+
+  <div class="scene" id="s2"><div class="split">
+    <div class="term">
+      <div class="prompt"><span class="pf">&gt;</span> <span class="pt"></span></div>
+      <div class="code"></div>
+    </div>
+    <div class="seite"><div class="fenster">
+      <div class="kopf"><i></i><i></i><i></i></div>
+      <div class="held"><span class="s2a"></span><span class="s2a2"></span><span class="s2b"></span><span class="kn"></span></div>
+      <div class="reihe"><span></span><span></span><span></span></div>
+    </div></div>
+  </div></div>
+
+  <div class="scene dark" id="s3"><div class="pad">
+    <h2 class="h-m"><span class="ln"><i>Ich arbeite mit KI.</i></span><span class="ln"><i>Das sage ich vorher,</i></span><span class="ln"><i>nicht hinterher.</i></span></h2>
+    <p class="lead" style="margin-top:calc(34px * var(--k))">Deswegen geht es schnell. Und deswegen kostet es 250 € statt ein Vielfaches.</p>
+  </div><div class="vig"></div></div>
+</div>
+<script src="kern.js"></script>
+<script>
+stage.insertAdjacentHTML('beforeend', ABSPANN_HTML);
+const ZEILEN=[
+ '<b>→ Betrieb</b>  Klempnerei · Jena',
+ '<b>→ Seiten</b>   Start · Leistungen · Kontakt',
+ '<b>→ Farben</b>   aus dem Firmenschild',
+ '<b>→ Schrift</b>  lokal, keine fremden Server',
+ '<b>→ Aufbau</b>   Handy zuerst',
+ '<b>→ Pflicht</b>  Impressum · Datenschutz',
+ '<u>✓ Entwurf fertig — jetzt schauen Sie drauf</u>'
+];
+const SZ=[{id:'s1',a:0,b:3.2},{id:'s2',a:3.2,b:18.4},{id:'s3',a:18.4,b:22.6},{id:'abspann',a:22.6,b:27.6}];
+starteFilm(SZ,(id,lt)=>{
+  if(id==='s1'){ steig(q('#s1 .lab'),lt,0.1,0.8,20); zeilen(q('#s1 h1'),lt,0.28,0.12,1.0); }
+  if(id==='s2'){
+    q('#s2 .pt').innerHTML=tippe('baue eine seite für eine klempnerei in jena',lt,0.4,3.6,false);
+    /* Codezeilen laufen durch */
+    const sicht=ZEILEN.filter((_,i)=>lt>4.0+i*1.05);
+    q('#s2 .code').innerHTML=sicht.join('\n');
+    /* die Seite entsteht im selben Takt */
+    const bau=(el,s)=>{ const k=eOut(pr(lt,s,s+0.5)); el.style.transform=
+      (el.parentElement.className==='reihe'?`scaleY(${k})`:`scaleX(${k})`); el.style.opacity=cl(k*4); };
+    bau(q('#s2 .s2a'),5.2); bau(q('#s2 .s2a2'),6.3); bau(q('#s2 .s2b'),7.4); bau(q('#s2 .kn'),8.5);
+    qa('#s2 .reihe span').forEach((c,i)=>bau(c,9.6+i*0.7));
+    const f=q('#s2 .fenster'), e=eOut(pr(lt,0.2,1.0));
+    put(f,{o:cl(e*1.5),y:(1-e)*30*K()});
+  }
+  if(id==='s3'){ zeilen(q('#s3 h2'),lt,0.15,0.12,1.0); steig(q('#s3 .lead'),lt,0.75,1.0,26); }
+  if(id==='abspann') malAbspann(lt);
+},{abspann:0.3,s3:0.25});
+</script></body></html>

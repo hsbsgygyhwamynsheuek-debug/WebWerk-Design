@@ -1,0 +1,61 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Eine Woche</title>
+<link rel="stylesheet" href="kern.css">
+<style>
+#s2 .woche{display:grid;grid-template-columns:repeat(5,1fr);gap:calc(20px * var(--k));
+  margin-top:calc(60px * var(--k))}
+#stage.port #s2 .woche{grid-template-columns:1fr;gap:calc(14px * var(--k))}
+#s2 .tag{background:#fff;border:1px solid var(--linie);border-radius:calc(16px * var(--k));
+  padding:calc(28px * var(--k)) calc(24px * var(--k));min-height:calc(260px * var(--k));
+  display:flex;flex-direction:column}
+#stage.port #s2 .tag{min-height:0;flex-direction:row;align-items:center;gap:calc(24px * var(--k));
+  padding:calc(22px * var(--k)) calc(26px * var(--k))}
+#s2 .tag .d{font-size:calc(19px * var(--k));letter-spacing:.2em;text-transform:uppercase;
+  color:var(--grau);font-weight:700}
+#stage.port #s2 .tag .d{width:calc(130px * var(--k));flex:none}
+#s2 .tag b{margin-top:auto;font-family:"Inter Display","Inter",sans-serif;
+  font-size:calc(31px * var(--k));font-weight:650;letter-spacing:-.022em;line-height:1.2}
+#stage.port #s2 .tag b{margin-top:0}
+#s2 .tag.an{background:var(--ink);border-color:var(--ink);color:#fff}
+#s2 .tag.an .d{color:var(--glut)}
+#s2 .tag.ziel{background:var(--akzent);border-color:var(--akzent);color:#fff}
+#s2 .tag.ziel .d{color:rgba(255,255,255,.75)}
+#stage.port #s2 .tag{padding:calc(30px * var(--k)) calc(30px * var(--k))}
+#stage.port #s2 .tag b{font-size:calc(40px * var(--k))}
+#stage.port #s2 .tag .d{font-size:calc(22px * var(--k));width:calc(165px * var(--k))}
+#stage.port #s1 h1{font-size:calc(104px * var(--k))}
+</style></head><body>
+<div id="stage" class="land">
+  <div class="scene" id="s1"><div class="pad">
+    <p class="lab">Tempo</p>
+    <h1 class="h-l" style="margin-top:calc(26px * var(--k))"><span class="ln"><i>Montag angerufen.</i></span><span class="ln"><i>Freitag online.</i></span></h1>
+  </div><div class="korn"></div></div>
+  <div class="scene sand" id="s2"><div class="pad">
+    <p class="lab">Eine Woche</p>
+    <div class="woche">
+      <div class="tag"><span class="d">Montag</span><b>Zehn Minuten telefonieren</b></div>
+      <div class="tag"><span class="d">Dienstag</span><b>Ich baue den Entwurf</b></div>
+      <div class="tag"><span class="d">Mittwoch</span><b>Sie sehen den Link</b></div>
+      <div class="tag"><span class="d">Donnerstag</span><b>Ihre Änderungen</b></div>
+      <div class="tag ziel"><span class="d">Freitag</span><b>Die Seite ist online</b></div>
+    </div>
+  </div><div class="korn"></div></div>
+</div>
+<script src="kern.js"></script>
+<script>
+stage.insertAdjacentHTML('beforeend', ABSPANN_HTML);
+const SZ=[{id:'s1',a:0,b:3.2},{id:'s2',a:3.2,b:13.4},{id:'abspann',a:13.4,b:18.4}];
+starteFilm(SZ,(id,lt)=>{
+  if(id==='s1'){ steig(q('#s1 .lab'),lt,0.1,0.8,20); zeilen(q('#s1 h1'),lt,0.26,0.13,1.0); }
+  if(id==='s2'){
+    steig(q('#s2 .lab'),lt,0.08,0.7,18);
+    qa('#s2 .tag').forEach((d,i)=>{
+      const st=0.4+i*1.55;
+      steig(d,lt,st,0.85,30);
+      /* der jeweils aktuelle Tag ist dunkel, die erledigten werden wieder hell */
+      const aktiv = lt>=st+0.35 && lt<st+1.55;
+      d.classList.toggle('an', aktiv && !d.classList.contains('ziel'));
+    });
+  }
+  if(id==='abspann') malAbspann(lt);
+},{abspann:0.3});
+</script></body></html>

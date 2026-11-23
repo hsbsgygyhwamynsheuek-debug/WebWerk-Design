@@ -1,0 +1,48 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Was drin ist</title>
+<link rel="stylesheet" href="kern.css">
+<style>
+#s2 .liste{list-style:none;margin-top:calc(54px * var(--k));display:flex;flex-direction:column}
+#s2 li{display:flex;gap:calc(34px * var(--k));align-items:flex-start;
+  padding:calc(30px * var(--k)) 0;border-top:1px solid var(--linie)}
+#s2 li:first-child{border-top:0}
+#s2 .hk{width:calc(46px * var(--k));height:calc(46px * var(--k));flex:none;border-radius:999px;
+  background:var(--akzent);color:#fff;display:flex;align-items:center;justify-content:center;
+  font-size:calc(24px * var(--k));font-weight:700;margin-top:calc(4px * var(--k))}
+#s2 .hk.minus{background:var(--linie);color:var(--grau)}
+#s2 b{display:block;font-family:"Inter Display","Inter",sans-serif;font-size:calc(42px * var(--k));
+  font-weight:650;letter-spacing:-.026em}
+#s2 small{display:block;font-size:calc(27px * var(--k));color:var(--grau);margin-top:calc(8px * var(--k));
+  line-height:1.4}
+#s3 .zahl{font-family:"Inter Display","Inter",sans-serif;font-weight:800;
+  font-size:calc(260px * var(--k));line-height:.9;letter-spacing:-.055em}
+</style></head><body>
+<div id="stage" class="land">
+  <div class="scene" id="s1"><div class="pad">
+    <p class="lab">Leistung</p>
+    <h1 class="h-l" style="margin-top:calc(26px * var(--k))"><span class="ln"><i>Was Sie bekommen.</i></span></h1>
+  </div><div class="korn"></div></div>
+  <div class="scene" id="s2"><div class="pad">
+    <ul class="liste">
+      <li><span class="hk">✓</span><div><b>Die komplette Seite</b><small>Leistungen, Öffnungszeiten, Telefonnummer, Anfahrt.</small></div></li>
+      <li><span class="hk">✓</span><div><b>Läuft auf dem Handy</b><small>Da schauen die meisten drauf.</small></div></li>
+      <li><span class="hk">✓</span><div><b>Impressum und Datenschutz</b><small>Muss sein. Mache ich mit.</small></div></li>
+      <li><span class="hk">✓</span><div><b>Änderungen im ersten Monat</b><small>Kostenlos, so oft Sie wollen.</small></div></li>
+      <li><span class="hk minus">–</span><div><b>Domain und Hosting zahlen Sie selbst</b><small>Ungefähr 15 € im Jahr. Läuft auf Ihren Namen, damit die Seite Ihnen gehört.</small></div></li>
+    </ul>
+  </div><div class="korn"></div></div>
+  <div class="scene dark" id="s3"><div class="pad mitte">
+    <div class="zahl"><span class="ln"><i>250 €</i></span></div>
+    <p class="lead" style="margin-top:calc(26px * var(--k));text-align:center">Einmalig. Bezahlt wird erst, wenn die Seite online ist und Ihnen gefällt.</p>
+  </div><div class="vig"></div></div>
+</div>
+<script src="kern.js"></script>
+<script>
+stage.insertAdjacentHTML('beforeend', ABSPANN_HTML);
+const SZ=[{id:'s1',a:0,b:3.0},{id:'s2',a:3.0,b:13.6},{id:'s3',a:13.6,b:17.4},{id:'abspann',a:17.4,b:22.4}];
+starteFilm(SZ,(id,lt)=>{
+  if(id==='s1'){ steig(q('#s1 .lab'),lt,0.1,0.8,20); zeilen(q('#s1 h1'),lt,0.28,0.1,1.0); }
+  if(id==='s2') qa('#s2 li').forEach((li,i)=>steig(li,lt,0.15+i*1.55,0.9,30));
+  if(id==='s3'){ zeilen(q('#s3 .zahl'),lt,0.15,0.1,1.1); steig(q('#s3 .lead'),lt,0.75,1.0,26); }
+  if(id==='abspann') malAbspann(lt);
+},{abspann:0.3,s3:0.25});
+</script></body></html>
