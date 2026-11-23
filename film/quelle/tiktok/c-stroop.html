@@ -1,0 +1,48 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Stroop</title>
+<link rel="stylesheet" href="tt.css">
+<style>
+#s1{background:var(--ink)}
+.wort{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;
+  font-family:"Inter Display","Inter",sans-serif;font-weight:800;font-size:170px;
+  letter-spacing:-.045em}
+.oben{position:absolute;left:70px;right:140px;top:200px;text-align:center}
+.punkte{position:absolute;left:70px;right:140px;top:1340px;display:flex;gap:12px;justify-content:center}
+.punkte i{width:46px;height:10px;border-radius:99px;background:rgba(250,249,246,.2)}
+.punkte i.an{background:var(--glut)}
+</style></head><body>
+<div id="stage">
+  <div class="scene" id="s1">
+    <div class="oben"><div class="mittel"><span class="ln"><i>Sag die FARBE.</i></span><span class="ln"><i>Nicht das Wort.</i></span></div></div>
+    <div class="wort"></div>
+    <div class="punkte"></div>
+  </div>
+</div>
+<script src="tt.js"></script>
+<script>
+stage.insertAdjacentHTML('beforeend', WM);
+const F={rot:'#FF3B30',gelb:'#FFD60A',gruen:'#30D158',blau:'#0A84FF',lila:'#BF5AF2',orange:'#FF9F0A'};
+const PAARE=[['BLAU','rot'],['ROT','gelb'],['GRÜN','blau'],['GELB','gruen'],
+             ['LILA','orange'],['ORANGE','lila'],['ROT','gruen'],['GRÜN','rot'],['BLAU','gelb']];
+const p=q('.punkte'); PAARE.forEach(()=>p.insertAdjacentHTML('beforeend','<i></i>'));
+const START=1.7, TAKT=1.05, DAUER=START+PAARE.length*TAKT+2.2;
+starte([{id:'s1',a:0,b:DAUER}],(id,lt)=>{
+  zeilen(q('.oben'),lt,0.1,0.1,0.7);
+  const w=q('.wort'), ende=START+PAARE.length*TAKT;
+  if(lt<START||lt>=ende){
+    if(lt>=ende){
+      w.style.color='var(--paper)'; w.style.fontSize='96px';
+      w.innerHTML='Wie weit<br>bist du<br>gekommen?';
+      const k=eOut(pr(lt,ende+0.1,ende+0.8)); w.style.opacity=String(k);
+      w.style.transform=`translateY(-50%) scale(${(0.94+0.06*k).toFixed(3)})`;
+    } else { w.style.opacity='0'; }
+  } else {
+    const i=Math.floor((lt-START)/TAKT), [wort,farbe]=PAARE[i];
+    const lokal=((lt-START)%TAKT)/TAKT;
+    w.style.fontSize='170px'; w.innerHTML=wort; w.style.color=F[farbe];
+    const auf=eSpr(cl(lokal/0.3));
+    w.style.opacity=String(cl(lokal/0.12)*(1-cl((lokal-0.86)/0.14)));
+    w.style.transform=`translateY(-50%) scale(${(0.86+0.14*auf).toFixed(3)})`;
+    qa('.punkte i').forEach((d,n)=>d.classList.toggle('an', n<=i));
+  }
+});
+</script></body></html>

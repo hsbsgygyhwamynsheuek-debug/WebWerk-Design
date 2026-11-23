@@ -1,0 +1,49 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Mathetrick</title>
+<link rel="stylesheet" href="tt.css">
+<style>
+#s1{background:var(--ink)}
+.schritte{position:absolute;left:70px;right:140px;top:505px;display:flex;flex-direction:column;gap:26px}
+.sch{display:flex;align-items:center;justify-content:space-between;gap:30px;
+  border-bottom:2px solid rgba(250,249,246,.14);padding-bottom:24px}
+.sch b{font-family:"Inter Display","Inter",sans-serif;font-weight:700;font-size:62px;
+  letter-spacing:-.03em}
+.sch span{font-family:"JetBrains Mono",monospace;font-size:58px;color:var(--glut);
+  font-variant-numeric:tabular-nums}
+#s2{background:var(--akzent);color:#fff}
+#s2 .z{font-family:"Inter Display","Inter",sans-serif;font-weight:800;font-size:420px;
+  letter-spacing:-.06em;line-height:.9}
+</style></head><body>
+<div id="stage">
+  <div class="scene" id="s1">
+    <div class="schritte">
+      <div class="sch"><b>Denk dir eine Zahl</b><span>7</span></div>
+      <div class="sch"><b>Mal 2</b><span>14</span></div>
+      <div class="sch"><b>Plus 10</b><span>24</span></div>
+      <div class="sch"><b>Durch 2</b><span>12</span></div>
+      <div class="sch"><b>Minus deine Zahl</b><span>5</span></div>
+    </div>
+  </div>
+  <div class="scene" id="s2"><div class="safe">
+    <div class="z"><span class="ln"><i>5</i></span></div>
+    <div class="mittel"><span class="ln"><i>Du hast 5.</i></span></div>
+    <div class="klein" style="opacity:.85">Egal, welche Zahl du dir gedacht hast.</div>
+  </div></div>
+</div>
+<script src="tt.js"></script>
+<script>
+stage.insertAdjacentHTML('beforeend', WM);
+/* Warum das immer stimmt:  ((z·2) + 10) / 2 − z  =  z + 5 − z  =  5 */
+const SZ=[{id:'s1',a:0,b:9.4},{id:'s2',a:9.4,b:14.2}];
+starte(SZ,(id,lt)=>{
+  if(id==='s1') qa('.sch').forEach((s,i)=>{
+    steig(s,lt,0.15+i*1.78,0.6,34);
+    /* die Beispielzahl kommt kurz nach dem Text */
+    steig(q('span',s),lt,0.55+i*1.78,0.5,0);
+  });
+  if(id==='s2'){
+    zeilen(q('#s2 .z'),lt,0.08,0,0.75);
+    zeilen(q('#s2 .mittel'),lt,0.55,0,0.7);
+    steig(q('#s2 .klein'),lt,0.95,0.7,24);
+  }
+});
+</script></body></html>
