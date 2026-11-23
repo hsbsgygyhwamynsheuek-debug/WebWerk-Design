@@ -219,3 +219,41 @@ Animation. Dafür bräuchte es einen Dienst für sprechende Bilder
 ```
 teil 1 von der 970 😨 wollt ihr part 2? #67 #sixseven #fyp #foryou #fürdich #viral #ai #brainrot #story
 ```
+
+---
+
+## Tunnel (23.11.2026) — der Versuch mit der groessten Decke
+
+`tiktok/tunnel-hypnose.mp4` — 9,3 s, 1080 × 1920, mit Ton.
+`tiktok/tunnel-stumm.mp4` — dasselbe ohne Ton, fuer einen Trend-Sound.
+
+**Kein Text, keine Sprache.** Deutscher Text deckelt die Reichweite auf
+den deutschsprachigen Raum. Das hier laeuft in jedem Land.
+
+### Warum das Ding nicht aufhoert
+
+Jeder Ring hat zur Zeit t die Groesse `S0 * K^(i + t/T)`. Nach genau
+T = 1,55 s ist Ring i dort, wo vorher Ring i+1 war. Farbe, Drehung und
+Strichstaerke haengen nur von `(i + t/T)` ab — also ist das Bild bei
+t = T **pixelgleich** mit dem bei t = 0. Geprueft, nicht geschaetzt:
+`schuss.js` vergleicht beide Bilder byteweise.
+
+Dadurch sieht man den Schleifenpunkt nicht. Wer nicht aktiv wegwischt,
+schaut das Video mehrfach — und genau das misst TikTok.
+
+### Der Ton schleift genauso
+
+`quelle/tunnel/ton.py`: Jede Frequenz ist ein ganzzahliges Vielfaches
+von 1/T = 0,645 Hz. Dadurch ist die Welle nach T Sekunden exakt wieder
+am selben Punkt. Das Skript prueft das selbst und meldet es.
+Grundakkord 64,5 / 96,8 / 129 Hz, Schimmer darueber, ein weicher Puls
+pro Ringschritt.
+
+### Beschriftung zum Kopieren
+
+```
+dont look away 👁️ #oddlysatisfying #illusion #hypnotic #fyp #foryou #viral #loop #satisfying #trippy
+```
+
+Englisch, weil das die Reichweite oeffnet. Mit `tunnel-stumm.mp4` und
+einem Trend-Sound ist die Chance hoeher als mit eigenem Ton.

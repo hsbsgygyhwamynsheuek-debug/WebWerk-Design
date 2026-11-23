@@ -1,0 +1,93 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Tunnel</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#000;overflow:hidden}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:#05050A}
+#glut{position:absolute;inset:0;
+  background:radial-gradient(42% 28% at 50% 50%,rgba(120,80,255,.30),transparent 70%)}
+#tunnel{position:absolute;left:50%;top:50%;width:0;height:0}
+#tunnel .r{position:absolute;left:50%;top:50%;border-style:solid;
+  will-change:transform;transform-origin:50% 50%}
+#kern{position:absolute;left:50%;top:50%;width:26px;height:26px;margin:-13px 0 0 -13px;
+  border-radius:99px;background:#fff;filter:blur(2px)}
+#vig{position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(86% 54% at 50% 50%,transparent 36%,rgba(0,0,0,.88) 100%)}
+#korn{position:absolute;inset:0;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E")}
+</style></head><body>
+<div id="stage">
+  <div id="glut"></div>
+  <div id="tunnel"></div>
+  <div id="kern"></div>
+  <div id="vig"></div>
+  <div id="korn"></div>
+</div>
+<script>
+/* ===================================================================
+   Unendlicher Zoom, mathematisch perfekte Schleife.
+
+   Jeder Ring i hat zur Zeit t die Groesse  s0 * K^(i + t/T).
+   Nach genau T Sekunden ist Ring i dort, wo vorher Ring i+1 war.
+   Da Farbe, Drehung und Strichstaerke nur von (i + t/T) abhaengen,
+   ist das Bild bei t = T pixelgleich mit dem bei t = 0.
+   Es gibt also keinen Uebergang, den man sehen koennte.
+   =================================================================== */
+const K     = 1.28;     /* Groessensprung von Ring zu Ring */
+const DREH  = 9.0;      /* Grad Verdrehung pro Ring  -> Spirale */
+const N     = 38;       /* so viele Ringe, dass oben und unten nichts fehlt */
+const S0    = 1.4;      /* Groesse des innersten Rings in Pixeln */
+const T     = 1.55;     /* Sekunden fuer einen Ringschritt */
+const RUNDEN= 6;        /* so viele Schritte lang laeuft das Video */
+const DAUER = T * RUNDEN;
+window.FILM_DAUER = DAUER;
+
+const tunnel = document.getElementById('tunnel');
+const RINGE = [];
+for (let i = 0; i < N; i++) {
+  const d = document.createElement('div');
+  d.className = 'r';
+  tunnel.appendChild(d);
+  RINGE.push(d);
+}
+
+/* Farbe allein aus der Laufzahl u = i + t/T -> automatisch periodisch */
+function farbe(u, a) {
+  const h = (u * 31.5) % 360;
+  return `hsla(${h.toFixed(1)}, 92%, ${(58 + 10*Math.sin(u*0.9)).toFixed(1)}%, ${a})`;
+}
+
+window.render = function (t) {
+  const ph = (t / T) % 1;                 /* Phase innerhalb eines Schritts */
+  for (let i = 0; i < N; i++) {
+    const u = i + ph;
+    const s = S0 * Math.pow(K, u);        /* aktuelle Kantenlaenge */
+    const d = RINGE[i];
+    if (s > 7000) { d.style.display = 'none'; continue; }
+    d.style.display = 'block';
+    const strich = Math.max(0.6, s * 0.052);
+    /* Randstaerke, Radius und Position skalieren alle mit -> selbstaehnlich */
+    d.style.width  = s + 'px';
+    d.style.height = s + 'px';
+    d.style.marginLeft = (-s/2) + 'px';
+    d.style.marginTop  = (-s/2) + 'px';
+    d.style.borderWidth = strich + 'px';
+    d.style.borderRadius = (s * 0.26) + 'px';
+    /* weit aussen und ganz innen sanft ausblenden, damit nichts aufpoppt */
+    const ein  = Math.min(1, s / 26);
+    const aus  = s > 2300 ? Math.max(0, 1 - (s - 2300) / 2400) : 1;
+    const a = ein * aus;
+    d.style.borderColor = farbe(u, a);
+    d.style.boxShadow = `0 0 ${(strich*2.4).toFixed(1)}px ${farbe(u, a*0.55)}`;
+    d.style.transform = `rotate(${(u * DREH).toFixed(3)}deg)`;
+  }
+  /* Der Kern atmet im selben Takt – bleibt dadurch periodisch */
+  const k = document.getElementById('kern');
+  const puls = 1 + 0.5 * Math.sin(ph * Math.PI * 2);
+  k.style.transform = `scale(${puls.toFixed(3)})`;
+  k.style.opacity = (0.55 + 0.45 * Math.cos(ph * Math.PI * 2)).toFixed(3);
+  /* Hintergrundglut dreht die Farbe mit */
+  document.getElementById('glut').style.background =
+    `radial-gradient(42% 28% at 50% 50%, ${farbe(ph*4, 0.30)}, transparent 70%)`;
+};
+window.render(0);
+</script></body></html>
