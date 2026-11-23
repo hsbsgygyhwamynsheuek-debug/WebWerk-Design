@@ -64,3 +64,45 @@ node probe.js          # Stichproben
 node schleifentest.js  # prüft, ob die Schleife wirklich nahtlos ist
 node batch.js          # alle sechs rendern (~2 Minuten)
 ```
+
+---
+
+## Klassenzimmer 67 (23.11.2026)
+
+`tiktok/klassenzimmer-67.mp4` — 8,6 s, 1080 × 1920, ohne Ton.
+
+### Wie es entstanden ist, und was dabei schiefging
+
+Ziel war ein echtes 3D-Video im Pixar-Stil. Hier ist kein Videomodell
+angebunden, deshalb der Umweg über Gamma mit dem Modell `veo-3.1-fast`.
+
+Ergebnis: **Gamma hat ein Standbild geliefert, kein Video.** Dabei sind
+**28 Gamma-Credits verbraucht worden, danach standen 0 übrig.** Außerdem
+hat Gamma die leuchtenden Stirnzahlen weggelassen und die Zuordnung im
+eigenen Bildprompt vertauscht.
+
+Gerettet wurde das so, ohne weitere Kosten:
+
+- Das erzeugte Standbild (`quelle/pixar/szene.jpg`, 1360 × 1712) ist gut.
+- Die Zahlen 67, 88 und 970 sind in `quelle/pixar/clip.html` als
+  leuchtende Elemente über die Stirnen gelegt — mit Aufpopp-Animation
+  und leichtem Pulsieren.
+- Dazu eine langsame Kamerafahrt (Maßstab 1,132 → 1,277), ein minimaler
+  Seitwärtsdrift und 34 Staubpartikel, die im Gegenlicht aufsteigen.
+  Das ist der Unterschied zwischen „Standbild" und „wirkt wie gefilmt".
+- Untertitel Wort für Wort, über der TikTok-Beschriftungszone.
+
+### Grenze, die bleibt
+
+Die Figuren bewegen sich nicht und sprechen nicht. Wer genau hinsieht,
+erkennt ein animiertes Standbild. Für echte Bewegung bräuchte es ein
+Videomodell (Sora, Veo direkt, Runway) — das ist hier nicht erreichbar.
+
+### Beschriftung zum Kopieren
+
+```
+die 970 hat einfach andere regeln 💀 #67 #sixseven #fyp #foryou #fürdich #viral #ai #aivideo #brainrot #schule
+```
+
+Beim Hochladen in TikTok den Schalter **„KI-generierte Inhalte"**
+einschalten. Kostet nichts, dauert einen Tipp, und erspart Ärger.
