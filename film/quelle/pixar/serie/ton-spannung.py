@@ -40,10 +40,15 @@ def schlag(zeit, laut, frq=58.0, dauer=0.5):
     w=np.sin(2*np.pi*frq*tt*(1-0.35*tt))*h*laut
     mix[i0:i1,0]+=w; mix[i0:i1,1]+=w
 
-takt, zeit = 1.55, 0.35
+# Bei langen Filmen zieht der Puls langsamer an, sonst haemmert er die
+# halbe Laufzeit im Anschlag.
+lang   = LEN > 25
+faktor = 0.985 if lang else 0.955
+boden  = 0.78  if lang else 0.95
+takt, zeit = 1.60, 0.35
 while zeit < LEN-0.6:
     schlag(zeit, 0.30); schlag(zeit+0.21, 0.19)
-    takt = max(0.95, takt*0.955)          # Puls zieht an
+    takt = max(boden, takt*faktor)
     zeit += takt
 
 # --- Aufzieher vor jedem Schnitt + Schlag auf den Schnitt ---

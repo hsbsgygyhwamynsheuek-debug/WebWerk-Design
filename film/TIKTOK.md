@@ -170,3 +170,52 @@ welche zahl hättest du? 👀 schreib sie in die kommentare #67 #sixseven #fyp #
 ```
 
 Beim Hochladen den Schalter **„KI-generierte Inhalte"** einschalten.
+
+---
+
+## Die 970 — die lange Fassung, 62 Sekunden (23.11.2026)
+
+`tiktok/klassenzimmer-4-die-970-lang.mp4` — 1080 × 1920, 62 s, mit Ton.
+
+Eine durchgehende Szene mit **19 Dialogzeilen** zwischen Pfirsich (67),
+Paprika (88) und der Kartoffel (970), geschnitten als Schuss und
+Gegenschuss über **21 Einstellungen** — alle aus demselben einen Bild.
+
+### Wie der Dialog funktioniert
+
+`quelle/pixar/serie/kino2.js`: Jede Zeile hat Anfang, Dauer, Sprecher
+und Text. Die Kamera folgt dem Sprecher (Pfirsich links, Paprika
+rechts, Kartoffel in der Mitte von unten), die Zeile erscheint Wort
+für Wort, darüber ein farbiges Namensschild, und **die Zahl des
+Sprechenden pulsiert im Sprechrhythmus** — so sieht man ohne Ton
+sofort, wer gerade redet.
+
+Bei den Kartoffel-Einstellungen liegt ein kalter Farbstich über dem
+Bild (weniger Sättigung, leichter Blaustich). Das trennt sie von den
+warmen Einstellungen der beiden vorne.
+
+### Ton
+
+Dasselbe Spannungsbett wie bei den kurzen Clips, aber mit angepasstem
+Puls: Bei Filmen über 25 Sekunden zieht der Herzschlag langsamer an
+(Faktor 0,985 statt 0,955) und geht bis 0,78 Sekunden Abstand
+herunter. Sonst hämmert er die halbe Laufzeit im Anschlag.
+Einschläge liegen auf den sechs Wendepunkten der Geschichte.
+
+### Was NICHT drin ist, und warum
+
+**Die Figuren sprechen nicht mit Stimme.** Für den Versuch wurde ein
+ElevenLabs-Schlüssel eingetragen, die API antwortet aber dreimal mit
+`401 Invalid API key`. Solange das nicht stimmt, gibt es keine
+Sprachaufnahme.
+
+**Die Münder bewegen sich nicht.** Das ginge auch mit funktionierendem
+ElevenLabs-Schlüssel nicht — der Dienst macht Stimmen, keine
+Animation. Dafür bräuchte es einen Dienst für sprechende Bilder
+(Hedra, D-ID) oder Bild-zu-Video (Kling, Runway).
+
+### Beschriftung zum Kopieren
+
+```
+teil 1 von der 970 😨 wollt ihr part 2? #67 #sixseven #fyp #foryou #fürdich #viral #ai #brainrot #story
+```
