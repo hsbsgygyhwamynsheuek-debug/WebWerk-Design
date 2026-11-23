@@ -257,3 +257,65 @@ dont look away 👁️ #oddlysatisfying #illusion #hypnotic #fyp #foryou #viral 
 
 Englisch, weil das die Reichweite oeffnet. Mit `tunnel-stumm.mp4` und
 einem Trend-Sound ist die Chance hoeher als mit eigenem Ton.
+
+---
+
+## Die 970 — zwei Minuten, mit echten Stimmen (23.11.2026)
+
+`tiktok/klassenzimmer-5-zwei-minuten.mp4` — 123 s, 1080 × 1920, 52 MB.
+
+55 Dialogzeilen, 61 Einstellungen, drei sprechende Figuren.
+
+### Die Stimmen kosten nichts
+
+Der eingetragene ElevenLabs-Schluessel wird dauerhaft mit `401
+Invalid API key` abgelehnt. Stattdessen laeuft **Piper** in einer
+eigenen Python-Umgebung direkt im Container — ein neuronales
+Sprachmodell, offline, ohne Konto, ohne Credits.
+
+Drei deutsche Stimmmodelle von `rhasspy/piper-voices`, je zusaetzlich
+in Tonhoehe und Tempo verschoben (`quelle/stimme/drehbuch.py`):
+
+| Figur | Modell | Tonhoehe | Tempo |
+|---|---|---|---|
+| Pfirsich (67) | `de_DE-thorsten-medium` | 1,16 | 0,96 |
+| Paprika (88) | `de_DE-karlsson-low` | 1,09 | 1,00 |
+| Kartoffel (970) | `de_DE-pavoque-low` | **0,74** | **1,26** |
+
+Die Tonhoehe wird mit `asetrate` verschoben und mit `atempo` wieder
+auf die urspruengliche Laenge gezogen, danach Hochpass, Kompressor
+und Limiter.
+
+### Die Zeitachse kommt aus dem Ton, nicht umgekehrt
+
+`quelle/stimme/erzeuge.py` misst jede fertige Sprachdatei und setzt
+die Zeilen mit den im Drehbuch hinterlegten Pausen aneinander. Erst
+daraus entstehen Kameraplan und Untertitel. Dadurch sitzt jeder
+Schnitt auf dem Wort, auf dem er sitzen soll.
+
+### Die Zahlen pulsieren mit der echten Stimme
+
+`quelle/stimme/mische.py` zieht aus jeder Sprachzeile einen
+Lautstaerkeverlauf mit 25 Werten je Sekunde. `kino2.js` legt den
+direkt auf Helligkeit und Groesse der leuchtenden Zahl. Wer spricht,
+dessen Zahl flackert exakt zu seinen Silben — kein Zufallsflackern.
+
+### Mischung
+
+Spannungsbett unter den Stimmen, automatisch abgesenkt, solange
+jemand redet (weiche Flanke ueber 0,18 s, bis −72 %). Wendepunkte
+bekommen einen Einschlag. Endmischung auf −14,6 LUFS, also auf dem
+Pegel, den TikTok ohnehin anstrebt.
+
+### Grenze
+
+Die Muender bewegen sich nicht. Dafuer braeuchte es einen Dienst fuer
+sprechende Bilder (Hedra, D-ID) oder Bild-zu-Video (Kling, Runway) —
+keiner davon ist als Konnektor verfuegbar, das ginge nur ueber einen
+eigenen API-Schluessel.
+
+### Beschriftung zum Kopieren
+
+```
+die zahlen zählen runter 😨 part 2? #67 #sixseven #fyp #foryou #fürdich #viral #ai #brainrot #story #creepy
+```

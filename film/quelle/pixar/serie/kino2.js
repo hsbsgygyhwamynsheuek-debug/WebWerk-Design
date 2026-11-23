@@ -55,10 +55,21 @@ function bauDialog(KONF){
       qa('.z').forEach(z=>z.classList.remove('laut'));
       const zz={P:1,A:2,K:0}[r.w];
       const el=qa('.z')[zz];
-      if(el){ el.classList.add('laut');
-        el.style.filter=`brightness(${(1.1+0.22*Math.abs(Math.sin(lt2*11))).toFixed(3)})`; }
+      if(el){
+        el.classList.add('laut');
+        /* Wenn eine Huellkurve der echten Stimme vorliegt, pulsiert die Zahl
+           genau mit der Lautstaerke des Sprechers - 25 Werte je Sekunde. */
+        let amp;
+        if(r.env && r.env.length){
+          const n=Math.min(r.env.length-1, Math.max(0, Math.floor(lt2*25)));
+          amp=r.env[n];
+        } else amp=Math.abs(Math.sin(lt2*11));
+        el.style.filter=`brightness(${(1.04+0.5*amp).toFixed(3)})`;
+        el.style.transform=`translate(-50%,-50%) scale(${(1+0.08*amp).toFixed(3)})`;
+      }
     } else {
-      qa('.z').forEach(z=>{z.classList.remove('laut'); z.style.filter='';});
+      qa('.z').forEach(z=>{z.classList.remove('laut'); z.style.filter='';
+        z.style.transform='translate(-50%,-50%)';});
     }
 
     /* Schlusskarte */
