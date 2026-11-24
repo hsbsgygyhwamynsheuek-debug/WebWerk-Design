@@ -1,0 +1,27 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><title>k4-pov</title>
+<link rel="stylesheet" href="kurz.css"></head><body>
+<div id="stage">
+  <div id="rahmen">
+    <canvas id="szene" width="1360" height="1712"></canvas>
+    <div class="z" data-p="762,158" style="left:762px;top:158px;font-size:96px">970</div>
+    <div class="z" data-p="396,762" style="left:396px;top:762px;font-size:84px">67</div>
+    <div class="z" data-p="1002,800" style="left:1002px;top:800px;font-size:84px">88</div>
+  </div>
+  <div id="staub"></div>
+  <div id="vig"></div>
+</div>
+<script src="bild.js"></script>
+<script src="warp.js"></script>
+<script src="kino.js"></script>
+<script src="kurz.js"></script>
+<script>
+window.bereit=false;
+const bild=new Image();
+bild.onload=()=>{
+  const z=baueWarp(document.getElementById('szene'), bild);
+  bauKurz({"dauer": 9.0, "samen": 67, "kalt": true, "von": {"cx": 762, "cy": 470, "z": 1.72}, "bis": {"cx": 762, "cy": 440, "z": 2.16}, "pochen": "762,158", "texte": [{"a": 0.1, "t": "POV: du sitzt vor der 970.", "pos": "unten"}]});
+  window.setzeZeichner(z);
+  window.render(0); window.bereit=true;
+};
+bild.src=window.SZENE_DATEN;
+</script></body></html>

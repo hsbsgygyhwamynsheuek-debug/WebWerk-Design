@@ -319,3 +319,54 @@ eigenen API-Schluessel.
 ```
 die zahlen zählen runter 😨 part 2? #67 #sixseven #fyp #foryou #fürdich #viral #ai #brainrot #story #creepy
 ```
+
+---
+
+## Kurzreihe „970" mit Bewegung und Phonk (24.11.2026)
+
+Fünf Clips à 9 Sekunden, `tiktok/970-k1 … k5`. Jeweils mit Musik und
+als `-stumm` für einen Trend-Sound.
+
+| Clip | Auflösung bei | Inhalt |
+|---|---|---|
+| k1-reveal | 4,9 s | Nah am Pfirsich → Kamera zurück → Kartoffel 970 |
+| k2-starren | 5,6 s | Extreme Nahaufnahme, Kartoffel atmet und blinzelt |
+| k3-runter | 4,8 s | Die 67 flackert und wird zur 66 |
+| k4-pov | 4,5 s | „POV: du sitzt vor der 970" |
+| k5-frage | 5,4 s | „Welche Zahl hättest du?" |
+
+### Bewegung (`quelle/warp/warp.js`)
+
+Kein Zerschneiden, sondern ein Verzerrungsfeld per WebGL über dem
+Bild: Kopf (Drehung, Versatz, Atmen), Mund (örtliche Dehnung, Kiefer
+fällt dreimal so weit wie die Oberlippe steigt), Augen (Stauchung beim
+Blinzeln). Alles mit Gauß-Abfall um die Figur, der Hintergrund bleibt
+unberührt. Das Bild ist als Data-URI eingebettet, weil WebGL über
+`file://` keine Texturen laden darf.
+
+### Musik (`quelle/musik/phonk.py`)
+
+Phonk, 140 BPM, komplett synthetisiert: 808-Cowbell aus zwei
+Rechtecken im Verhältnis 1:1,48, übersteuerter 808-Bass, Kick mit
+Tonhöhenfall, Clap aus drei Rauschstößen, Hi-Hats. Vor dem Drop
+gedämpfter Beat hinter einem sich öffnenden Tiefpass, im letzten Takt
+Wirbel und Riser, auf dem Drop ein Crash.
+
+Die Intro-Takte werden so berechnet, dass der Drop **auf einen
+Taktanfang** und gleichzeitig **sample-genau auf die Auflösung im Bild**
+fällt. Geprüft bei k3: Pegel springt bei 4,80 s von −20,2 auf −6,6 dB.
+
+Intro und Drop sind auf rund 7 dB Abstand eingestellt — beim ersten
+Versuch lag das Intro 23 dB unter dem Drop und war praktisch stumm.
+
+Endmischung −14 LUFS.
+
+### Beschriftungen
+
+```
+seine zahl ist 67 😳 #67 #sixseven #fyp #foryou #fürdich #viral #ai #brainrot #phonk
+nicht wegschauen 👁️ #fyp #foryou #fürdich #viral #ai #brainrot #creepy #phonk
+gestern war sie noch 68 😨 #67 #fyp #foryou #fürdich #viral #ai #brainrot #phonk
+pov: du sitzt vor der 970 💀 #pov #fyp #foryou #fürdich #viral #ai #brainrot #phonk
+welche zahl hättest du? 👇 #67 #fyp #foryou #fürdich #viral #ai #brainrot #phonk
+```

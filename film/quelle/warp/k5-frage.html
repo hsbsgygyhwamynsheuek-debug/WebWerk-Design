@@ -1,0 +1,27 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><title>k5-frage</title>
+<link rel="stylesheet" href="kurz.css"></head><body>
+<div id="stage">
+  <div id="rahmen">
+    <canvas id="szene" width="1360" height="1712"></canvas>
+    <div class="z" data-p="762,158" style="left:762px;top:158px;font-size:96px">970</div>
+    <div class="z" data-p="396,762" style="left:396px;top:762px;font-size:84px">67</div>
+    <div class="z" data-p="1002,800" style="left:1002px;top:800px;font-size:84px">88</div>
+  </div>
+  <div id="staub"></div>
+  <div id="vig"></div>
+</div>
+<script src="bild.js"></script>
+<script src="warp.js"></script>
+<script src="kino.js"></script>
+<script src="kurz.js"></script>
+<script>
+window.bereit=false;
+const bild=new Image();
+bild.onload=()=>{
+  const z=baueWarp(document.getElementById('szene'), bild);
+  bauKurz({"dauer": 9.4, "samen": 89, "von": {"cx": 680, "cy": 856, "z": 1.14}, "bis": {"cx": 690, "cy": 880, "z": 1.3}, "fluestern": ["P", "A"], "texte": [{"a": 0.1, "b": 5.2, "t": "Welche Zahl hättest du?", "pos": "oben"}, {"a": 5.4, "t": "Schreib sie in die Kommentare.", "pos": "unten"}]});
+  window.setzeZeichner(z);
+  window.render(0); window.bereit=true;
+};
+bild.src=window.SZENE_DATEN;
+</script></body></html>
