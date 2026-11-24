@@ -1,0 +1,10 @@
+{"titel":"Nobody is coming","tonart":"moll","bpm":92,"szenen":[
+ {"typ":"allein","h":"NOBODY IS COMING.","pill":"TO SAVE YOU","m":"ruhig","vo":"[intense] Nobody is coming to save you."},
+ {"typ":"handy","h":"NO MESSAGE.","pill":"NO PERFECT CHANCE","t1":"NEW MESSAGES","vo":"No message. No perfect chance. Nobody knocking on your door."},
+ {"typ":"tuer","h":"THE DOOR?","pill":"NEVER LOCKED","m":"drums","vo":"[intense] But here's the thing... that door was never locked."},
+ {"typ":"gruppe","modus":"zaehlen","h":"EVERYONE ELSE","pill":"IS BUSY","vo":"Everyone else is busy fighting their own battles."},
+ {"typ":"zahl","gross":"1","h":"ONE PERSON","pill":"CAN CHANGE YOUR LIFE","vo":"[intense] There is only one person who can change your life."},
+ {"typ":"spiegel","h":"THE MIRROR.","pill":"IT'S YOU","m":"peak","pause":0.5,"vo":"[shouting] And you see that person every morning in the mirror!"},
+ {"typ":"punkt","h":"SCARY?","pill":"GOOD","m":"drop","vo":"[whispers] Scary? [intense] Good. That means it matters."},
+ {"typ":"berg","h":"BUILD IT.","pill":"BRICK BY BRICK","m":"build","vo":"Nobody will build it for you. So build it. Brick by brick."},
+ {"typ":"ende","h":"SAVE YOURSELF.","pill":"FOLLOW FOR MORE","m":"end","pause":2.0,"vo":"[shouting] Be the one who saves you!"}]}

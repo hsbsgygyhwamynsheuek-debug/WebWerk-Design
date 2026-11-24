@@ -79,9 +79,15 @@ def clap():
     x = tp(hp(n*env), 0.42)
     return x/(np.abs(x).max()+1e-9)
 
+def tom(f0):
+    """Gestimmte Trommel ohne Rauschanteil."""
+    t = tt(0.16); f = f0*(1 + 0.5*np.exp(-t*40)); ph = 2*np.pi*np.cumsum(f)/SR
+    x = (np.sin(ph) + 0.3*np.sin(2*ph))*np.exp(-t*22)*(1-np.exp(-t*900))
+    return x/(np.abs(x).max()+1e-9)
+
 def hat(offen=False):
     t = tt(0.22 if offen else 0.06)
-    x = hp(hp(rng.normal(0,1,len(t))))*np.exp(-t*(14 if offen else 70))
+    x = hp(hp(rng.normal(0,1,len(t))))*np.exp(-t*(22 if offen else 120))
     return x/(np.abs(x).max()+1e-9)
 
 def crash():
@@ -117,10 +123,10 @@ for takt in range(-1, letzter_takt):
             lege(ziel, m_takt + s*S16, glocke(n), g)
     # Hi-Hats auf Achteln, Wirbel am Taktende jedes zweiten Takts
     for s in range(0,16,2):
-        lege(ziel, m_takt + s*S16, hat(), 0.16 if vor_drop else 0.20)
+        lege(ziel, m_takt + s*S16, hat(), 0.07 if vor_drop else 0.09)
     if takt % 2 == 1:
         for k in range(4):
-            lege(ziel, m_takt + 14*S16 + k*S16/2, hat(), 0.12)
+            lege(ziel, m_takt + 14*S16 + k*S16/2, hat(), 0.05)
     if vor_drop:
         # Im Intro schon ein gedaempfter Bass auf der Eins – der Track lebt sofort
         lege(intro, m_takt, bass(BASS_TON[takt%2][0], 1.4), 0.42 if not LEISE_INTRO else 0.24)
@@ -132,11 +138,12 @@ for takt in range(-1, letzter_takt):
             lege(trocken, m_takt + s*S16, bass(BASS_TON[takt%2][i]), 0.78)
         for s in (4,12):
             lege(trocken, m_takt + s*S16, clap(), 0.55)
-        lege(trocken, m_takt + 2*S16, hat(True), 0.10)
+        lege(trocken, m_takt + 2*S16, hat(True), 0.05)
     if takt == N_INTRO-1:
-        # Aufbau im letzten Takt vor dem Drop: Wirbel wird dichter, Rauschen steigt
-        for s in range(8):  lege(trocken, m_takt + s*S16, clap(), 0.10 + 0.03*s)
-        for k in range(16): lege(trocken, m_takt + BAR/2 + k*S16/2, clap(), 0.30 + 0.025*k)
+        # Aufbau im letzten Takt vor dem Drop: tonaler Trommelwirbel, der nach oben steigt
+        # (frueher Klatsch-Wirbel aus Rauschen - das war das hoerbare "Rauschen" mitten im Video)
+        for s in range(8):  lege(trocken, m_takt + s*S16, tom(90 + 6*s), 0.22 + 0.03*s)
+        for k in range(16): lege(trocken, m_takt + BAR/2 + k*S16/2, tom(140 + 9*k), 0.30 + 0.02*k)
         lege(trocken, m_takt, riser(BAR), 0.30)
     if takt == N_INTRO:
         lege(trocken, m_takt, crash(), 0.32)

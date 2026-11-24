@@ -1,0 +1,229 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Motivation</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#000;overflow:hidden}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;
+  background:radial-gradient(70% 45% at 50% 46%,#151515 0%,#070707 60%,#000 100%);
+  font-family:"Inter Display","Inter",sans-serif;color:#F4F4F4;-webkit-font-smoothing:antialiased}
+.sz{position:absolute;inset:0;opacity:0}
+.h{position:absolute;left:40px;right:40px;top:470px;text-align:center;font-weight:800;
+  font-size:92px;letter-spacing:.11em;line-height:1.05;text-transform:uppercase;
+  text-shadow:0 0 18px rgba(255,255,255,.55),0 0 46px rgba(255,255,255,.22)}
+.pill{position:absolute;left:50%;top:1310px;transform:translateX(-50%);background:#F4F4F4;color:#0A0A0A;
+  font-weight:800;font-size:26px;letter-spacing:.16em;padding:12px 26px;border-radius:999px;white-space:nowrap;
+  box-shadow:0 0 30px rgba(255,255,255,.35)}
+#ut{position:absolute;left:90px;right:90px;top:1415px;text-align:center;font-family:"Inter",sans-serif;
+  font-weight:600;font-size:36px;line-height:1.35;color:rgba(255,255,255,.82)}
+#ut span{opacity:.25}
+.glow{filter:drop-shadow(0 0 10px rgba(255,255,255,.7)) drop-shadow(0 0 26px rgba(255,255,255,.25))}
+svg{position:absolute;overflow:visible}
+#korn{position:absolute;inset:0;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E")}
+</style></head><body>
+<div id="stage"><div id="szenen"></div><div id="ut"></div><div id="korn"></div></div>
+<script>
+const P=__PLAN__; window.FILM_DAUER=P.dauer;
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)), pr=(t,a,b)=>cl((t-a)/(b-a));
+const eOut=x=>1-Math.pow(1-x,3), eIO=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const eSpr=x=>{if(x>=1)return 1;const w=11,z=.62;return 1-Math.exp(-z*w*x)*Math.cos(w*Math.sqrt(1-z*z)*x);};
+const W='#F4F4F4';
+/* Strichfigur: Kopf + gewoelbter Koerper */
+const figur=(x,y,s=1,o=1)=>`<g transform="translate(${x} ${y}) scale(${s})" opacity="${o}">
+  <circle cx="0" cy="-74" r="22" fill="${W}"/><path d="M-36,0 Q-36,-46 0,-46 Q36,-46 36,0 Z" fill="${W}"/></g>`;
+const sanduhr=(x,y,s=1)=>`<g transform="translate(${x} ${y}) scale(${s})" class="uhr">
+  <rect x="-46" y="-90" width="92" height="10" rx="4" fill="${W}"/><rect x="-46" y="80" width="92" height="10" rx="4" fill="${W}"/>
+  <path d="M-36,-80 L36,-80 L4,0 L36,80 L-36,80 L-4,0 Z" fill="none" stroke="${W}" stroke-width="5"/>
+  <path class="oben" d="M-28,-72 L28,-72 L2,-6 L-2,-6 Z" fill="${W}"/><path class="unten" d="M-30,74 L30,74 L2,30 L-2,30 Z" fill="${W}"/></g>`;
+const kalender=(id)=>`<g id="${id}"><rect x="-150" y="-170" width="300" height="320" rx="22" fill="none" stroke="${W}" stroke-width="7"/>
+  <rect x="-150" y="-170" width="300" height="78" rx="22" fill="${W}"/><rect x="-150" y="-110" width="300" height="18" fill="${W}"/>
+  <text class="kopf" x="0" y="-118" text-anchor="middle" font-size="34" font-weight="800" letter-spacing="5" fill="#0A0A0A">DAY</text>
+  <text class="zahl" x="0" y="80" text-anchor="middle" font-size="150" font-weight="800" fill="${W}">1</text></g>`;
+const SZ=document.getElementById('szenen');
+P.szenen.forEach((s,i)=>{
+  let v='';
+  if(s.typ==='stopp') v=`<svg width="1080" height="1920" class="glow">${sanduhr(540,960,2.1)}${figur(300,1110,1.6)}</svg>`;
+  if(s.typ==='berg'){ let b=''; for(let k=0;k<7;k++) b+=`<rect class="block" data-k="${k}" x="${540-150+((k%2)*24-12)}" y="${1100-(k+1)*62}" width="300" height="50" rx="10" fill="none" stroke="${W}" stroke-width="5"/>`;
+    v=`<svg width="1080" height="1920" class="glow">${b}${figur(540,1230,1.7)}</svg>`; }
+  if(s.typ==='prozent') v=`<div class="gross glow" style="position:absolute;left:0;right:0;top:640px;text-align:center;font-weight:800;font-size:380px;letter-spacing:-.02em">1%</div>
+     <svg width="1080" height="1920" class="glow" id="plus${i}"></svg>`;
+  if(s.typ==='punkt') v=`<svg width="1080" height="1920" class="glow"><circle id="dot" cx="540" cy="960" r="9" fill="${W}"/></svg>`;
+  if(s.typ==='kalender') v=`<svg width="1080" height="1920" class="glow"><g transform="translate(540 990) scale(1.25)">${kalender('kal'+i)}</g>${sanduhr(180,990,1.1)}${sanduhr(900,990,1.1)}</svg>`;
+  if(s.typ==='hoch'||s.typ==='runter') v=`<svg width="1080" height="1920" class="glow">
+     <line x1="140" y1="1240" x2="960" y2="1240" stroke="${W}" stroke-width="4" opacity=".55"/>
+     <line x1="140" y1="1240" x2="140" y2="700" stroke="${W}" stroke-width="4" opacity=".55"/>
+     <path id="kv${i}" fill="none" stroke="${W}" stroke-width="9" stroke-linecap="round"/>
+     <circle id="kp${i}" r="14" fill="${W}"/>
+     <text id="kz${i}" font-size="64" font-weight="800" fill="${W}" text-anchor="end"></text>
+     <text x="140" y="1290" font-size="26" font-weight="700" letter-spacing="4" fill="${W}" opacity=".7">DAY 1</text>
+     <text x="960" y="1290" font-size="26" font-weight="700" letter-spacing="4" fill="${W}" opacity=".7" text-anchor="end">DAY 365</text></svg>`;
+  if(s.typ==='talent'){ let m=''; [[200,1150],[330,1210],[760,1210],[880,1150],[260,1290],[820,1290]].forEach(([x,y])=>m+=figur(x,y,1.0,.28));
+    v=`<svg width="1080" height="1920"><defs><linearGradient id="kegel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity=".04"/></linearGradient></defs>
+      <polygon id="licht" points="490,640 590,640 720,1240 360,1240" fill="url(#kegel)"/>
+      <ellipse id="boden" cx="540" cy="1240" rx="190" ry="26" fill="#fff" opacity=".25"/>
+      <g class="glow">${m}${figur(540,1230,1.7)}</g></svg>`; }
+  if(s.typ==='heute') v=`<svg width="1080" height="1920" class="glow"><g transform="translate(540 990) scale(1.45)">${kalender('kal'+i)}</g></svg>`;
+  if(s.typ==='ende'){ let st=''; for(let k=0;k<6;k++) st+=`<rect class="stufe" x="${150+k*125}" y="${1240-k*70}" width="125" height="${18}" rx="6" fill="${W}"/>`;
+    v=`<svg width="1080" height="1920" class="glow">${st}<path id="stern" d="M0,-46 L13,-14 L46,-14 L19,6 L29,40 L0,20 L-29,40 L-19,6 L-46,-14 L-13,-14 Z" transform="translate(925 830)" fill="${W}"/>
+       <g id="laeufer">${figur(0,0,1.15)}</g></svg>`; }
+  /* ---------- Serien-Bildtypen ---------- */
+  const T=(x,y,str,fs=28,o=.75,a='middle',id='')=>`<text ${id?`id="${id}"`:''} x="${x}" y="${y}" text-anchor="${a}" font-size="${fs}" font-weight="800" letter-spacing="${fs>40?2:5}" fill="${W}" opacity="${o}">${str}</text>`;
+  const SV=inner=>`<svg width="1080" height="1920" class="glow">${inner}</svg>`;
+  if(s.typ==='zahl'){ const g=String(s.gross??'1'), lang=g.length>3;
+    v=`<div class="gross glow" style="position:absolute;left:0;right:0;top:${lang?740:640}px;text-align:center;font-weight:800;font-size:${lang?230:380}px;letter-spacing:-.02em;font-variant-numeric:tabular-nums">${g}</div>`; }
+  if(s.typ==='akku') v=SV(`<g transform="translate(540 930)">
+     <rect x="-250" y="-120" width="480" height="240" rx="34" fill="none" stroke="${W}" stroke-width="12"/>
+     <rect x="236" y="-46" width="34" height="92" rx="10" fill="${W}"/>
+     <rect id="af${i}" x="-226" y="-96" width="432" height="192" rx="18" fill="${W}"/>
+     ${T(-10,235,'',84,1,'middle','at'+i)}</g>`);
+  if(s.typ==='graph') v=SV(`<line x1="140" y1="1240" x2="960" y2="1240" stroke="${W}" stroke-width="4" opacity=".55"/>
+     <line x1="140" y1="1240" x2="140" y2="700" stroke="${W}" stroke-width="4" opacity=".55"/>
+     <path id="gw${i}" fill="none" stroke="${W}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+     <path id="gt${i}" fill="none" stroke="${W}" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+     ${T(0,0,s.t1||'MOTIVATION',30,.8,'end','lw'+i)}${T(0,0,s.t2||'DISCIPLINE',34,1,'end','lt'+i)}
+     ${T(140,1290,s.x1||'DAY 1',26,.7,'start')}${T(960,1290,s.x2||'DAY 365',26,.7,'end')}`);
+  if(s.typ==='uhr'){ let tk=''; for(let k=0;k<12;k++) tk+=`<rect x="-6" y="-222" width="12" height="${k%3?26:44}" rx="5" fill="${W}" transform="rotate(${k*30})"/>`;
+    v=SV(`<g transform="translate(540 930)"><circle r="240" fill="none" stroke="${W}" stroke-width="12"/>${tk}
+     <g id="uh${i}"><rect x="-9" y="-120" width="18" height="130" rx="9" fill="${W}"/></g>
+     <g id="um${i}"><rect x="-6" y="-190" width="12" height="200" rx="6" fill="${W}"/></g><circle r="18" fill="${W}"/></g>
+     ${T(540,1250,'',46,1,'middle','ul'+i)}`); }
+  if(s.typ==='allein') v=`<svg width="1080" height="1920"><defs><linearGradient id="kg${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".8"/><stop offset="1" stop-color="#fff" stop-opacity=".03"/></linearGradient></defs>
+      <polygon id="li${i}" points="500,640 580,640 740,1240 340,1240" fill="url(#kg${i})"/>
+      <ellipse id="bo${i}" cx="540" cy="1240" rx="210" ry="26" fill="#fff" opacity=".2"/>
+      <g class="glow">${figur(540,1230,1.7)}</g></svg>`;
+  if(s.typ==='handy') v=SV(`<g transform="translate(540 950)">
+     <rect x="-200" y="-330" width="400" height="660" rx="56" fill="none" stroke="${W}" stroke-width="10"/>
+     <rect x="-58" y="-306" width="116" height="26" rx="13" fill="${W}"/>
+     <g id="hb${i}" transform="translate(0 -110)"><path d="M-52,34 Q-52,-52 0,-58 Q52,-52 52,34 L66,50 L-66,50 Z" fill="none" stroke="${W}" stroke-width="8" stroke-linejoin="round"/>
+       <circle cx="0" cy="64" r="11" fill="${W}"/><circle cx="0" cy="-64" r="8" fill="${W}"/></g>
+     <g id="hz${i}">${T(0,120,'0',190,1)}</g>${T(0,196,s.t1||'NEW MESSAGES',26,.7)}</g>`);
+  if(s.typ==='tuer') v=`<svg width="1080" height="1920"><defs><linearGradient id="tg${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
+     <rect id="tl${i}" x="400" y="700" width="280" height="540" fill="#fff"/>
+     <polygon id="tb${i}" points="400,1240 680,1240 900,1300 180,1300" fill="url(#tg${i})"/>
+     <g class="glow"><rect x="388" y="688" width="304" height="560" rx="6" fill="none" stroke="${W}" stroke-width="10"/>
+     <g id="tp${i}"><rect x="0" y="700" width="280" height="540" fill="#0b0b0b" stroke="${W}" stroke-width="6"/><circle cx="236" cy="980" r="13" fill="${W}"/></g></g></svg>`;
+  if(s.typ==='gruppe'){ const POS=[[220,900],[860,900],[170,1200],[910,1200],[540,800]]; let m='';
+    POS.forEach(([x,y],k)=>m+=`<line class="gl" x1="540" y1="1040" x2="${x}" y2="${y-40}" stroke="${W}" stroke-width="3" stroke-dasharray="10 12"/>`);
+    POS.forEach(([x,y],k)=>m+=`<g class="gf">${figur(x,y,1.0)}${s.modus==='du'?'':T(x,y-118,String(k+1),34,.9)}</g>`);
+    v=SV(`${m}<circle id="gh${i}" cx="540" cy="1050" r="130" fill="none" stroke="${W}" stroke-width="5" opacity="0"/><g id="gc${i}">${figur(540,1110,1.6)}</g>`); }
+  if(s.typ==='spiegel') v=`<svg width="1080" height="1920"><defs><clipPath id="sc${i}"><rect x="600" y="700" width="280" height="540" rx="140"/></clipPath></defs>
+     <g class="glow"><rect x="600" y="700" width="280" height="540" rx="140" fill="none" stroke="${W}" stroke-width="9"/>
+     <g id="sr${i}" clip-path="url(#sc${i})" opacity=".5">${figur(740,1210,1.6)}</g>${figur(330,1210,1.6)}</g>
+     <g clip-path="url(#sc${i})"><rect id="ss${i}" x="0" y="640" width="60" height="700" fill="#fff" opacity=".22" transform="skewX(-20)"/></g></svg>`;
+  if(s.typ==='kreis') v=SV(`<circle id="kr${i}" cx="540" cy="980" r="260" fill="none" stroke="${W}" stroke-width="8"/>
+     <g id="kf${i}">${figur(540,1070,1.5)}</g>${T(540,800,s.t1||'COMFORT ZONE',28,.8,'middle','kt'+i)}`);
+  if(s.typ==='ringe'){ const R=[100,175,245,310], L=s.liste||['COMFORT','FEAR','LEARNING','GROWTH']; let m='';
+    R.forEach((r,k)=>m+=`<g class="rg" data-k="${k}"><circle cx="540" cy="970" r="${r}" fill="none" stroke="${W}" stroke-width="${k===3?9:5}" ${k===1?'stroke-dasharray="14 12"':''}/>
+       ${k?T(540,970-(R[k-1]+r)/2+9,L[k],k===3?28:24,k===3?1:.75):T(540,1032,L[0],19,.8)}</g>`);
+    v=SV(`${m}<line id="rw${i}" x1="540" y1="975" x2="540" y2="975" stroke="${W}" stroke-width="4" stroke-dasharray="6 10" opacity=".7"/><g id="rf${i}">${figur(0,0,0.9)}</g>`); }
+  if(s.typ==='zweiwege') v=SV(`<path id="zs${i}" d="M540,1270 L540,1060" fill="none" stroke="${W}" stroke-width="10" stroke-linecap="round"/>
+     <path id="zl${i}" d="M540,1060 C540,940 280,930 270,790" fill="none" stroke="${W}" stroke-width="8" stroke-linecap="round" opacity=".35"/>
+     <path id="zr${i}" d="M540,1060 C540,940 800,930 810,790" fill="none" stroke="${W}" stroke-width="12" stroke-linecap="round"/>
+     ${T(270,760,s.t1||'EASY',30,.45)}${T(810,760,s.t2||'RIGHT',34,1)}<g id="zf${i}">${figur(0,0,1.0)}</g>`);
+  SZ.insertAdjacentHTML('beforeend',`<div class="sz" id="s${i}"><div class="h" style="${s.h.length>13?'font-size:70px':''}">${s.h}</div>${v}<div class="pill">${s.pill}</div></div>`);
+});
+const ut=document.getElementById('ut');
+function kurve(i,t,lt,hoch){
+  const pfad=document.getElementById('kv'+i), pkt=document.getElementById('kp'+i), z=document.getElementById('kz'+i);
+  const f=eIO(pr(lt,0.5,3.2)), n=Math.max(1,Math.round(365*f));
+  const ymax=hoch?40:1.05, X=x=>140+820*x/365, Y=v=>1240-540*v/ymax;
+  let d=''; for(let x=0;x<=n;x+=2){ const v=hoch?Math.pow(1.01,x):Math.pow(0.99,x); d+=(x?'L':'M')+X(x).toFixed(1)+','+Y(v).toFixed(1); }
+  pfad.setAttribute('d',d);
+  const v=hoch?Math.pow(1.01,n):Math.pow(0.99,n);
+  pkt.setAttribute('cx',X(n)); pkt.setAttribute('cy',Y(v));
+  z.setAttribute('x',Math.min(960,X(n)+10)); z.setAttribute('y',Math.max(760,Y(v)-40));
+  z.textContent=v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+window.render=function(t){
+  P.szenen.forEach((s,i)=>{
+    /* Erste Szene ist ab Bild 1 voll da – kein schwarzer Anfang */
+    const a0 = i===0 ? 0 : s.a;
+    const el=document.getElementById('s'+i), lt=t-a0;
+    const ein= i===0 ? 1 : eOut(pr(lt,0,0.45)), aus=1-pr(t,s.b-0.32,s.b);
+    const o=(t>=a0-0.01&&t<s.b+0.01)?ein*aus:0;
+    el.style.opacity=o.toFixed(3); if(o<=0) return;
+    const h=el.querySelector('.h'); h.style.transform=`translateY(${((1-ein)*-24).toFixed(1)}px) scale(${(0.96+0.04*ein).toFixed(3)})`;
+    el.querySelector('.pill').style.transform=`translateX(-50%) translateY(${((1-eOut(pr(lt,0.2,0.7)))*20).toFixed(1)}px)`;
+    el.querySelector('.pill').style.opacity=eOut(pr(lt,0.2,0.6)).toFixed(3);
+    if(s.typ==='stopp'){ const u=el.querySelector('.uhr'), k=pr(lt,0.4,s.b-s.a);
+      u.querySelector('.oben').setAttribute('transform',`translate(0 ${(-36*k*0.0).toFixed(1)}) scale(1 ${(1-k*0.9).toFixed(3)})`);
+      u.querySelector('.oben').style.transformOrigin='0px -6px';
+      u.querySelector('.unten').setAttribute('transform',`scale(1 ${(0.1+k*0.9).toFixed(3)})`);
+      u.querySelector('.unten').style.transformOrigin='0px 74px';
+      /* STOPP knallt gross rein und setzt sich weich */
+      const k2=eOut(pr(lt,0.55,1.15)); h.style.transform=`scale(${(1.75-0.75*k2).toFixed(3)})`;
+      h.style.transformOrigin='50% 50%'; }
+    if(s.typ==='berg') el.querySelectorAll('.block').forEach(b=>{const k=+b.dataset.k, e=eSpr(pr(lt,0.15+k*0.18,0.75+k*0.18));
+      b.setAttribute('transform',`translate(${(Math.sin(t*2+k)*3*e).toFixed(1)} ${(-(1-e)*500).toFixed(1)})`); b.style.opacity=cl(e*2);});
+    if(s.typ==='prozent'){ const g=el.querySelector('.gross'); const p=1+0.03*Math.sin(lt*5);
+      g.style.transform=`scale(${(eSpr(pr(lt,0,0.8))*p).toFixed(3)})`;
+      let pl=''; for(let k=0;k<14;k++){const a=(lt*0.9+k/14)%1; const x=150+((k*137)%780); pl+=`<text x="${x}" y="${(1350-a*700).toFixed(0)}" font-size="34" font-weight="800" fill="#F4F4F4" opacity="${(Math.sin(a*Math.PI)*0.6).toFixed(2)}">+1%</text>`;}
+      document.getElementById('plus'+i).innerHTML=pl; }
+    if(s.typ==='punkt'){ const d=document.getElementById('dot'); d.setAttribute('r',(9+2*Math.sin(lt*4)).toFixed(1)); }
+    if(s.typ==='kalender'){ const n=Math.max(1,Math.round(365*eIO(pr(lt,0.4,s.b-s.a-0.5))));
+      el.querySelector('.zahl').textContent=n; el.querySelector('.zahl').setAttribute('font-size', n>99?120:150);
+      el.querySelectorAll('.uhr').forEach((u,j)=>u.setAttribute('transform',u.getAttribute('transform').replace(/ rotate\([^)]*\)/,'')+` rotate(${((Math.floor(lt/0.9)%2)*180+(j?0:0)).toFixed(0)})`)); }
+    if(s.typ==='hoch') kurve(i,t,lt,true);
+    if(s.typ==='runter'){ kurve(i,t,lt,false); }
+    if(s.typ==='talent'){ const l=eOut(pr(lt,0.3,1.0)); document.getElementById('licht').style.opacity=(l*(0.85+0.15*Math.sin(lt*9)*Math.sin(lt*3))).toFixed(3);
+      document.getElementById('boden').style.opacity=(0.25*l).toFixed(3); }
+    if(s.typ==='heute'){ el.querySelector('.kopf').textContent='TODAY'; el.querySelector('.zahl').textContent='1';
+      const g=el.querySelector('#kal'+i); g.style.transform=`scale(${eSpr(pr(lt,0,0.8)).toFixed(3)})`; g.style.transformOrigin='0 0'; }
+    if(s.typ==='ende'){ const k=eIO(pr(lt,0.3,2.4)), stufe=k*5;
+      const x=150+62+stufe*125, y=1240-stufe*70-9+Math.abs(Math.sin(stufe*Math.PI))*-26;
+      document.getElementById('laeufer').setAttribute('transform',`translate(${x.toFixed(1)} ${y.toFixed(1)})`);
+      document.getElementById('stern').setAttribute('transform',`translate(925 830) scale(${(1+0.08*Math.sin(lt*6)).toFixed(3)}) rotate(${(lt*20).toFixed(1)})`);
+      el.querySelectorAll('.stufe').forEach((r,k)=>r.style.opacity=cl(eOut(pr(lt,k*0.08,k*0.08+0.4)))); }
+    /* ---------- Serien-Bildtypen: Bewegung ---------- */
+    const D=s.b-s.a, $=id=>document.getElementById(id+i);
+    if(s.typ==='zahl'){ const g=el.querySelector('.gross'); g.style.transform=`scale(${(eSpr(pr(lt,0,0.8))*(1+0.025*Math.sin(lt*5))).toFixed(3)})`;
+      if(s.von!==undefined){ const n=Math.round(s.von+(s.bis-s.von)*eIO(pr(lt,0.3,D-0.5))); g.textContent=(s.vor||'')+n.toLocaleString('en-US')+(s.nach||''); } }
+    if(s.typ==='akku'){ const von=s.von??100, bis=s.bis??8, p=von+(bis-von)*eIO(pr(lt,0.3,D-0.6));
+      $('af').setAttribute('width',(432*p/100).toFixed(1));
+      $('af').style.opacity = p<20 ? (Math.sin(lt*14)>0?'1':'.25') : '1';
+      $('at').textContent=Math.round(p)+'%'; }
+    if(s.typ==='graph'){ const f=eIO(pr(lt,0.4,Math.min(3.0,D-0.4))), n=365*f, X=x=>140+820*x/365, Y=v=>1240-520*v;
+      const we=x=>0.38+0.3*Math.sin(x*0.072+0.5), tr=x=>0.06+0.84*Math.floor(x/26)*26/365, z=s.zeige||'beide';
+      const pfad=fn=>{let d='';for(let x=0;x<=n;x+=1.5)d+=(x?'L':'M')+X(x).toFixed(1)+','+Y(fn(x)).toFixed(1);return d||'M140,1240';};
+      const zw=z!=='treppe', zt=z!=='welle';
+      $('gw').setAttribute('d',zw?pfad(we):''); $('gw').setAttribute('opacity',z==='beide'?'.5':'1');
+      $('gt').setAttribute('d',zt?pfad(tr):'');
+      const lab=(id,fn,an)=>{const e=$(id); e.setAttribute('stroke','#050505'); e.setAttribute('stroke-width','12'); e.style.paintOrder='stroke'; e.style.display=an?'':'none'; if(!an)return; e.setAttribute('x',Math.max(330,X(n)).toFixed(0)); e.setAttribute('y',(Y(fn(n))+(id==='lw'&&z==='beide'?62:-28)).toFixed(0)); e.style.opacity=pr(lt,0.6,1.0);};
+      lab('lw',we,zw); lab('lt',tr,zt); }
+    if(s.typ==='uhr'){ const sp=lt*lt*220+lt*90; $('um').setAttribute('transform',`rotate(${sp.toFixed(1)})`); $('uh').setAttribute('transform',`rotate(${(sp/12).toFixed(1)})`);
+      const L=s.liste||[]; if(L.length){ const k=Math.min(L.length-1,Math.floor(pr(lt,0.15,D-0.5)*L.length)); $('ul').textContent=L[k]; } }
+    if(s.typ==='allein'){ const l=eOut(pr(lt,0.2,0.9)); $('li').style.opacity=(l*(0.85+0.15*Math.sin(lt*9)*Math.sin(lt*3))).toFixed(3); $('bo').style.opacity=(0.22*l).toFixed(3); }
+    if(s.typ==='handy'){ $('hb').setAttribute('transform',`translate(0 -110) rotate(${(16*Math.sin(lt*26)*Math.exp(-lt*2.5)).toFixed(2)})`);
+      const z=eSpr(pr(lt,0.5,1.3)); $('hz').setAttribute('transform',`translate(0 60) scale(${Math.max(0.001,z).toFixed(3)}) translate(0 -60)`); }
+    if(s.typ==='tuer'){ const o=eIO(pr(lt,0.5,2.0));
+      $('tp').setAttribute('transform',`translate(400 ${(700*0.0).toFixed(0)}) skewY(${(-9*o).toFixed(2)}) scale(${(1-0.78*o).toFixed(3)} 1) translate(0 0)`);
+      $('tl').style.opacity=(0.15+0.85*o).toFixed(3); $('tb').style.opacity=o.toFixed(3); }
+    if(s.typ==='gruppe'){ const du=s.modus==='du';
+      el.querySelectorAll('.gf').forEach((g,k)=>{ const e=eOut(pr(lt,0.3+k*0.22,0.6+k*0.22)); g.style.opacity=du?(0.85-0.6*eOut(pr(lt,0.4,1.4))).toFixed(3):(0.15+0.85*e).toFixed(3); });
+      el.querySelectorAll('.gl').forEach((g,k)=>{ const e=eOut(pr(lt,0.3+k*0.22,0.6+k*0.22)); g.style.opacity=du?(0.6-0.6*eOut(pr(lt,0.4,1.2))).toFixed(3):(0.6*e).toFixed(3); g.style.strokeDashoffset=(-lt*30).toFixed(1); });
+      const hz=du?eSpr(pr(lt,0.6,1.5)):0; $('gh').setAttribute('opacity',(hz*(0.6+0.2*Math.sin(lt*6))).toFixed(3)); $('gh').setAttribute('r',(130+hz*20+6*Math.sin(lt*4)).toFixed(1));
+      $('gc').setAttribute('transform',`translate(540 1110) scale(${(1+0.12*hz).toFixed(3)}) translate(-540 -1110)`); }
+    if(s.typ==='spiegel'){ $('sr').setAttribute('opacity',(0.2+0.5*eOut(pr(lt,0.3,1.4))).toFixed(3));
+      $('ss').setAttribute('x',(380+((lt*0.7)%1.6)*500).toFixed(1)); }
+    if(s.typ==='kreis'){ const r=s.eng?260-90*eIO(pr(lt,0.3,D-0.3)):260+6*Math.sin(lt*2.2);
+      $('kr').setAttribute('r',r.toFixed(1)); $('kt').setAttribute('y',(980-r-26).toFixed(1));
+      if(s.eng){ $('kr').style.opacity=(Math.sin(lt*23)>-0.4?1:0.45); $('kf').setAttribute('transform',`translate(540 1070) scale(${(1-0.22*eIO(pr(lt,0.3,D-0.3))).toFixed(3)}) translate(-540 -1070)`); } }
+    if(s.typ==='ringe'){ el.querySelectorAll('.rg').forEach(g=>{ const k=+g.dataset.k, e=eSpr(pr(lt,0.1+k*0.3,0.7+k*0.3));
+        g.setAttribute('transform',`translate(540 970) scale(${Math.max(0.001,e).toFixed(3)}) translate(-540 -970)`); g.style.opacity=cl(e*1.5); });
+      const w=s.raus?eIO(pr(lt,0.9,Math.min(2.8,D-0.3)))*278:0, x=540+w, y=992+Math.abs(Math.sin(w/26))*-10;
+      $('rf').setAttribute('transform',`translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(0.8)`); $('rw').setAttribute('x2',(540+w).toFixed(1)); }
+    if(s.typ==='zweiwege'){ ['zs','zl','zr'].forEach((id,k)=>{ const p=$(id), L=p.getTotalLength(), e=eIO(pr(lt,0.2+k*0.25*(k>0?1:0)+(k?0.4:0),0.9+(k?0.5:0)));
+        p.style.strokeDasharray=L; p.style.strokeDashoffset=(L*(1-e)).toFixed(1); });
+      const w=eIO(pr(lt,1.4,Math.min(3.4,D-0.2))), zs=$('zs'), zr=$('zr'), Ls=zs.getTotalLength(), Lr=zr.getTotalLength(), d=w*(Ls+Lr*0.75);
+      const pt=d<Ls?zs.getPointAtLength(d):zr.getPointAtLength(d-Ls);
+      $('zf').setAttribute('transform',`translate(${pt.x.toFixed(1)} ${(pt.y+4).toFixed(1)})`); $('zf').style.opacity=cl(lt*3); }
+  });
+  /* Untertitel: Wort fuer Wort */
+  let a=null; for(const s of P.szenen) if(t>=s.vo_a && t<s.vo_a+s.vo_d+0.4) a=s;
+  if(!a){ ut.style.opacity='0'; return; }
+  if(ut.dataset.f!==a.vo){ ut.dataset.f=a.vo; ut.innerHTML=a.vo.split(' ').map(w=>`<span>${w}</span>`).join(' '); }
+  const W_=[...ut.querySelectorAll('span')], f=(t-a.vo_a)/(a.vo_d*0.92);
+  W_.forEach((w,k)=>w.style.opacity = (k/W_.length<=f)?'1':'.25');
+  ut.style.opacity=eOut(pr(t,a.vo_a,a.vo_a+0.2)).toFixed(3);
+};
+window.render(0); window.bereit=true;
+</script></body></html>

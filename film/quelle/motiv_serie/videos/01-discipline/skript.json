@@ -1,0 +1,10 @@
+{"titel":"Discipline","tonart":"dunkel","bpm":90,"szenen":[
+ {"typ":"akku","h":"MOTIVATION?","pill":"IT RUNS OUT","von":100,"bis":6,"m":"ruhig","vo":"[shouting] Motivation is a lie! [intense] It shows up... and then it leaves."},
+ {"typ":"graph","zeige":"welle","h":"UP. DOWN.","pill":"FEELINGS CHANGE","t1":"MOTIVATION","vo":"Motivation is a feeling. And feelings change every single hour."},
+ {"typ":"graph","zeige":"treppe","h":"DISCIPLINE","pill":"IS A DECISION","t2":"DISCIPLINE","m":"drums","vo":"[intense] Discipline is different. Discipline is a decision."},
+ {"typ":"allein","h":"NO ONE WATCHING","pill":"DO IT ANYWAY","vo":"It's doing the work when nobody is watching."},
+ {"typ":"akku","h":"TIRED?","pill":"DO IT ANYWAY","von":18,"bis":4,"vo":"[intense] Tired? Do it anyway. Bored? Do it anyway."},
+ {"typ":"graph","zeige":"beide","h":"WHO WINS?","pill":"AFTER ONE YEAR","t1":"MOTIVATION","t2":"DISCIPLINE","m":"peak","pause":0.5,"vo":"[shouting] Motivated people start. Disciplined people FINISH!"},
+ {"typ":"punkt","h":"NOT READY?","pill":"NOBODY EVER IS","m":"drop","vo":"[whispers] You don't need to feel ready."},
+ {"typ":"zahl","gross":"1","h":"SHOW UP.","pill":"ONE MORE DAY","m":"build","vo":"[intense] You just need to show up. One more day."},
+ {"typ":"ende","h":"EVERY DAY.","pill":"FOLLOW FOR MORE","m":"end","pause":2.0,"vo":"[shouting] Stop waiting to feel it. Show up. Every. Single. Day!"}]}

@@ -1,0 +1,9 @@
+{"titel":"Your 5 people","tonart":"dunkel","bpm":92,"szenen":[
+ {"typ":"gruppe","modus":"zaehlen","h":"YOUR 5 PEOPLE","pill":"LOOK AROUND YOU","m":"ruhig","vo":"[intense] Look at the five people you spend the most time with."},
+ {"typ":"gruppe","modus":"du","h":"THAT'S YOU.","pill":"IN 5 YEARS","vo":"That's who you're becoming. Like it or not."},
+ {"typ":"akku","h":"THEY DRAIN YOU?","pill":"ENERGY: LOW","von":90,"bis":5,"m":"drums","vo":"[intense] If they drain your energy... you'll end up empty."},
+ {"typ":"graph","zeige":"treppe","h":"THEY PUSH YOU?","pill":"ENERGY: HIGH","t2":"YOU","x1":"TODAY","x2":"5 YEARS","vo":"If they push you... you'll go further than you ever thought."},
+ {"typ":"zweiwege","h":"CHOOSE.","pill":"YOUR CIRCLE","t1":"COMFORT","t2":"GROWTH","m":"peak","pause":0.5,"vo":"[shouting] So choose your circle like your future depends on it! Because it does!"},
+ {"typ":"allein","h":"ALONE FOR A WHILE?","pill":"THAT'S OK","m":"drop","vo":"[whispers] And if that means being alone for a while? [intense] That's okay."},
+ {"typ":"zahl","gross":"ALONE","h":"BETTER","pill":"THAN HELD BACK","m":"build","vo":"Better alone... than held back."},
+ {"typ":"ende","h":"LEVEL UP.","pill":"FOLLOW FOR MORE","m":"end","pause":2.0,"vo":"[shouting] Find the people who make you better. And LEVEL UP!"}]}
