@@ -370,3 +370,32 @@ gestern war sie noch 68 😨 #67 #fyp #foryou #fürdich #viral #ai #brainrot #ph
 pov: du sitzt vor der 970 💀 #pov #fyp #foryou #fürdich #viral #ai #brainrot #phonk
 welche zahl hättest du? 👇 #67 #fyp #foryou #fürdich #viral #ai #brainrot #phonk
 ```
+
+---
+
+## 970 – Profi-Edit (24.11.2026)
+
+`tiktok/970-profi.mp4` — 23,6 s, 1080 × 1920, mit Ton.
+`tiktok/970-zwei-minuten-bewegt.mp4` — die lange Fassung, jetzt mit
+Bewegung und Phonk (Drop beim ersten Wort der Kartoffel, 1:25).
+
+Was den Profi-Edit von den Kurzclips unterscheidet:
+
+- **Jeder Schnitt auf einem Schlag** (140 BPM). `quelle/profi/zeitplan.py`
+  rundet jede Einstellung auf ganze Schläge auf.
+- **Zoom-Schlag** auf jedem Schnitt, **Wackler** auf jedem Kick.
+- **Wischübergang in den Drop** mit gerichteter Bewegungsunschärfe
+  (SVG-`feGaussianBlur` nur in x-Richtung).
+- **Karaoke-Untertitel**: das gesprochene Wort leuchtet in der Farbe
+  des Sprechers.
+- **67 → 66 als Glitch** mit Rot/Cyan-Farbversatz und Digitalgeräusch.
+- **Musik bricht weg**, wenn die Kartoffel spricht, und setzt mit
+  Sub-Schlag auf der Endkarte wieder ein.
+- Alle Stimmen auf dieselbe Lautheit gebracht — vorher lag die
+  Kartoffel 10 dB unter den anderen.
+
+Hook: „Mit der 970 legt sich keiner an." (die ersten 5 Sekunden).
+
+```
+mit der 970 legt sich keiner an 😨 part 2? #67 #sixseven #fyp #foryou #fürdich #viral #ai #brainrot #phonk
+```
