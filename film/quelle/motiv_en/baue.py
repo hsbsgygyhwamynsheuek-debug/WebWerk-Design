@@ -20,9 +20,11 @@ def sprich(text):
         if code!='200': raise SystemExit(f'ElevenLabs HTTP {code}: {open(mp3).read()[:200]}')
     # Stimme verdichten, Praesenz, leichte Saettigung, kurzer Raum, minimal schneller
     subprocess.run(['ffmpeg','-v','error','-y','-i',mp3,'-af',
-        'atempo=1.05,highpass=f=75,equalizer=f=180:t=q:w=1:g=2,equalizer=f=3200:t=q:w=1.2:g=3.5,'
-        'acompressor=threshold=-22dB:ratio=4:attack=4:release=120:makeup=4,'
-        'asoftclip=type=tanh,aecho=0.8:0.4:28|47:0.10|0.06,alimiter=limit=0.95',
+        'atempo=1.05,highpass=f=75,lowpass=f=12000,deesser=i=0.7:m=0.5:f=0.5:s=o,'
+        'equalizer=f=180:t=q:w=1:g=2,equalizer=f=2800:t=q:w=1.2:g=2,'
+        'acompressor=threshold=-22dB:ratio=3.5:attack=4:release=120:makeup=3,'
+        'agate=threshold=0.012:ratio=6:attack=4:release=140,'
+        'aecho=0.8:0.35:28|47:0.08|0.05,alimiter=limit=0.95',
         '-ar',str(SR),'-ac','1',wav],check=True)
     return wav
 zeit=0.25; plan=[]
@@ -53,12 +55,13 @@ def klavier(f,d=1.6):
     x=q(d); return (np.sin(2*np.pi*f*x)+0.5*np.sin(4*np.pi*f*x)*np.exp(-x*2)+0.2*np.sin(6*np.pi*f*x)*np.exp(-x*4))*(1-np.exp(-x*800))*np.exp(-x*2.2)
 def taiko(f0=58):
     x=q(0.9); f=f0*(1+0.9*np.exp(-x*30)); ph=2*np.pi*np.cumsum(f)/SR
-    k=np.sin(ph)*np.exp(-x*5.5); n=rng.normal(0,1,len(x))*np.exp(-x*40)*0.35
-    return np.tanh(2.2*(k+n))
+    k=np.sin(ph)*np.exp(-x*5.5)+0.25*np.sin(2*ph)*np.exp(-x*14)
+    return np.tanh(2.0*k)
 def schlag():   # grosser Einschlag
     x=q(2.6); f=40+90*np.exp(-x*12); ph=2*np.pi*np.cumsum(f)/SR
-    b=np.sin(ph)*np.exp(-x*1.8); c=np.diff(rng.normal(0,1,len(x)+1))*np.exp(-x*1.6)*0.5
-    return np.tanh(1.6*(b+c))
+    b=np.sin(ph)*np.exp(-x*1.8)
+    stab=sum(np.sin(2*np.pi*hz(n)*x*h)/h for n in (33,40,45,52) for h in (1,2,3))*np.exp(-x*2.4)*(1-np.exp(-x*300))
+    return np.tanh(1.3*(b+0.22*stab))
 def intensitaet(ts):
     if ts<T_DRUM: return 0.45
     if ts<T_HOCH: return 0.65
@@ -91,8 +94,9 @@ c=np.concatenate([[0.0],np.cumsum(env)]); w=SR//2; lo=np.clip(np.arange(N)-w,0,N
 env=(c[hi]-c[lo])/np.maximum(1,hi-lo)
 musik+=pad*0.035*env
 # Riser in den Hoehepunkt, Einschlaege auf "37x" und "START NOW"
-x=q(1.8); r=np.cumsum(rng.normal(0,1,len(x))); r=np.diff(r,prepend=0)*(x/1.8)**2.5
-lege(r/np.abs(r).max(), T_HOCH-1.8, 0.35)
+x=q(1.8); gl=2**((x/1.8)*1.0)            # eine Oktave nach oben gleiten
+r=sum(np.sin(2*np.pi*np.cumsum(hz(n)*gl)/SR) for n in (57,64,69))*(x/1.8)**2.2
+lege(r/np.abs(r).max(), T_HOCH-1.8, 0.22)
 lege(schlag(), T_HOCH, 0.9); lege(schlag(), T_END, 1.0)
 # Musik bleibt praesent, geht unter der Stimme nur etwas zurueck (wie im Vorbild)
 h=np.abs(stim); w=int(SR*0.2); c=np.concatenate([[0.0],np.cumsum(h)])
@@ -100,7 +104,7 @@ lo=np.clip(np.arange(N)-w//2,0,N); hi=np.clip(np.arange(N)+w//2,0,N); g=(c[hi]-c
 musik*=1-0.40*np.clip(g*3,0,1)
 mix=stim*1.0+musik*0.85
 mix*=np.clip((LEN-t)/1.0,0,1)
-mix=np.tanh(1.2*mix/np.abs(mix).max())/np.tanh(1.2)
+mix=mix/np.abs(mix).max()
 mix*=10**(-1/20)
 with wave.open(os.path.join(HIER,'mix.wav'),'wb') as f:
     f.setnchannels(2); f.setsampwidth(2); f.setframerate(SR)

@@ -85,16 +85,16 @@ def hat(offen=False):
     return x/(np.abs(x).max()+1e-9)
 
 def crash():
-    t = tt(2.2); x = hp(rng.normal(0,1,len(t)))*np.exp(-t*2.0)
+    """Tonaler Einschlag statt Becken-Rauschen: tiefer Schlag plus Akkord."""
+    t = tt(1.8); f = 42 + 80*np.exp(-t*12); ph = 2*np.pi*np.cumsum(f)/SR
+    stab = sum(np.sin(2*np.pi*f0*h*t)/h for f0 in (87.3, 130.8, 174.6) for h in (1,2,3))
+    x = np.sin(ph)*np.exp(-t*2.0) + 0.18*stab*np.exp(-t*2.6)*(1-np.exp(-t*300))
     return x/(np.abs(x).max()+1e-9)
 
 def riser(dauer):
-    t = tt(dauer); n = rng.normal(0,1,len(t))
-    y = np.empty_like(n); v=0.0
-    for i in range(len(n)):
-        a = 0.01 + 0.5*(i/len(n))**2.2
-        v += a*(n[i]-v); y[i]=v
-    y = y*(t/dauer)**1.8
+    """Ansteigender Akkord statt Rauschfahne."""
+    t = tt(dauer); gl = 2**(t/dauer)
+    y = sum(np.sin(2*np.pi*np.cumsum(f0*gl)/SR) for f0 in (349.2, 523.3, 698.5))*(t/dauer)**2.2
     return y/(np.abs(y).max()+1e-9)
 
 # ---------------- Muster ----------------

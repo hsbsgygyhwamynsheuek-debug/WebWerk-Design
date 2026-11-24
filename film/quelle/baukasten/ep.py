@@ -116,17 +116,18 @@ def boom(f0=48,lang=1.6):
     q=tt(lang); f=f0+70*np.exp(-q*14); ph=2*np.pi*np.cumsum(f)/SR
     return np.tanh(1.8*np.sin(ph)*np.exp(-q*2.6))
 if 'drop' in marken:
-    d=0.42; x=rng.normal(0,1,int(SR*d)); u=tt(d)/d; y=np.empty_like(x); v=0.0
-    for i in range(len(x)): a=0.02+0.55*np.sin(np.pi*u[i])**2; v+=a*(x[i]-v); y[i]=v
-    y*=np.sin(np.pi*u)**1.5; y/=np.abs(y).max()+1e-9; lege(sfx,marken['drop']-0.30,y,0.55)
+    # Whoosh tonal: schneller Abwaertsgleiter statt Rauschen
+    d=0.42; q=tt(d); f=900*np.exp(-q*6)+90; ph=2*np.pi*np.cumsum(f)/SR
+    y=np.sin(ph)*np.sin(np.pi*q/d)**1.5; lege(sfx,marken['drop']-0.30,y,0.28)
     lege(sfx,marken['drop'],boom(),0.75)
 if 'ende' in marken: lege(sfx,marken['ende'],boom(42,2.2),0.95)
 def glitch():
+    """Digitaler Glitch ohne Rauschen: kurze Rechteck-Piepser in springenden Tonhoehen."""
     q=tt(0.34); g=np.zeros(len(q))
     for k in range(9):
-        s=int(k*0.034*SR); e=min(len(q),s+int(0.02*SR)); f=900+(300*k)%1800
-        g[s:e]=np.sign(np.sin(2*np.pi*f*q[s:e]))*0.6+rng.normal(0,0.5,e-s)
-    return np.round(g*6)/6
+        s0=int(k*0.034*SR); e=min(len(q),s0+int(0.02*SR)); f=700+(377*k)%1500
+        g[s0:e]=np.sign(np.sin(2*np.pi*f*q[s0:e]))*0.5
+    return g
 for wz in wechselzeiten: lege(sfx,wz,glitch(),0.28)
 for (a0,a1) in spinfenster:
     tick=np.sin(2*np.pi*2400*tt(0.012))*np.exp(-tt(0.012)*300)
