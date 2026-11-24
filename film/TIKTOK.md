@@ -399,3 +399,35 @@ Hook: „Mit der 970 legt sich keiner an." (die ersten 5 Sekunden).
 ```
 mit der 970 legt sich keiner an 😨 part 2? #67 #sixseven #fyp #foryou #fürdich #viral #ai #brainrot #phonk
 ```
+
+---
+
+## 970 – Part 2 (24.11.2026)
+
+`tiktok/970-part2.mp4` — 21,9 s, 1080 × 1920, mit Ton.
+
+Vier **neue Szenen**, erzeugt in Figma (Modell GPT Image 2.5, 2 Credits
+pro Bild aus dem Gratis-Kontingent des Starter-Tarifs, also 0 €). Die
+Originale liegen in `quelle/part2/szenen/` und in der Figma-Datei
+„970 – Part 2 Szenen".
+
+Canva war der erste Versuch, weil es ein Vorlagenbild annimmt und die
+Figuren dadurch gleich bleiben würden — dort ist die KI-Bildgenerierung
+aber vom Team-Admin abgeschaltet. Figma kann über die Verbindung keine
+Vorlage nehmen; die Figuren sind deshalb sehr genau beschrieben und
+ähnlich, aber nicht pixelgleich.
+
+Die Zahlen sind nicht im Bild, sondern werden wie immer als Leuchtzahlen
+darübergelegt — Bildgeneratoren verhunzen Ziffern oft.
+
+`quelle/part2/warp2.js` ist die Bewegung als Fabrik: jede Szene bekommt
+ihre eigenen Kopf-, Mund- und Augenkoordinaten.
+
+Ablauf: Kartoffel über Pfirsich („Du hast meine gesagt.") → Pfirsich nah
+→ Drop auf „Dreh dich um." → „Nein." → „Dreh dich um." → „Pfirsich.
+Deine Zahl." → 66 glitcht zu 65 → Licht aus, leerer Platz („Wer saß hier
+vorher?" / „Einer, der gefragt hat.", mit langem Hall) → „Part 3?".
+
+```
+part 2 – sie hat es gehört 😨 #67 #sixseven #fyp #foryou #fürdich #viral #ai #brainrot #phonk #part2
+```
