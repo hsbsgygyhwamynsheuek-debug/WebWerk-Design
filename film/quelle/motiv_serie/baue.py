@@ -88,48 +88,57 @@ def lege(sig, ts, g):
     i0 = int(ts * SR); i1 = min(N, i0 + len(sig))
     if 0 <= i0 < N: musik[i0:i1] += sig[:i1 - i0] * g
 def q(d): return np.arange(int(SR * d)) / SR
-def klavier(f, d=1.6):
+def ton(f, d, harm=8, ein=0.004, ab=12.0):
+    """Streicherartiger Ton aus Obertoenen (saegezahnaehnlich, ohne Rauschen)."""
     x = q(d)
-    return (np.sin(2*np.pi*f*x) + 0.5*np.sin(4*np.pi*f*x)*np.exp(-x*2) + 0.2*np.sin(6*np.pi*f*x)*np.exp(-x*4)) \
-        * (1 - np.exp(-x*800)) * np.exp(-x*2.2)
-def taiko(f0=58):
-    x = q(0.9); f = f0 * (1 + 0.9*np.exp(-x*30)); ph = 2*np.pi*np.cumsum(f)/SR
-    return np.tanh(2.0 * (np.sin(ph)*np.exp(-x*5.5) + 0.25*np.sin(2*ph)*np.exp(-x*14)))
-def schlag():
-    x = q(2.6); f = 40 + 90*np.exp(-x*12); ph = 2*np.pi*np.cumsum(f)/SR
-    b = np.sin(ph) * np.exp(-x*1.8)
-    grund = AKK[0][0] - 24
-    stab = sum(np.sin(2*np.pi*hz(n)*x*h)/h for n in (grund, grund+7, grund+12, grund+19) for h in (1, 2, 3)) \
-        * np.exp(-x*2.4) * (1 - np.exp(-x*300))
-    return np.tanh(1.3 * (b + 0.22*stab))
+    y = sum(np.sin(2*np.pi*f*hh*x + hh)/hh for hh in range(1, harm + 1))
+    return y * (1 - np.exp(-x/ein)) * np.exp(-x*ab)
+def kick():
+    """Sauberer Kinoschlag: kurz, ohne Verzerrung und ohne langes Abrutschen (kein "Pfff")."""
+    x = q(0.45); f = 52 + 30*np.exp(-x*30); ph = 2*np.pi*np.cumsum(f)/SR
+    return np.sin(ph) * np.exp(-x*8) * (1 - np.exp(-x*1500))
+def klavier(f, d=1.2):
+    x = q(d); return np.sin(2*np.pi*f*x) * (1 - np.exp(-x*400)) * np.exp(-x*3)
 
+# Laufende tiefe Streicher (Spiccato) auf Achteln - der Motor jeder Motivationsmusik
+AKZ = [1.0, 0.55, 0.75, 0.55, 0.9, 0.55, 0.75, 0.6]
 s = 0
 while s * BEAT < LEN:
-    ts = s * BEAT; akk = AKK[(s // 4) % 4]; I = intensitaet(ts); tr = TROMMEL[phase_bei(ts)]
-    for h in (0, 0.5):
-        ton = akk[[0, 2, 1, 2][(s*2 + int(h*2)) % 4]] + 12
-        lege(klavier(hz(ton)), ts + h*BEAT, 0.13 * (0.6 + 0.4*I))
-    if tr and (tr == 1 or s % 2 == 0): lege(taiko(), ts, 0.42 * I)
-    if tr == 1 and s % 4 == 3: lege(taiko(84), ts + BEAT*0.5, 0.25 * I)
+    ts = s * BEAT; akk = AKK[(s // 4) % 4]; ph = phase_bei(ts); I = STAERKE[ph]
+    for hh in (0, 0.5):
+        k8 = int(s*2 + hh*2) % 8; g = AKZ[k8] * (0.35 + 0.65*I)
+        grund = akk[0] - 24 if ph not in ('ruhig', 'drop') else akk[0] - 12
+        lege(ton(hz(grund), 0.3, harm=7, ab=11), ts + hh*BEAT, 0.030*g)
+        lege(ton(hz(grund + 12), 0.3, harm=5, ab=13), ts + hh*BEAT, 0.018*g)
+    # Klavier nur noch als leiser Glanz in den ruhigen Stellen
+    if ph in ('ruhig', 'drop') and s % 2 == 0:
+        lege(klavier(hz(akk[(s // 2) % 3] + 24)), ts, 0.035)
+    # Schlagzeug: sauberer Kick statt Taiko
+    tr = TROMMEL[ph]
+    if tr and (tr == 1 or s % 2 == 0): lege(kick(), ts, 0.55 * I)
     s += 1
+# Breite Streicherflaeche, weicher Einsatz
 pad = np.zeros(N)
 for k in range(int(LEN / (4*BEAT)) + 1):
-    a0 = k*4*BEAT; akk = AKK[k % 4]; i0 = int(a0*SR); i1 = min(N, int((a0 + 4*BEAT + 0.6)*SR))
+    a0 = k*4*BEAT; akk = AKK[k % 4]; i0 = int(a0*SR); i1 = min(N, int((a0 + 4*BEAT + 0.8)*SR))
     if i0 >= N: break
     x = t[i0:i1] - a0
-    w = sum(sum(np.sin(2*np.pi*hz(n-12)*h*x*(1 + 0.002*dd))/h for h in range(1, 7) for dd in (-1, 1)) for n in akk)
-    pad[i0:i1] += w * np.clip(x/0.5, 0, 1) * np.clip((4*BEAT + 0.6 - x)/0.5, 0, 1)
+    w = sum(sum(np.sin(2*np.pi*hz(n)*hh*x*(1 + 0.003*dd))/hh for hh in range(1, 6) for dd in (-1, 1)) for n in akk)
+    w += sum(np.sin(2*np.pi*hz(akk[0] - 24)*x) for _ in (0,))          # tiefer Bass, rein
+    pad[i0:i1] += w * np.clip(x/0.8, 0, 1) * np.clip((4*BEAT + 0.8 - x)/0.8, 0, 1)
 env = np.repeat(np.array([intensitaet(v) for v in t[::480]]), 480)[:N]
 c = np.concatenate([[0.0], np.cumsum(env)]); w = SR // 2
 lo = np.clip(np.arange(N) - w, 0, N); hi = np.clip(np.arange(N) + w, 0, N)
-musik += pad * 0.035 * (c[hi] - c[lo]) / np.maximum(1, hi - lo)
-# Riser vor jedem Hoehepunkt, Einschlag auf Hoehepunkt und Schluss
+glatt = (c[hi] - c[lo]) / np.maximum(1, hi - lo)
+musik += pad * 0.030 * glatt
+# Blechblaeser-Anschwellen in Hoehepunkt und Schluss (statt Einschlag mit Abrutschen)
 for sz in plan:
-    if sz['m'] in ('peak', 'end') and (sz is plan[0] or plan[plan.index(sz) - 1]['m'] != sz['m']):
-        x = q(1.8); gl = 2 ** (x / 1.8)
-        r = sum(np.sin(2*np.pi*np.cumsum(hz(n + 12)*gl)/SR) for n in AKK[0]) * (x/1.8)**2.2
-        lege(r / np.abs(r).max(), sz['a'] - 1.8, 0.22)
-        lege(schlag(), sz['a'], 0.9 if sz['m'] == 'peak' else 1.0)
+    if sz['m'] in ('peak', 'end'):
+        d = sz['b'] - sz['a'] + 0.5; x = q(d); akk = AKK[0]
+        y = sum(ton(hz(n - 12), d, harm=9, ein=0.5, ab=0.0) for n in akk)
+        y *= np.clip((d - x)/0.6, 0, 1)
+        lege(y, sz['a'], 0.045)
+        lege(kick(), sz['a'], 0.9)
 # Musik geht unter der Stimme nur etwas zurueck
 h = np.abs(stim); w = int(SR*0.2); c = np.concatenate([[0.0], np.cumsum(h)])
 lo = np.clip(np.arange(N) - w//2, 0, N); hi = np.clip(np.arange(N) + w//2, 0, N)
