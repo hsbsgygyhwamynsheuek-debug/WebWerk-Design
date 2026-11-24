@@ -1,0 +1,215 @@
+{
+ "name": "v06-der-neue",
+ "szenen": {
+  "s1": {
+   "bild": "/tmp/claude-0/-home-user-WebWerk-Design/21ce08ea-274b-522f-8718-d96f1cd65571/scratchpad/film/pixar/szene.jpg",
+   "grade": "warm",
+   "fig": {
+    "K": {
+     "kopf": [
+      750,
+      300,
+      330
+     ],
+     "mund": [
+      705,
+      470,
+      92
+     ],
+     "auge": [
+      700,
+      342,
+      165,
+      58
+     ]
+    },
+    "P": {
+     "kopf": [
+      395,
+      920,
+      310
+     ],
+     "mund": [
+      515,
+      1140,
+      62
+     ],
+     "auge": [
+      545,
+      965,
+      125,
+      50
+     ]
+    },
+    "A": {
+     "kopf": [
+      995,
+      940,
+      300
+     ],
+     "mund": [
+      938,
+      1152,
+      60
+     ],
+     "auge": [
+      915,
+      988,
+      125,
+      50
+     ]
+    }
+   },
+   "zahlen": [
+    {
+     "t": "67",
+     "x": 396,
+     "y": 762,
+     "fs": 84,
+     "wer": "P"
+    },
+    {
+     "t": "88",
+     "x": 1002,
+     "y": 800,
+     "fs": 84,
+     "wer": "A"
+    }
+   ]
+  },
+  "n2": {
+   "bild": "/tmp/claude-0/-home-user-WebWerk-Design/21ce08ea-274b-522f-8718-d96f1cd65571/scratchpad/film/neu/roh2/n2.png",
+   "grade": "warm",
+   "fig": {
+    "N": {
+     "kopf": [
+      430,
+      470,
+      140
+     ],
+     "mund": [
+      430,
+      540,
+      30
+     ],
+     "auge": [
+      435,
+      471,
+      70,
+      25
+     ]
+    }
+   },
+   "zahlen": [
+    {
+     "t": "?",
+     "x": 432,
+     "y": 395,
+     "fs": 54,
+     "wer": "N",
+     "spin": {
+      "von": "neu",
+      "bis": "drop",
+      "ende": "1000"
+     }
+    }
+   ]
+  },
+  "n3": {
+   "bild": "/tmp/claude-0/-home-user-WebWerk-Design/21ce08ea-274b-522f-8718-d96f1cd65571/scratchpad/film/neu/roh2/n3.png",
+   "grade": "warm",
+   "fig": {
+    "K": {
+     "kopf": [
+      425,
+      580,
+      400
+     ],
+     "mund": [
+      430,
+      886,
+      60
+     ],
+     "auge": [
+      435,
+      648,
+      200,
+      75
+     ]
+    }
+   },
+   "zahlen": [
+    {
+     "t": "970",
+     "x": 430,
+     "y": 330,
+     "fs": 150,
+     "wer": "K"
+    }
+   ]
+  }
+ },
+ "titel": [
+  {
+   "t": "Die 970 war immer die Höchste.",
+   "von": 0.05,
+   "bis": "neu"
+  },
+  {
+   "t": "Bis heute.",
+   "von": "neu",
+   "bis": "drop"
+  }
+ ],
+ "shots": [
+  {
+   "sz": "s1",
+   "cx": 680,
+   "cy": 856,
+   "z0": 1.14,
+   "z1": 1.24,
+   "min": 5
+  },
+  {
+   "sz": "n2",
+   "cx": 432,
+   "cy": 620,
+   "z0": 1.27,
+   "z1": 1.42,
+   "min": 6,
+   "mark": "neu"
+  },
+  {
+   "sz": "n3",
+   "cx": 430,
+   "cy": 560,
+   "z0": 1.3,
+   "z1": 1.42,
+   "min": 3,
+   "rede": {
+    "w": "K",
+    "t": "Das ist unmöglich.",
+    "hall": false
+   },
+   "mark": "drop"
+  },
+  {
+   "sz": "n2",
+   "cx": 432,
+   "cy": 480,
+   "z0": 2.05,
+   "z1": 2.22,
+   "min": 3,
+   "rede": {
+    "w": "N",
+    "t": "Hallo. Ich bin der Neue.",
+    "hall": false
+   }
+  }
+ ],
+ "ende": {
+  "gr1": "970 oder 1000?",
+  "gr2": "Wer gewinnt?",
+  "kl": "Kommentier 👇"
+ }
+}

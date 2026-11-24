@@ -1,0 +1,15 @@
+{
+ "name": "v01-automat",
+ "szenen": {
+  "s3": {"bild": "/tmp/claude-0/-home-user-WebWerk-Design/21ce08ea-274b-522f-8718-d96f1cd65571/scratchpad/film/neu/roh/szene3.png", "grade": "warm",
+         "fig": {"P": {"kopf":[416,600,420],"mund":[436,850,70],"auge":[456,655,200,70]}},
+         "zahlen": [{"t":"?","x":430,"y":430,"fs":150,"wer":"P","spin":{"von":0.25,"bis":"drop","ende":"67"}}]}
+ },
+ "titel": [{"t":"Stopp das Video. Das ist deine Zahl.","von":0.05,"bis":"drop"}],
+ "shots": [
+  {"sz":"s3","cx":432,"cy":600,"z0":1.30,"z1":1.46,"min":16},
+  {"sz":"s3","cx":432,"cy":620,"z0":1.62,"z1":1.74,"min":4,"mark":"drop",
+   "rede":{"w":"P","t":"Siebenundsechzig?! Schon wieder?"}}
+ ],
+ "ende": {"gr1":"Welche Zahl","gr2":"hattest du?","kl":"Schreib sie in die Kommentare 👇"}
+}

@@ -1,0 +1,21 @@
+@import url("kino.css");
+#rahmen canvas{display:block;width:1360px;height:1712px}
+/* Hook oben */
+#hook{position:absolute;left:50px;right:50px;top:190px;text-align:center;
+  font-family:"Inter Display","Inter",sans-serif;font-weight:800;font-size:74px;line-height:1.1;
+  color:#fff;letter-spacing:-.025em;
+  text-shadow:0 5px 0 rgba(0,0,0,.92),0 0 22px rgba(0,0,0,.92),0 0 60px rgba(0,0,0,.7)}
+/* Karaoke-Untertitel */
+#ut{position:absolute;left:46px;right:46px;top:1290px;text-align:center;
+  font-family:"Inter Display","Inter",sans-serif;font-weight:800;font-size:70px;line-height:1.16;
+  letter-spacing:-.022em}
+#ut span{display:inline-block;margin:0 .11em;color:#fff;
+  text-shadow:0 5px 0 rgba(0,0,0,.95),0 0 18px rgba(0,0,0,.9),0 0 50px rgba(0,0,0,.7)}
+/* Endkarte */
+#ende{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:34px;padding:0 70px 280px;text-align:center;opacity:0;
+  background:radial-gradient(80% 60% at 50% 45%,rgba(30,12,6,.72),rgba(4,3,2,.94))}
+#ende .gr{font-family:"Inter Display","Inter",sans-serif;font-size:150px;font-weight:800;
+  letter-spacing:-.05em;color:#fff;line-height:.98}
+#ende .gr b{color:#FF8A3D;display:block}
+#ende .kl{font-size:46px;font-weight:700;color:#FFD2A8}

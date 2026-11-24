@@ -1,0 +1,147 @@
+{
+ "name": "v10-part3",
+ "szenen": {
+  "n8": {
+   "bild": "/tmp/claude-0/-home-user-WebWerk-Design/21ce08ea-274b-522f-8718-d96f1cd65571/scratchpad/film/neu/roh2/n8.png",
+   "grade": "dunkel",
+   "fig": {
+    "P": {
+     "kopf": [
+      377,
+      650,
+      190
+     ],
+     "mund": [
+      402,
+      790,
+      25
+     ],
+     "auge": [
+      402,
+      720,
+      80,
+      30
+     ]
+    }
+   },
+   "zahlen": [
+    {
+     "t": "65",
+     "x": 372,
+     "y": 575,
+     "fs": 70,
+     "wer": "P",
+     "wechsel": [
+      [
+       "glitch",
+       "64"
+      ]
+     ]
+    }
+   ]
+  },
+  "n9": {
+   "bild": "/tmp/claude-0/-home-user-WebWerk-Design/21ce08ea-274b-522f-8718-d96f1cd65571/scratchpad/film/neu/roh2/n9.png",
+   "grade": "dunkel",
+   "fig": {
+    "K": {
+     "kopf": [
+      433,
+      260,
+      110
+     ],
+     "mund": [
+      -9000,
+      -9000,
+      1
+     ],
+     "auge": [
+      433,
+      300,
+      60,
+      20
+     ]
+    }
+   },
+   "zahlen": [
+    {
+     "t": "970",
+     "x": 432,
+     "y": 205,
+     "fs": 54,
+     "wer": "K",
+     "cls": "flare"
+    }
+   ]
+  }
+ },
+ "titel": [
+  {
+   "t": "Part 3: Der leere Platz",
+   "von": 0.05,
+   "bis": "glitch"
+  }
+ ],
+ "shots": [
+  {
+   "sz": "n8",
+   "cx": 400,
+   "cy": 720,
+   "z0": 1.27,
+   "z1": 1.42,
+   "min": 3,
+   "rede": {
+    "w": "P",
+    "t": "Ich setz mich einfach hin.",
+    "hall": true
+   }
+  },
+  {
+   "sz": "n8",
+   "cx": 380,
+   "cy": 640,
+   "z0": 1.9,
+   "z1": 2.15,
+   "min": 4,
+   "rede": {
+    "w": "P",
+    "t": "Meine Zahl...",
+    "hall": true
+   },
+   "mark": "glitch"
+  },
+  {
+   "sz": "n9",
+   "cx": 432,
+   "cy": 500,
+   "z0": 1.27,
+   "z1": 1.44,
+   "min": 3,
+   "rede": {
+    "w": "K",
+    "t": "Jetzt ist es deiner.",
+    "hall": true
+   },
+   "mark": "drop"
+  },
+  {
+   "sz": "n9",
+   "cx": 432,
+   "cy": 320,
+   "z0": 2.1,
+   "z1": 2.4,
+   "min": 4,
+   "rede": {
+    "w": "K",
+    "t": "Wer fragt, sitzt hier.",
+    "hall": true
+   },
+   "mark": "stille"
+  }
+ ],
+ "ende": {
+  "gr1": "Wollt ihr",
+  "gr2": "Part 4?",
+  "kl": "Kommentier „Part 4\" 👇"
+ }
+}
