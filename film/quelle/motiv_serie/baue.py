@@ -41,7 +41,8 @@ def sprich(text):
             raise SystemExit(f'ElevenLabs HTTP {code}: {msg}')
     # Stimmkette ohne Rauschquellen: De-Esser gegen scharfe S-Laute, Gate fuer stille Pausen
     subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', mp3, '-af',
-        'atempo=1.05,highpass=f=75,lowpass=f=12000,deesser=i=0.7:m=0.5:f=0.5:s=o,'
+        'silenceremove=start_periods=1:start_threshold=-45dB:stop_periods=-1:stop_duration=0.12:stop_threshold=-45dB:stop_silence=0.1,'
+        'atempo=1.2,highpass=f=75,lowpass=f=12000,deesser=i=0.7:m=0.5:f=0.5:s=o,'
         'equalizer=f=180:t=q:w=1:g=2,equalizer=f=2800:t=q:w=1.2:g=2,'
         'acompressor=threshold=-22dB:ratio=3.5:attack=4:release=120:makeup=3,'
         'agate=threshold=0.012:ratio=6:attack=4:release=140,'
@@ -54,10 +55,10 @@ zeit = 0.25; plan = []; phase = 'ruhig'
 for sz in S['szenen']:
     phase = sz.get('m', phase)
     p = sprich(sz['vo']); d = len(lies(p)) / SR
-    dauer = max(1.9, d + 0.45 + sz.get('pause', 0.2))
+    dauer = max(1.3, d + 0.12 + sz.get('pause', 0.0))   # wie im Vorbild: Satz an Satz, kaum Luft
     anzeige = re.sub(r'\[[^\]]*\]\s*', '', sz['vo']).strip()
     plan.append(dict(sz, m=phase, vo=anzeige, a=round(zeit, 3), b=round(zeit + dauer, 3),
-                     vo_a=round(zeit + 0.18, 3), vo_d=round(d, 3), datei=p))
+                     vo_a=round(zeit + 0.04, 3), vo_d=round(d, 3), datei=p))
     zeit += dauer
 LEN = round(zeit, 3); N = int(SR * LEN); t = np.arange(N) / SR
 
@@ -81,7 +82,7 @@ TONARTEN = {   # MIDI-Grundtoene der Dreiklaenge
     'heroisch': [[52, 55, 59], [48, 52, 55], [55, 59, 62], [50, 54, 57]], # Em C G D
 }
 AKK = TONARTEN[S.get('tonart', 'moll')]
-BPM = S.get('bpm', 92); BEAT = 60 / BPM
+BPM = S.get('bpm', 104); BEAT = 60 / BPM
 def hz(n): return 440 * 2 ** ((n - 69) / 12)
 musik = np.zeros(N)
 def lege(sig, ts, g):

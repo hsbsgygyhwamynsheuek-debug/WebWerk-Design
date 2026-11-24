@@ -1,78 +1,74 @@
 {
- "stimme": "SOYHLrjzK2X1ezoPC6cr",
+ "titel": "00-one-percent",
+ "tonart": "moll",
+ "bpm": 104,
  "szenen": [
   {
    "typ": "stopp",
    "h": "STOP.",
    "pill": "WAITING",
-   "vo": "[shouting] Stop waiting! [intense] The perfect moment is never coming.",
+   "vo": "[shouting] Stop waiting, bro! [intense] The perfect moment is never coming.",
    "m": "ruhig"
   },
   {
    "typ": "berg",
    "h": "ALL AT ONCE?",
    "pill": "YOUR WHOLE LIFE",
-   "vo": "You don't need to fix your whole life tonight."
+   "vo": "[intense] You don't need to fix your whole life tonight. You just need one percent."
   },
   {
    "typ": "prozent",
    "h": "ONE PERCENT.",
    "pill": "EVERY SINGLE DAY",
-   "vo": "[intense] One percent. That's it. One percent better... every single day.",
+   "vo": "[intense] One percent better, every single day. That's it.",
    "m": "drums"
   },
   {
    "typ": "punkt",
    "h": "SOUNDS LIKE NOTHING?",
    "pill": "THAT'S THE POINT",
-   "vo": "[whispers] Sounds like nothing? [intense] Good. That's why nobody does it."
+   "vo": "[intense] Sounds like nothing? Good. That's exactly why nobody does it."
   },
   {
    "typ": "kalender",
    "h": "365 DAYS",
    "pill": "ONE YEAR",
-   "vo": "But stack it for one year..."
+   "vo": "[intense] But stack that one percent for one full year."
   },
   {
    "typ": "hoch",
    "h": "37× BETTER",
    "pill": "1.01 TO THE POWER OF 365",
    "vo": "[shouting] And you're thirty-seven times better than the person you are right now!",
-   "pause": 0.6,
    "m": "peak"
   },
   {
    "typ": "runter",
    "h": "THE OTHER WAY?",
    "pill": "0.99 TO THE POWER OF 365",
-   "vo": "[intense] Lose one percent a day... and there's nothing left of you.",
-   "pause": 0.6
+   "vo": "[intense] Lose one percent a day, and there's almost nothing left of you."
   },
   {
    "typ": "talent",
    "h": "NOT TALENT.",
    "pill": "NEVER WAS",
-   "vo": "It was never about talent. Never.",
+   "vo": "[intense] It was never about talent. Never.",
    "m": "drop"
   },
   {
    "typ": "heute",
    "h": "TODAY.",
    "pill": "DAY ONE",
-   "vo": "[intense] It's about what you do... today.",
-   "pause": 0.5,
+   "vo": "[intense] It's about what you do today.",
    "m": "build"
   },
   {
    "typ": "ende",
    "h": "START NOW.",
    "pill": "FOLLOW FOR MORE",
-   "vo": "[shouting] So get up. And START. NOW!",
-   "pause": 2.0,
-   "m": "end"
+   "vo": "[shouting] So get up and start. Right now!",
+   "m": "end",
+   "pause": 1.5
   }
- ],
- "titel": "One percent",
- "tonart": "moll",
- "bpm": 92
+ ]
 }

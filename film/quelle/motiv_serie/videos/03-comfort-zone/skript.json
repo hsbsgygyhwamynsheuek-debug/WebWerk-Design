@@ -1,9 +1,72 @@
-{"titel":"Comfort zone","tonart":"heroisch","bpm":94,"szenen":[
- {"typ":"kreis","h":"COMFORT ZONE","pill":"FEELS SAFE","t1":"COMFORT ZONE","m":"ruhig","vo":"Your comfort zone feels safe. Warm. Easy."},
- {"typ":"kreis","eng":true,"h":"IT'S A TRAP.","pill":"NOTHING GROWS HERE","t1":"COMFORT ZONE","vo":"[intense] But it's a trap. Nothing grows in there. Nothing."},
- {"typ":"uhr","h":"TIME PASSES","pill":"SAME PLACE","liste":["DAYS","MONTHS","YEARS"],"m":"drums","vo":"Days become months. Months become years. And you're still in the same place."},
- {"typ":"ringe","h":"OUTSIDE?","pill":"FEAR. THEN GROWTH.","vo":"[intense] Outside, it gets scary first. Then you learn. Then you grow."},
- {"typ":"ringe","raus":true,"h":"STEP OUT.","pill":"ONE STEP","m":"peak","pause":0.5,"vo":"[shouting] Everything you want is waiting one step outside!"},
- {"typ":"punkt","h":"UNCOMFORTABLE?","pill":"THAT'S THE SIGN","m":"drop","vo":"[whispers] Feeling uncomfortable? [intense] That's the sign you're growing."},
- {"typ":"zahl","gross":"1","h":"ONE THING","pill":"THAT SCARES YOU","m":"build","vo":"Do one thing today that scares you. Just a little."},
- {"typ":"ende","h":"GROW.","pill":"FOLLOW FOR MORE","m":"end","pause":2.0,"vo":"[shouting] Get out of the circle. And GROW!"}]}
+{
+ "titel": "03-comfort-zone",
+ "tonart": "heroisch",
+ "bpm": 104,
+ "szenen": [
+  {
+   "typ": "kreis",
+   "h": "COMFORT ZONE",
+   "pill": "FEELS SAFE",
+   "vo": "[intense] Your comfort zone feels safe, warm and easy. That's exactly why it's dangerous.",
+   "m": "ruhig",
+   "t1": "COMFORT ZONE"
+  },
+  {
+   "typ": "kreis",
+   "h": "IT'S A TRAP.",
+   "pill": "NOTHING GROWS HERE",
+   "vo": "[intense] Nothing grows in there, bro. Not your skills, not your money, not you.",
+   "t1": "COMFORT ZONE",
+   "eng": true
+  },
+  {
+   "typ": "uhr",
+   "h": "TIME PASSES",
+   "pill": "SAME PLACE",
+   "vo": "[intense] Days turn into months, months turn into years, and you're still standing in the same place.",
+   "m": "drums",
+   "liste": [
+    "DAYS",
+    "MONTHS",
+    "YEARS"
+   ]
+  },
+  {
+   "typ": "ringe",
+   "h": "OUTSIDE?",
+   "pill": "FEAR. THEN GROWTH.",
+   "vo": "[intense] Outside, it gets scary first. Then you learn. Then you grow."
+  },
+  {
+   "typ": "ringe",
+   "h": "STEP OUT.",
+   "pill": "ONE STEP",
+   "vo": "[shouting] Everything you want is waiting one step outside that circle!",
+   "m": "peak",
+   "raus": true
+  },
+  {
+   "typ": "punkt",
+   "h": "UNCOMFORTABLE?",
+   "pill": "THAT'S THE SIGN",
+   "vo": "[intense] Feeling uncomfortable? That's not a stop sign. That's proof you're growing.",
+   "m": "drop"
+  },
+  {
+   "typ": "zahl",
+   "h": "ONE THING",
+   "pill": "THAT SCARES YOU",
+   "vo": "[intense] So do one thing today that scares you. Just one.",
+   "m": "build",
+   "gross": "1"
+  },
+  {
+   "typ": "ende",
+   "h": "GROW.",
+   "pill": "FOLLOW FOR MORE",
+   "vo": "[shouting] Get out of the circle and grow!",
+   "m": "end",
+   "pause": 1.5
+  }
+ ]
+}
