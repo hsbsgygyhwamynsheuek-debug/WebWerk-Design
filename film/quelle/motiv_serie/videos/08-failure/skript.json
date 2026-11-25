@@ -1,7 +1,7 @@
 {
  "titel": "08-failure",
  "tonart": "moll",
- "bpm": 100,
+ "bpm": 110,
  "szenen": [
   {
    "typ": "akku",
@@ -63,7 +63,7 @@
    "pill": "FOLLOW FOR MORE",
    "vo": "[shouting] Get back up, and keep going!",
    "m": "end",
-   "pause": 1.5
+   "pause": 4.5
   }
  ]
 }

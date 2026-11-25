@@ -80,7 +80,7 @@ def intensitaet(ts): return STAERKE[phase_bei(ts)]
 # Cis-Moll – A – E – H (vi–IV–I–V in E): die klassische emotionale Motivations-Folge, je Video transponiert
 VERSATZ = dict(moll=0, dunkel=-2, heroisch=3).get(S.get('tonart', 'moll'), 0)
 AKK = [[n + VERSATZ for n in a] for a in ([61, 64, 68], [57, 61, 64], [52, 56, 59], [59, 63, 66])]
-BPM = S.get('bpm', 96); BEAT = 60 / BPM; TAKT = 4 * BEAT
+BPM = S.get('bpm', 110); BEAT = 60 / BPM; TAKT = 4 * BEAT
 def hz(n): return 440 * 2 ** ((n - 69) / 12)
 def q(d): return np.arange(int(SR * d)) / SR
 unten = np.zeros(N); oben = np.zeros(N)
@@ -149,6 +149,21 @@ while k * TAKT < LEN:
     if ph0 in ('peak', 'end'):
         lege(oben, blech(akk), t0, 0.9); lege(oben, blech(akk, 0.35), t0 + 2.5*BEAT, 0.6)
     k += 1
+# ---- Outro wie in beiden Vorbildern: nach dem letzten Satz kommt der "Song" ----
+T_OUT = plan[-1]['vo_a'] + plan[-1]['vo_d'] + 0.05
+def lead(f, d):
+    x = q(d); y = sum(np.sin(2*np.pi*f*hh*x*(1 + 0.004*np.sin(2*np.pi*5.5*x)))/hh for hh in range(1, 7))
+    return y * (1 - np.exp(-x*120)) * np.exp(-x*2.5) * np.clip((d - x)/0.04, 0, 1)
+HOOK = [(0, 2, 0.75), (0.75, 2, 0.25), (1, 1, 0.5), (1.5, 0, 0.5), (2, 1, 0.75), (2.75, 2, 0.25), (3, 2, 1.0)]
+k0 = int(T_OUT // TAKT)
+for k in range(k0, int(LEN // TAKT) + 2):
+    t0 = k * TAKT; akk = AKK[k % 4]
+    for sch, ti, d in HOOK:
+        ts = t0 + sch*BEAT
+        if T_OUT <= ts < LEN: lege(oben, lead(hz(akk[ti] + 12), d*BEAT), ts, 0.6)
+    for hh in range(4):                                   # voller Beat im Outro
+        ts = t0 + hh*BEAT
+        if T_OUT <= ts < LEN: lege(unten, kick(), ts, 0.9)
 # Streicherflaeche darunter (gross, aber ohne Rauschen)
 for k in range(int(LEN / TAKT) + 1):
     a0 = k*TAKT; akk = AKK[k % 4]; i0 = int(a0*SR); i1 = min(N, int((a0 + TAKT + 0.6)*SR))
@@ -166,7 +181,7 @@ def band(x, lo_, hi_):
     return 10*np.log10(X[(f >= lo_) & (f < hi_)].sum() + 1e-12)
 aktiv = np.abs(stim) > 1e-4
 STIMME_MITTE = band(stim, 250, 4000) - 10*np.log10(aktiv.mean())
-UNTEN_ZIEL = S.get('bass_db', -1.0)        # Vorbild: Musik-Bass +0,7 dB gegenueber Sprach-Mitten
+UNTEN_ZIEL = S.get('bass_db', -2.5)        # Vorbild: Musik-Bass +0,7 dB gegenueber Sprach-Mitten
 OBEN_ZIEL = S.get('mitte_db', -11.0)       # Mitten der Musik deutlich unter der Stimme
 unten *= 10**((STIMME_MITTE + UNTEN_ZIEL - band(unten, 30, 250))/20)
 oben *= 10**((STIMME_MITTE + OBEN_ZIEL - band(oben, 250, 4000))/20)
@@ -176,7 +191,8 @@ h = np.abs(stim); w = int(SR*0.2); c = np.concatenate([[0.0], np.cumsum(h)])
 lo = np.clip(np.arange(N) - w//2, 0, N); hi = np.clip(np.arange(N) + w//2, 0, N)
 g = (c[hi] - c[lo]) / np.maximum(1, hi - lo); g /= g.max() + 1e-9
 musik *= 1 - 0.20*np.clip(g*3, 0, 1)
-mix = stim + musik
+outro = 1 + (10**(5/20) - 1)*np.clip((t - T_OUT)/0.3, 0, 1)
+mix = stim + musik*outro
 mix *= np.clip((LEN - t)/1.2, 0, 1)
 mix = mix / np.abs(mix).max() * 10**(-1/20)
 mixp = os.path.join(AUS, 'mix.wav')

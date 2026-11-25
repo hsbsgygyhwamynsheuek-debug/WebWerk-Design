@@ -1,7 +1,7 @@
 {
  "titel": "00-one-percent",
  "tonart": "moll",
- "bpm": 100,
+ "bpm": 110,
  "szenen": [
   {
    "typ": "stopp",
@@ -68,7 +68,7 @@
    "pill": "FOLLOW FOR MORE",
    "vo": "[shouting] So get up and start. Right now!",
    "m": "end",
-   "pause": 1.5
+   "pause": 4.5
   }
  ]
 }

@@ -1,7 +1,7 @@
 {
  "titel": "02-nobody-is-coming",
  "tonart": "moll",
- "bpm": 100,
+ "bpm": 110,
  "szenen": [
   {
    "typ": "allein",
@@ -65,7 +65,7 @@
    "pill": "FOLLOW FOR MORE",
    "vo": "[shouting] Stop waiting to be saved. Be the one who saves you!",
    "m": "end",
-   "pause": 1.5
+   "pause": 4.5
   }
  ]
 }

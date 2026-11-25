@@ -1,7 +1,7 @@
 {
  "titel": "04-your-5-people",
  "tonart": "dunkel",
- "bpm": 100,
+ "bpm": 110,
  "szenen": [
   {
    "typ": "gruppe",
@@ -67,7 +67,7 @@
    "pill": "FOLLOW FOR MORE",
    "vo": "[shouting] Find the people who make you better, and level up!",
    "m": "end",
-   "pause": 1.5
+   "pause": 4.5
   }
  ]
 }

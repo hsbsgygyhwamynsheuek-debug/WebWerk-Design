@@ -1,7 +1,7 @@
 {
  "titel": "06-your-phone",
  "tonart": "dunkel",
- "bpm": 100,
+ "bpm": 110,
  "szenen": [
   {
    "typ": "handy",
@@ -76,7 +76,7 @@
    "pill": "FOLLOW FOR MORE",
    "vo": "[shouting] Right after this video, put it down and go build something!",
    "m": "end",
-   "pause": 1.5
+   "pause": 4.5
   }
  ]
 }
