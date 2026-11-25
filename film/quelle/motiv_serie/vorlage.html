@@ -9,6 +9,7 @@ html,body{background:#000;overflow:hidden}
 .h{position:absolute;left:40px;right:40px;top:470px;text-align:center;font-weight:800;
   font-size:92px;letter-spacing:.11em;line-height:1.05;text-transform:uppercase;
   text-shadow:0 0 18px rgba(255,255,255,.55),0 0 46px rgba(255,255,255,.22)}
+.pill:empty,.h:empty{display:none}
 .pill{position:absolute;left:50%;top:1310px;transform:translateX(-50%);background:#F4F4F4;color:#0A0A0A;
   font-weight:800;font-size:26px;letter-spacing:.16em;padding:12px 26px;border-radius:999px;white-space:nowrap;
   box-shadow:0 0 30px rgba(255,255,255,.35)}
@@ -119,6 +120,26 @@ P.szenen.forEach((s,i)=>{
      <path id="zl${i}" d="M540,1060 C540,940 280,930 270,790" fill="none" stroke="${W}" stroke-width="8" stroke-linecap="round" opacity=".35"/>
      <path id="zr${i}" d="M540,1060 C540,940 800,930 810,790" fill="none" stroke="${W}" stroke-width="12" stroke-linecap="round"/>
      ${T(270,760,s.t1||'EASY',30,.45)}${T(810,760,s.t2||'RIGHT',34,1)}<g id="zf${i}">${figur(0,0,1.0)}</g>`);
+  /* ---------- Duell: zwei Figuren nebeneinander, ein Jahr im Zeitraffer (nach dem 2,3-Mio-Format) ---------- */
+  if(s.typ==='duell'){ const L=290, R=790, Y=1180;
+    const tisch=x=>`<rect x="${x-150}" y="1120" width="300" height="22" rx="4" fill="${W}"/><rect x="${x-140}" y="1142" width="280" height="150" fill="#1c1c1c" stroke="${W}" stroke-width="4"/>
+      <rect x="${x-130}" y="1292" width="14" height="40" fill="${W}"/><rect x="${x+116}" y="1292" width="14" height="40" fill="${W}"/>`;
+    let stapel=''; for(let k=0;k<10;k++) stapel+=`<rect class="buch" data-k="${k}" x="${R-140+((k%2)*8)}" y="${1118-(k+1)*26}" width="84" height="22" rx="4" fill="none" stroke="${W}" stroke-width="4" opacity="0"/>`;
+    v=`<svg width="1080" height="1920"><g class="glow" transform="translate(540 990) scale(1.25) translate(-540 -990)">
+      ${T(L,650,s.links||'STARTS MONDAY',30,1)}${T(R,650,s.rechts||'STARTS TODAY',30,1)}
+      <g transform="translate(540 800) scale(.6)">${kalender('dk'+i)}</g>
+      <g id="dw${i}">${[[-34,0,30],[0,-14,36],[36,0,28]].map(([x,y,r])=>`<circle cx="${L+x}" cy="${935+y}" r="${r}" fill="#8a8a8a"/>`).join('')}</g>
+      <g id="dr${i}" opacity="0">${[0,1,2,3,4].map(k=>`<line class="tropf" data-k="${k}" x1="${L-50+k*25}" y1="960" x2="${L-56+k*25}" y2="985" stroke="#9ab" stroke-width="4" stroke-linecap="round"/>`).join('')}</g>
+      <g id="dl${i}">${figur(L,Y,1.7)}</g><g id="dg${i}">${figur(R,Y,1.7)}</g>
+      <rect id="dp${i}" x="${L+40}" y="1045" width="28" height="48" rx="6" fill="${W}"/>
+      <rect x="${R+25}" y="1032" width="110" height="74" rx="6" fill="#0c0c0c" stroke="${W}" stroke-width="5"/><rect x="${R+15}" y="1108" width="130" height="10" rx="3" fill="${W}"/>
+      <g id="dc${i}">${[0,1,2].map(k=>`<rect x="${R+38}" y="${1048+k*16}" width="${[70,50,60][k]}" height="6" rx="3" fill="${W}" opacity=".7"/>`).join('')}</g>
+      ${stapel}<rect id="dm${i}" x="${L-120}" y="1092" width="84" height="22" rx="4" fill="none" stroke="${W}" stroke-width="4" opacity="0"/>
+      ${tisch(L)}${tisch(R)}
+      <g id="db${i}" opacity="0"><circle cx="${L+62}" cy="995" r="7" fill="${W}"/><circle cx="${L+82}" cy="972" r="10" fill="${W}"/>
+        <rect x="${L+60}" y="880" width="230" height="74" rx="37" fill="${W}"/><text id="dbt${i}" x="${L+175}" y="928" text-anchor="middle" font-size="30" font-weight="800" letter-spacing="3" fill="#0A0A0A">MONDAY</text></g>
+      <path id="ds${i}" d="M0,-46 L13,-14 L46,-14 L19,6 L29,40 L0,20 L-29,40 L-19,6 L-46,-14 L-13,-14 Z" fill="#FFD54A" transform="translate(${R} 930) scale(0)"/>
+      </g></svg>`; }
   SZ.insertAdjacentHTML('beforeend',`<div class="sz" id="s${i}"><div class="h" style="${s.h.length>13?'font-size:70px':''}">${s.h}</div>${v}<div class="pill">${s.pill}</div></div>`);
 });
 const ut=document.getElementById('ut');
@@ -216,6 +237,34 @@ window.render=function(t){
       const w=eIO(pr(lt,1.4,Math.min(3.4,D-0.2))), zs=$('zs'), zr=$('zr'), Ls=zs.getTotalLength(), Lr=zr.getTotalLength(), d=w*(Ls+Lr*0.75);
       const pt=d<Ls?zs.getPointAtLength(d):zr.getPointAtLength(d-Ls);
       $('zf').setAttribute('transform',`translate(${pt.x.toFixed(1)} ${(pt.y+4).toFixed(1)})`); $('zf').style.opacity=cl(lt*3); }
+    if(s.typ==='duell'){ const u=lt/D, L=290, R=790;
+      const JAHR=0.60, ENDE=0.78;                       /* 0-60 %: Jahr laeuft, 60-78 %: 31. Dezember, danach Neustart */
+      const MON=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'], ML=[31,28,31,30,31,30,31,31,30,31,30,31];
+      const tag = u<JAHR ? Math.max(1,Math.round(365*eIO(pr(u,0.03,JAHR)))) : (u<ENDE ? 365 : 1);
+      let m=0, rest=tag; while(rest>ML[m]){rest-=ML[m];m++;}
+      const kal=document.getElementById('dk'+i); kal.querySelector('.kopf').textContent=MON[m]; kal.querySelector('.zahl').textContent=rest;
+      kal.querySelectorAll('rect')[1].setAttribute('fill', (u>=JAHR&&u<ENDE)?'#E5484D':W); kal.querySelectorAll('rect')[2].setAttribute('fill', (u>=JAHR&&u<ENDE)?'#E5484D':W);
+      const pf=pr(u,0.03,JAHR);                          /* Fortschritt im Jahr */
+      /* rechts: Stapel waechst, Bildschirm flackert, bleibt nach Neustart stehen */
+      const nb = u<ENDE ? Math.floor(pf*10.99) : 10;
+      el.querySelectorAll('.buch').forEach(b=>{const k=+b.dataset.k; b.setAttribute('opacity', k<nb?1:0);});
+      $('dc').querySelectorAll('rect').forEach((r,k)=>r.setAttribute('opacity',(0.35+0.55*Math.abs(Math.sin(lt*7+k*1.7))).toFixed(2)));
+      const sieg=eSpr(pr(u,JAHR+0.02,JAHR+0.10))*(u<ENDE?1:0);
+      $('ds').setAttribute('transform',`translate(${R} ${930-20*sieg}) scale(${(sieg*1.3).toFixed(3)}) rotate(${(lt*40).toFixed(0)})`);
+      $('dg').setAttribute('transform',`translate(0 ${(-30*sieg+Math.sin(lt*14)*2*(u<JAHR?1:0)).toFixed(1)})`);
+      /* links: Handy, Denkblase "MONDAY", Wolke waechst, an Silvester Regen und Panik */
+      const panik = u>=JAHR && u<ENDE;
+      $('dp').setAttribute('opacity', panik?0:(0.75+0.25*Math.sin(lt*11)).toFixed(2));
+      $('dm').setAttribute('opacity', panik?1:0);
+      $('dl').setAttribute('transform',`translate(${panik?(Math.sin(lt*45)*5).toFixed(1):0} 0)`);
+      const blase = u<JAHR ? (Math.sin(u*JAHR*60)>0.55 ? 1:0) : (u>=ENDE+0.03 ? 1:0);
+      $('db').setAttribute('opacity', blase); $('dbt').textContent = u>=ENDE ? 'THIS YEAR!' : 'MONDAY';
+      const w = u<ENDE ? 0.25+0.9*pf : 0.25, dunkel = Math.round(138-80*pr(pf,0.3,1)*(u<ENDE?1:0));
+      $('dw').setAttribute('transform',`translate(${L} 935) scale(${w.toFixed(3)}) translate(${-L} -935)`);
+      $('dw').querySelectorAll('circle').forEach(c=>c.setAttribute('fill',`rgb(${dunkel},${dunkel},${dunkel})`));
+      $('dr').setAttribute('opacity', panik?1:0);
+      $('dr').querySelectorAll('.tropf').forEach(t=>{const k=+t.dataset.k, y=((lt*3+k*0.37)%1)*70; t.setAttribute('transform',`translate(0 ${y.toFixed(1)})`);});
+    }
   });
   /* Untertitel: Wort fuer Wort */
   let a=null; for(const s of P.szenen) if(t>=s.vo_a && t<s.vo_a+s.vo_d+0.4) a=s;

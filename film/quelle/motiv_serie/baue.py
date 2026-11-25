@@ -80,6 +80,11 @@ STAERKE = dict(ruhig=0.85, drums=0.92, peak=1.0, drop=0.55, build=0.95, end=1.0)
 TROMMEL = dict(ruhig=2, drums=2, peak=1, drop=0, build=1, end=1)
 if not any(sz.get('vo') for sz in S['szenen']) and S.get('drop_stil'): TROMMEL['ruhig'] = 0      # 2 = Trap-Muster, 1 = voll, 0 aus
 def phase_bei(ts):
+    if S.get('marken'):     # Musik-Phasen nach Zeitmarken (fuer Videos aus einer einzigen langen Szene)
+        ph = S['marken'][0][1]
+        for tm, pm in S['marken']:
+            if ts >= tm: ph = pm
+        return ph
     for s in reversed(plan):
         if ts >= s['a']: return s['m']
     return plan[0]['m']
