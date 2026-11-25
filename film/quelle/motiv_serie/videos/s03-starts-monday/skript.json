@@ -1,3 +1,37 @@
-{"titel":"Starts Monday","tonart":"heroisch","bpm":76,"stumm_bass":-3.0,
- "marken":[[0,"ruhig"],[2.0,"drums"],[8.1,"peak"],[10.5,"drop"],[12.2,"end"]],
- "szenen":[{"typ":"duell","h":"","pill":"","links":"STARTS MONDAY","rechts":"STARTS TODAY","m":"ruhig","dauer":14.0}]}
+{
+ "titel": "Starts Monday",
+ "tonart": "heroisch",
+ "bpm": 76,
+ "stumm_bass": -3.0,
+ "marken": [
+  [
+   0,
+   "drums"
+  ],
+  [
+   8.1,
+   "peak"
+  ],
+  [
+   10.5,
+   "drop"
+  ],
+  [
+   12.2,
+   "end"
+  ]
+ ],
+ "szenen": [
+  {
+   "typ": "duell",
+   "h": "",
+   "pill": "",
+   "links": "STARTS MONDAY",
+   "rechts": "STARTS TODAY",
+   "m": "ruhig",
+   "dauer": 14.0
+  }
+ ],
+ "drop_stil": true,
+ "laut_db": -15
+}

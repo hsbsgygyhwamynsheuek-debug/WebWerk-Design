@@ -225,8 +225,9 @@ mix = stim + musik*outro
 if os.environ.get('STEMS'): np.save(os.path.join(AUS, 'stems.npy'), np.stack([stim, musik*outro]))   # nur fuer Messungen
 mix *= np.clip((LEN - t)/1.2, 0, 1)
 if STUMM and S.get('drop_stil'):   # Dynamik behalten: lauter Teil auf -11 dBFS, Limiter faengt Spitzen
-    laut = mix[int(plan[[s['m'] for s in plan].index('peak')]['a']*SR):]
-    mix = mix * 10**(-9/20) / np.sqrt((laut**2).mean())
+    tp = next(tm for tm, pm in S['marken'] if pm == 'peak') if S.get('marken') else plan[[s['m'] for s in plan].index('peak')]['a']
+    laut = mix[int(tp*SR):]
+    mix = mix * 10**(S.get('laut_db', -9)/20) / np.sqrt((laut**2).mean())
     mix = np.tanh(mix*1.05)/1.05
 else:
     mix = mix / np.abs(mix).max() * 10**(-1/20)
