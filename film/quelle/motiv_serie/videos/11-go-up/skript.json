@@ -1,0 +1,61 @@
+{
+ "titel": "Go up",
+ "tonart": "moll",
+ "bpm": 110,
+ "szenen": [
+  {
+   "typ": "zweiwege",
+   "h": "TWO OPTIONS.",
+   "pill": "RIGHT NOW",
+   "t1": "STAY",
+   "t2": "GO UP",
+   "m": "ruhig",
+   "vo": "[intense] Listen, bro, you've got two options right now, you can stay exactly where you are, or you can go up."
+  },
+  {
+   "typ": "kreis",
+   "h": "STAYING?",
+   "pill": "FEELS SAFE",
+   "t1": "SAME LIFE",
+   "eng": true,
+   "vo": "[intense] Staying is easy, same room, same excuses, same life, every single year, until it's too late."
+  },
+  {
+   "typ": "uhr",
+   "h": "NOT TOMORROW.",
+   "pill": "NOT NEXT WEEK",
+   "liste": [
+    "TOMORROW",
+    "NEXT WEEK",
+    "NEXT YEAR"
+   ],
+   "m": "drums",
+   "vo": "[intense] And don't tell me tomorrow, don't tell me next week, because next week turns into next year."
+  },
+  {
+   "typ": "berg",
+   "h": "PROBLEMS?",
+   "pill": "ALWAYS",
+   "vo": "[intense] There will always be problems and something in your way, so you might as well start now."
+  },
+  {
+   "typ": "graph",
+   "h": "GO UP.",
+   "pill": "STEP BY STEP",
+   "zeige": "treppe",
+   "t2": "YOU",
+   "x1": "TODAY",
+   "x2": "1 YEAR",
+   "m": "peak",
+   "vo": "[shouting] So stop waiting for the perfect moment and go up, one step at a time!"
+  },
+  {
+   "typ": "ende",
+   "h": "START NOW.",
+   "pill": "FOLLOW FOR MORE",
+   "m": "end",
+   "pause": 4.0,
+   "vo": "[shouting] We're not staying here, bro. We're going up!"
+  }
+ ]
+}
