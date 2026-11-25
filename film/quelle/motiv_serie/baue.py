@@ -94,7 +94,7 @@ def basston(n):                      # Grundton in die Lage 38-76 Hz legen (wie 
     return f
 def sub808(f, d):
     x = q(d); ff = f * (1 + 0.05*np.exp(-x*40)); ph = 2*np.pi*np.cumsum(ff)/SR
-    y = np.sin(ph) + 0.35*np.sin(2*ph) + 0.12*np.sin(3*ph)       # Obertoene: auch auf Handys hoerbar
+    y = np.sin(ph) + 0.6*np.sin(2*ph) + 0.3*np.sin(3*ph) + 0.12*np.sin(4*ph)   # kraeftige Obertoene: auf Handy-Lautsprechern hoerbar
     return y * (1 - np.exp(-x*200)) * np.exp(-x*0.9) * np.clip((d - x)/0.05, 0, 1)
 def kick():
     x = q(0.35); f = 55 + 35*np.exp(-x*35); ph = 2*np.pi*np.cumsum(f)/SR
@@ -155,6 +155,14 @@ def lead(f, d):
     x = q(d); y = sum(np.sin(2*np.pi*f*hh*x*(1 + 0.004*np.sin(2*np.pi*5.5*x)))/hh for hh in range(1, 7))
     return y * (1 - np.exp(-x*120)) * np.exp(-x*2.5) * np.clip((d - x)/0.04, 0, 1)
 HOOK = [(0, 2, 0.75), (0.75, 2, 0.25), (1, 1, 0.5), (1.5, 0, 0.5), (2, 1, 0.75), (2.75, 2, 0.25), (3, 2, 1.0)]
+# Die Melodie laeuft leise durch das ganze Video (nicht nur im Outro): leise, aber wiedererkennbar
+k = 0
+while k * TAKT < T_OUT:
+    t0 = k * TAKT; akk = AKK[k % 4]
+    for sch, ti, d in HOOK:
+        ts = t0 + sch*BEAT
+        if ts < T_OUT and phase_bei(ts) != 'drop': lege(oben, lead(hz(akk[ti] + 12), d*BEAT), ts, 0.32)
+    k += 1
 k0 = int(T_OUT // TAKT)
 for k in range(k0, int(LEN // TAKT) + 2):
     t0 = k * TAKT; akk = AKK[k % 4]
@@ -181,8 +189,8 @@ def band(x, lo_, hi_):
     return 10*np.log10(X[(f >= lo_) & (f < hi_)].sum() + 1e-12)
 aktiv = np.abs(stim) > 1e-4
 STIMME_MITTE = band(stim, 250, 4000) - 10*np.log10(aktiv.mean())
-UNTEN_ZIEL = S.get('bass_db', -2.5)        # Vorbild: Musik-Bass +0,7 dB gegenueber Sprach-Mitten
-OBEN_ZIEL = S.get('mitte_db', -11.0)       # Mitten der Musik deutlich unter der Stimme
+UNTEN_ZIEL = S.get('bass_db', -5.0)        # Vorbild: Musik-Bass +0,7 dB gegenueber Sprach-Mitten
+OBEN_ZIEL = S.get('mitte_db', -12.0)       # Mitten der Musik deutlich unter der Stimme
 unten *= 10**((STIMME_MITTE + UNTEN_ZIEL - band(unten, 30, 250))/20)
 oben *= 10**((STIMME_MITTE + OBEN_ZIEL - band(oben, 250, 4000))/20)
 musik = unten + oben
@@ -193,6 +201,7 @@ g = (c[hi] - c[lo]) / np.maximum(1, hi - lo); g /= g.max() + 1e-9
 musik *= 1 - 0.20*np.clip(g*3, 0, 1)
 outro = 1 + (10**(5/20) - 1)*np.clip((t - T_OUT)/0.3, 0, 1)
 mix = stim + musik*outro
+if os.environ.get('STEMS'): np.save(os.path.join(AUS, 'stems.npy'), np.stack([stim, musik*outro]))   # nur fuer Messungen
 mix *= np.clip((LEN - t)/1.2, 0, 1)
 mix = mix / np.abs(mix).max() * 10**(-1/20)
 mixp = os.path.join(AUS, 'mix.wav')
