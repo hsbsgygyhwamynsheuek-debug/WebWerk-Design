@@ -154,12 +154,14 @@ function kurve(i,t,lt,hoch){
   z.setAttribute('x',Math.min(960,X(n)+10)); z.setAttribute('y',Math.max(760,Y(v)-40));
   z.textContent=v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
 }
+if(P.szenen.some(x=>x.typ==='duell')) document.getElementById('ut').style.top='1560px';
 window.render=function(t){
   P.szenen.forEach((s,i)=>{
     /* Erste Szene ist ab Bild 1 voll da – kein schwarzer Anfang */
     const a0 = i===0 ? 0 : s.a;
     const el=document.getElementById('s'+i), lt=t-a0;
-    const ein= i===0 ? 1 : eOut(pr(lt,0,0.45)), aus=1-pr(t,s.b-0.32,s.b);
+    const dg=s.typ==='duell', dv=dg&&i>0&&P.szenen[i-1].typ==='duell', dn=dg&&i<P.szenen.length-1&&P.szenen[i+1].typ==='duell';
+    const ein= (i===0||dv) ? 1 : eOut(pr(lt,0,0.45)), aus= dn ? 1 : 1-pr(t,s.b-0.32,s.b);
     const o=(t>=a0-0.01&&t<s.b+0.01)?ein*aus:0;
     el.style.opacity=o.toFixed(3); if(o<=0) return;
     const h=el.querySelector('.h'); h.style.transform=`translateY(${((1-ein)*-24).toFixed(1)}px) scale(${(0.96+0.04*ein).toFixed(3)})`;
@@ -237,10 +239,11 @@ window.render=function(t){
       const w=eIO(pr(lt,1.4,Math.min(3.4,D-0.2))), zs=$('zs'), zr=$('zr'), Ls=zs.getTotalLength(), Lr=zr.getTotalLength(), d=w*(Ls+Lr*0.75);
       const pt=d<Ls?zs.getPointAtLength(d):zr.getPointAtLength(d-Ls);
       $('zf').setAttribute('transform',`translate(${pt.x.toFixed(1)} ${(pt.y+4).toFixed(1)})`); $('zf').style.opacity=cl(lt*3); }
-    if(s.typ==='duell'){ const u=lt/D, L=290, R=790;
-      const JAHR=0.60, ENDE=0.78;                       /* 0-60 %: Jahr laeuft, 60-78 %: 31. Dezember, danach Neustart */
+    if(s.typ==='duell'){ const L=290, R=790, DS=P.szenen.filter(x=>x.typ==='duell'), A0=DS[0].a, B0=DS[DS.length-1].b;
+      const sv=DS.find(x=>x.silvester), nv=DS.find(x=>x.neustart);
+      const JT= sv? sv.a : A0+0.60*(B0-A0), ET= nv? nv.a : A0+0.78*(B0-A0), DD=B0-A0, u=(t-A0)/DD, JAHR=(JT-A0)/DD, ENDE=(ET-A0)/DD;                       /* 0-60 %: Jahr laeuft, 60-78 %: 31. Dezember, danach Neustart */
       const MON=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'], ML=[31,28,31,30,31,30,31,31,30,31,30,31];
-      const tag = u<JAHR ? Math.max(1,Math.round(365*eIO(pr(u,0.03,JAHR)))) : (u<ENDE ? 365 : 1);
+      const tag = u<JAHR ? Math.max(1,Math.round(365*eIO(pr(u,0.03,JAHR-0.01)))) : (u<ENDE ? 365 : 1);
       let m=0, rest=tag; while(rest>ML[m]){rest-=ML[m];m++;}
       const kal=document.getElementById('dk'+i); kal.querySelector('.kopf').textContent=MON[m]; kal.querySelector('.zahl').textContent=rest;
       kal.querySelectorAll('rect')[1].setAttribute('fill', (u>=JAHR&&u<ENDE)?'#E5484D':W); kal.querySelectorAll('rect')[2].setAttribute('fill', (u>=JAHR&&u<ENDE)?'#E5484D':W);
@@ -249,7 +252,7 @@ window.render=function(t){
       const nb = u<ENDE ? Math.floor(pf*10.99) : 10;
       el.querySelectorAll('.buch').forEach(b=>{const k=+b.dataset.k; b.setAttribute('opacity', k<nb?1:0);});
       $('dc').querySelectorAll('rect').forEach((r,k)=>r.setAttribute('opacity',(0.35+0.55*Math.abs(Math.sin(lt*7+k*1.7))).toFixed(2)));
-      const sieg=eSpr(pr(u,JAHR+0.02,JAHR+0.10))*(u<ENDE?1:0);
+      const sieg=eSpr(pr(t,JT+0.25,JT+1.2))*(u<ENDE?1:0);
       $('ds').setAttribute('transform',`translate(${R} ${930-20*sieg}) scale(${(sieg*1.3).toFixed(3)}) rotate(${(lt*40).toFixed(0)})`);
       $('dg').setAttribute('transform',`translate(0 ${(-30*sieg+Math.sin(lt*14)*2*(u<JAHR?1:0)).toFixed(1)})`);
       /* links: Handy, Denkblase "MONDAY", Wolke waechst, an Silvester Regen und Panik */
@@ -257,7 +260,7 @@ window.render=function(t){
       $('dp').setAttribute('opacity', panik?0:(0.75+0.25*Math.sin(lt*11)).toFixed(2));
       $('dm').setAttribute('opacity', panik?1:0);
       $('dl').setAttribute('transform',`translate(${panik?(Math.sin(lt*45)*5).toFixed(1):0} 0)`);
-      const blase = u<JAHR ? (Math.sin(u*JAHR*60)>0.55 ? 1:0) : (u>=ENDE+0.03 ? 1:0);
+      const blase = u<JAHR ? (Math.sin((t-A0)*4.2)>0.55 ? 1:0) : (u>=ENDE+0.03 ? 1:0);
       $('db').setAttribute('opacity', blase); $('dbt').textContent = u>=ENDE ? 'THIS YEAR!' : 'MONDAY';
       const w = u<ENDE ? 0.25+0.9*pf : 0.25, dunkel = Math.round(138-80*pr(pf,0.3,1)*(u<ENDE?1:0));
       $('dw').setAttribute('transform',`translate(${L} 935) scale(${w.toFixed(3)}) translate(${-L} -935)`);

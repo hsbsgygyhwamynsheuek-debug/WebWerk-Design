@@ -1,0 +1,6 @@
+{"titel":"Starts Monday (voice)","tonart":"heroisch","bpm":110,"szenen":[
+ {"typ":"duell","h":"","pill":"","links":"STARTS MONDAY","rechts":"STARTS TODAY","m":"ruhig","vo":"[intense] Two people. Same dream. Same year. Only one difference."},
+ {"typ":"duell","h":"","pill":"","links":"STARTS MONDAY","rechts":"STARTS TODAY","m":"drums","vo":"[intense] This guy says, I'll start on Monday. Every. Single. Monday."},
+ {"typ":"duell","h":"","pill":"","links":"STARTS MONDAY","rechts":"STARTS TODAY","m":"build","vo":"[intense] This guy starts today. Small steps. Boring work. Every day."},
+ {"typ":"duell","h":"","pill":"","links":"STARTS MONDAY","rechts":"STARTS TODAY","m":"peak","silvester":true,"vo":"[shouting] December thirty-first! One has a whole year of work. The other one has excuses!"},
+ {"typ":"duell","h":"","pill":"","links":"STARTS MONDAY","rechts":"STARTS TODAY","m":"end","neustart":true,"pause":4.0,"vo":"[intense] And on January first, he says it again. This year. [shouting] Don't be him. Start today!"}]}
