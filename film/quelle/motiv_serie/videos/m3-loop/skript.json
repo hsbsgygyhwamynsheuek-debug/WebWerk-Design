@@ -1,0 +1,59 @@
+{
+ "titel": "Mentality 3",
+ "tonart": "moll",
+ "bpm": 124,
+ "drop_stil": true,
+ "stumm_bass": 4.0,
+ "szenen": [
+  {
+   "typ": "akku",
+   "h": "TIRED OF STARTING OVER?",
+   "pill": "EVERY MONDAY",
+   "dauer": 3.6,
+   "von": 100,
+   "bis": 5,
+   "m": "ruhig"
+  },
+  {
+   "typ": "kreis",
+   "h": "SAME ROUTINE.",
+   "pill": "SAME RESULTS",
+   "dauer": 3.6,
+   "eng": true,
+   "t1": "ROUTINE"
+  },
+  {
+   "typ": "punkt",
+   "h": "ONE DECISION.",
+   "pill": "CHANGES IT",
+   "dauer": 3.0
+  },
+  {
+   "typ": "zweiwege",
+   "h": "BREAK THE LOOP.",
+   "pill": "TODAY",
+   "dauer": 4.2,
+   "t1": "AGAIN",
+   "t2": "DIFFERENT",
+   "m": "peak"
+  },
+  {
+   "typ": "graph",
+   "h": "DAY BY DAY.",
+   "pill": "IT ADDS UP",
+   "dauer": 3.8,
+   "zeige": "treppe",
+   "t2": "YOU",
+   "x1": "DAY 1",
+   "x2": "DAY 365"
+  },
+  {
+   "typ": "zahl",
+   "h": "ONE YEAR.",
+   "pill": "NEW PERSON",
+   "dauer": 5.0,
+   "gross": "365",
+   "m": "end"
+  }
+ ]
+}

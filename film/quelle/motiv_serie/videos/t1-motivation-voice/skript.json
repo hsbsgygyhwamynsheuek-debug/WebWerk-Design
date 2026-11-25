@@ -1,0 +1,52 @@
+{
+ "titel": "Motivation vs Discipline",
+ "tonart": "moll",
+ "bpm": 110,
+ "szenen": [
+  {
+   "typ": "stufen",
+   "h": "",
+   "pill": "",
+   "links": "MOTIVATION",
+   "rechts": "DISCIPLINE",
+   "rolle": "burnout",
+   "ankunft": 0.8,
+   "m": "ruhig",
+   "vo": "[intense] Look at motivation, bro, it starts so fast, like it's gonna conquer the whole world in one week."
+  },
+  {
+   "typ": "stufen",
+   "h": "",
+   "pill": "",
+   "links": "MOTIVATION",
+   "rechts": "DISCIPLINE",
+   "rolle": "burnout",
+   "ankunft": 0.8,
+   "m": "drums",
+   "vo": "[intense] But motivation runs out, and when it's gone, it crashes harder than anybody saw coming."
+  },
+  {
+   "typ": "stufen",
+   "h": "",
+   "pill": "",
+   "links": "MOTIVATION",
+   "rechts": "DISCIPLINE",
+   "rolle": "burnout",
+   "ankunft": 0.8,
+   "m": "build",
+   "vo": "[intense] Discipline is slow and boring, one step at a time, every single day, even when nobody claps."
+  },
+  {
+   "typ": "stufen",
+   "h": "",
+   "pill": "",
+   "links": "MOTIVATION",
+   "rechts": "DISCIPLINE",
+   "rolle": "burnout",
+   "ankunft": 0.8,
+   "m": "peak",
+   "pause": 3.0,
+   "vo": "[shouting] And guess who's standing at the top in the end? Not the fastest one, the one who never stopped!"
+  }
+ ]
+}

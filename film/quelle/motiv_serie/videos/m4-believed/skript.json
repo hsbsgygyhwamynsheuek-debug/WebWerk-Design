@@ -1,0 +1,55 @@
+{
+ "titel": "Mentality 4",
+ "tonart": "dunkel",
+ "bpm": 120,
+ "drop_stil": true,
+ "stumm_bass": 4.0,
+ "szenen": [
+  {
+   "typ": "allein",
+   "h": "NOBODY BELIEVED.",
+   "pill": "NOT EVEN FRIENDS",
+   "dauer": 3.6,
+   "m": "ruhig"
+  },
+  {
+   "typ": "gruppe",
+   "h": "THEY LAUGHED.",
+   "pill": "LET THEM",
+   "dauer": 3.6,
+   "modus": "du"
+  },
+  {
+   "typ": "uhr",
+   "h": "HE KEPT GOING.",
+   "pill": "EVERY MORNING",
+   "dauer": 3.8,
+   "liste": [
+    "5 AM",
+    "5 AM",
+    "5 AM"
+   ]
+  },
+  {
+   "typ": "tuer",
+   "h": "ONE DAY...",
+   "pill": "IT OPENED",
+   "dauer": 4.0,
+   "m": "peak"
+  },
+  {
+   "typ": "spiegel",
+   "h": "NOW THEY ASK.",
+   "pill": "HOW DID YOU DO IT?",
+   "dauer": 3.8
+  },
+  {
+   "typ": "zahl",
+   "h": "BELIEVE IN YOU.",
+   "pill": "FOLLOW FOR MORE",
+   "dauer": 4.8,
+   "gross": "1",
+   "m": "end"
+  }
+ ]
+}

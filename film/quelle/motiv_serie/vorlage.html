@@ -140,6 +140,22 @@ P.szenen.forEach((s,i)=>{
         <rect x="${L+60}" y="880" width="230" height="74" rx="37" fill="${W}"/><text id="dbt${i}" x="${L+175}" y="928" text-anchor="middle" font-size="30" font-weight="800" letter-spacing="3" fill="#0A0A0A">MONDAY</text></g>
       <path id="ds${i}" d="M0,-46 L13,-14 L46,-14 L19,6 L29,40 L0,20 L-29,40 L-19,6 L-46,-14 L-13,-14 Z" fill="#FFD54A" transform="translate(${R} 930) scale(0)"/>
       </g></svg>`; }
+  /* ---------- Treppen-Rennen: zwei Figuren, eine Treppe, 20 Stufen ---------- */
+  if(s.typ==='stufen'){ const X0=110, Y0=1430, SW=43, SH=33, NS=20;
+    let st='', nr='';
+    for(let k=1;k<=NS;k++){ const x=X0+(k-1)*SW, y=Y0-k*SH;
+      st+=`<rect x="${x}" y="${y}" width="${SW+1}" height="${Y0-y+120}" fill="${k%2?'#262626':'#2c2c2c'}"/><line x1="${x}" y1="${y}" x2="${x+SW}" y2="${y}" stroke="#E9E1CF" stroke-width="5" stroke-linecap="round" class="kante" data-k="${k}" opacity=".55"/>`;
+      nr+=`<text x="${x+SW/2}" y="${y+26}" text-anchor="middle" font-size="16" font-weight="700" fill="#E9E1CF" opacity=".55">${k}</text>`; }
+    v=`<svg width="1080" height="1920"><defs><linearGradient id="sk${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".7"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
+      <g transform="translate(540 1060) scale(1.08) translate(-540 -1060)">
+      <polygon id="sl${i}" points="${X0+19*SW-40},380 ${X0+19*SW+80},380 ${X0+20*SW+120},${Y0-NS*SH} ${X0+19*SW-90},${Y0-NS*SH}" fill="url(#sk${i})" opacity="0"/>
+      ${st}${nr}
+      <g id="fl${i}" class="glow">${figur(0,0,1.05)}<g class="schlaf" opacity="0">${T(46,-118,'Z',52,1)}${T(84,-168,'z',40,.85)}${T(112,-206,'z',30,.7)}</g><rect class="hd" x="18" y="-70" width="16" height="26" rx="4" fill="${W}" opacity="0"/></g>
+      ${T(0,0,s.links||'MOTIVATION',26,1,'middle','tl'+i)}
+      <g id="fr${i}" class="glow">${figur(0,0,1.05)}</g>
+      ${T(0,0,s.rechts||'DISCIPLINE',26,1,'middle','tr'+i)}
+      <path id="sx${i}" d="M0,-46 L13,-14 L46,-14 L19,6 L29,40 L0,20 L-29,40 L-19,6 L-46,-14 L-13,-14 Z" fill="#FFD54A" transform="scale(0)"/>
+      </g></svg>`; }
   SZ.insertAdjacentHTML('beforeend',`<div class="sz" id="s${i}"><div class="h" style="${s.h.length>13?'font-size:70px':''}">${s.h}</div>${v}<div class="pill">${s.pill}</div></div>`);
 });
 const ut=document.getElementById('ut');
@@ -154,13 +170,13 @@ function kurve(i,t,lt,hoch){
   z.setAttribute('x',Math.min(960,X(n)+10)); z.setAttribute('y',Math.max(760,Y(v)-40));
   z.textContent=v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
 }
-if(P.szenen.some(x=>x.typ==='duell')) document.getElementById('ut').style.top='1560px';
+if(P.szenen.some(x=>x.typ==='duell'||x.typ==='stufen')) document.getElementById('ut').style.top='1600px';
 window.render=function(t){
   P.szenen.forEach((s,i)=>{
     /* Erste Szene ist ab Bild 1 voll da – kein schwarzer Anfang */
     const a0 = i===0 ? 0 : s.a;
     const el=document.getElementById('s'+i), lt=t-a0;
-    const dg=s.typ==='duell', dv=dg&&i>0&&P.szenen[i-1].typ==='duell', dn=dg&&i<P.szenen.length-1&&P.szenen[i+1].typ==='duell';
+    const dg=(s.typ==='duell'||s.typ==='stufen'), dv=dg&&i>0&&P.szenen[i-1].typ===s.typ, dn=dg&&i<P.szenen.length-1&&P.szenen[i+1].typ===s.typ;
     const ein= (i===0||dv) ? 1 : eOut(pr(lt,0,0.45)), aus= dn ? 1 : 1-pr(t,s.b-0.32,s.b);
     const o=(t>=a0-0.01&&t<s.b+0.01)?ein*aus:0;
     el.style.opacity=o.toFixed(3); if(o<=0) return;
@@ -261,12 +277,35 @@ window.render=function(t){
       $('dm').setAttribute('opacity', panik?1:0);
       $('dl').setAttribute('transform',`translate(${panik?(Math.sin(lt*45)*5).toFixed(1):0} 0)`);
       const blase = u<JAHR ? (Math.sin((t-A0)*4.2)>0.55 ? 1:0) : (u>=ENDE+0.03 ? 1:0);
-      $('db').setAttribute('opacity', blase); $('dbt').textContent = u>=ENDE ? 'THIS YEAR!' : 'MONDAY';
+      $('db').setAttribute('opacity', blase); $('dbt').textContent = u>=ENDE ? (s.blase2||'THIS YEAR!') : (s.blase1||'MONDAY');
       const w = u<ENDE ? 0.25+0.9*pf : 0.25, dunkel = Math.round(138-80*pr(pf,0.3,1)*(u<ENDE?1:0));
       $('dw').setAttribute('transform',`translate(${L} 935) scale(${w.toFixed(3)}) translate(${-L} -935)`);
       $('dw').querySelectorAll('circle').forEach(c=>c.setAttribute('fill',`rgb(${dunkel},${dunkel},${dunkel})`));
       $('dr').setAttribute('opacity', panik?1:0);
       $('dr').querySelectorAll('.tropf').forEach(t=>{const k=+t.dataset.k, y=((lt*3+k*0.37)%1)*70; t.setAttribute('transform',`translate(0 ${y.toFixed(1)})`);});
+    }
+    if(s.typ==='stufen'){ const X0=110, Y0=1430, SW=43, SH=33, NS=20;
+      const G=P.szenen.filter(x=>x.typ==='stufen'), A0=G[0].a, B0=G[G.length-1].b, u=cl((t-A0)/(B0-A0)), tt=t-A0;
+      const pos=k=>{ const kk=Math.max(0,Math.min(NS,k)), f=Math.floor(kk), r=kk-f, hop=Math.sin(Math.PI*r)*14;
+        return [X0+kk*SW-SW*0.5+ (kk<0.01?SW*0.5:0), Y0-(f+(r>0.5?1:0))*SH - hop]; };
+      /* rechts: gleichmaessig, Stufe fuer Stufe, oben ins Licht */
+      const ankunft=s.ankunft||0.82, kr=NS*pr(u,0.04,ankunft);
+      const [xr,yr]=pos(kr); $('fr').setAttribute('transform',`translate(${xr.toFixed(1)} ${yr.toFixed(1)})`);
+      $('tr').setAttribute('x',Math.max(150,Math.min(930,xr)).toFixed(0)); $('tr').setAttribute('y',(yr-118).toFixed(0));
+      const oben=eOut(pr(u,ankunft,ankunft+0.06)); $('sl').setAttribute('opacity',(0.9*oben).toFixed(2));
+      $('sx').setAttribute('transform',`translate(${xr.toFixed(0)} ${(yr-175).toFixed(0)}) scale(${(eSpr(pr(u,ankunft+0.02,ankunft+0.1))*0.9).toFixed(3)}) rotate(${(tt*40).toFixed(0)})`);
+      el.querySelectorAll('.kante').forEach(e=>{const k=+e.dataset.k; e.setAttribute('opacity', k<=Math.floor(kr+0.01)?'1':'.45');});
+      /* links: je nach Rolle */
+      const rolle=s.rolle||'burnout'; let kl=0, rot=0, rotfarbe=0, zzz=0, hd=0, wackeln=0;
+      if(rolle==='burnout'){ kl=12*eOut(pr(u,0.0,0.36)); const kaputt=pr(u,0.36,0.44); rot=-78*eOut(kaputt); rotfarbe=kaputt; if(u>0.44) kl=12+1.5*pr(u,0.44,1); wackeln=u>0.44?Math.sin(tt*9)*2:0; }
+      if(rolle==='schlaf'){ kl=6+4*eOut(pr(u,0,0.25)); zzz=u>0.3?1:0; rot=u>0.3?-12:0; }
+      if(rolle==='handy'){ kl=7*pr(u,0.04,0.34); hd=u>0.36?1:0; }
+      const [xl,yl]=pos(kl); const fl=$('fl');
+      fl.setAttribute('transform',`translate(${(xl-16+wackeln).toFixed(1)} ${(yl-12).toFixed(1)}) rotate(${rot.toFixed(1)})`);
+      fl.querySelectorAll('circle,path').forEach(e=>e.setAttribute('fill', rotfarbe>0?`rgb(${Math.round(244-60*rotfarbe)},${Math.round(244-170*rotfarbe)},${Math.round(244-170*rotfarbe)})`:W));
+      fl.querySelector('.schlaf').setAttribute('opacity', zzz? (0.6+0.4*Math.sin(tt*3)).toFixed(2):0);
+      fl.querySelector('.hd').setAttribute('opacity', hd?(0.8+0.2*Math.sin(tt*11)).toFixed(2):0);
+      $('tl').setAttribute('x',Math.max(150,Math.min(930,xl-16)).toFixed(0)); $('tl').setAttribute('y',(yl-12-(rot<-40?70:118)).toFixed(0)); $('tl').setAttribute('fill','#FF5A5F');
     }
   });
   /* Untertitel: Wort fuer Wort */
