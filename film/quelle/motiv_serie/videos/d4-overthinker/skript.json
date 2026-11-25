@@ -1,0 +1,39 @@
+{
+ "titel": "Overthinker vs Doer",
+ "tonart": "heroisch",
+ "bpm": 78,
+ "stumm_bass": -3.0,
+ "drop_stil": true,
+ "laut_db": -15,
+ "marken": [
+  [
+   0,
+   "drums"
+  ],
+  [
+   8.1,
+   "peak"
+  ],
+  [
+   10.5,
+   "drop"
+  ],
+  [
+   12.2,
+   "end"
+  ]
+ ],
+ "szenen": [
+  {
+   "typ": "duell",
+   "h": "",
+   "pill": "",
+   "links": "OVERTHINKER",
+   "rechts": "DOER",
+   "blase1": "WHAT IF...?",
+   "blase2": "WHAT IF...?",
+   "m": "drums",
+   "dauer": 14.0
+  }
+ ]
+}
