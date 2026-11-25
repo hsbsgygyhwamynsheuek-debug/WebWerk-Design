@@ -68,7 +68,7 @@ P.szenen.forEach((s,i)=>{
   /* ---------- Serien-Bildtypen ---------- */
   const T=(x,y,str,fs=28,o=.75,a='middle',id='')=>`<text ${id?`id="${id}"`:''} x="${x}" y="${y}" text-anchor="${a}" font-size="${fs}" font-weight="800" letter-spacing="${fs>40?2:5}" fill="${W}" opacity="${o}">${str}</text>`;
   const SV=inner=>`<svg width="1080" height="1920" class="glow">${inner}</svg>`;
-  if(s.typ==='zahl'){ const g=String(s.gross??'1'), lang=g.length>3;
+  if(s.typ==='zahl'){ const g=String(s.gross??'1'), endw=s.bis!==undefined?(s.vor||'')+Number(s.bis).toLocaleString('en-US')+(s.nach||''):g, lang=Math.max(g.length,endw.length)>3;
     v=`<div class="gross glow" style="position:absolute;left:0;right:0;top:${lang?740:640}px;text-align:center;font-weight:800;font-size:${lang?230:380}px;letter-spacing:-.02em;font-variant-numeric:tabular-nums">${g}</div>`; }
   if(s.typ==='akku') v=SV(`<g transform="translate(540 930)">
      <rect x="-250" y="-120" width="480" height="240" rx="34" fill="none" stroke="${W}" stroke-width="12"/>
@@ -95,7 +95,7 @@ P.szenen.forEach((s,i)=>{
      <rect x="-58" y="-306" width="116" height="26" rx="13" fill="${W}"/>
      <g id="hb${i}" transform="translate(0 -110)"><path d="M-52,34 Q-52,-52 0,-58 Q52,-52 52,34 L66,50 L-66,50 Z" fill="none" stroke="${W}" stroke-width="8" stroke-linejoin="round"/>
        <circle cx="0" cy="64" r="11" fill="${W}"/><circle cx="0" cy="-64" r="8" fill="${W}"/></g>
-     <g id="hz${i}">${T(0,120,'0',190,1)}</g>${T(0,196,s.t1||'NEW MESSAGES',26,.7)}</g>`);
+     <g id="hz${i}">${T(0,120,String(s.gross??'0'),String(s.gross??'0').length>2?140:190,1)}</g>${T(0,196,s.t1||'NEW MESSAGES',26,.7)}</g>`);
   if(s.typ==='tuer') v=`<svg width="1080" height="1920"><defs><linearGradient id="tg${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
      <rect id="tl${i}" x="400" y="700" width="280" height="540" fill="#fff"/>
      <polygon id="tb${i}" points="400,1240 680,1240 900,1300 180,1300" fill="url(#tg${i})"/>

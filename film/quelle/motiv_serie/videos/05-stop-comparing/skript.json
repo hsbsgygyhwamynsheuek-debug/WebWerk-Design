@@ -1,0 +1,67 @@
+{
+ "titel": "05-stop-comparing",
+ "tonart": "moll",
+ "bpm": 96,
+ "szenen": [
+  {
+   "typ": "stopp",
+   "h": "STOP.",
+   "pill": "COMPARING",
+   "vo": "[shouting] Stop comparing yourself to everyone else, bro! [intense] It's killing your progress.",
+   "m": "ruhig"
+  },
+  {
+   "typ": "talent",
+   "h": "THEIR HIGHLIGHTS",
+   "pill": "NOT THEIR LIFE",
+   "vo": "[intense] You only see their highlight reel. You never see their struggle."
+  },
+  {
+   "typ": "graph",
+   "h": "DIFFERENT START",
+   "pill": "DIFFERENT PATH",
+   "vo": "[intense] They started years before you. Their chapter twenty is not your chapter one.",
+   "m": "drums",
+   "zeige": "beide",
+   "t1": "YOU",
+   "t2": "THEM"
+  },
+  {
+   "typ": "zweiwege",
+   "h": "YOUR LANE",
+   "pill": "ONLY YOURS",
+   "vo": "[intense] Stay in your lane. Your race is against one person only.",
+   "t1": "THEM",
+   "t2": "YOU"
+  },
+  {
+   "typ": "spiegel",
+   "h": "YESTERDAY'S YOU",
+   "pill": "YOUR ONLY RIVAL",
+   "vo": "[shouting] The person you were yesterday! Beat that person, every single day!",
+   "m": "peak"
+  },
+  {
+   "typ": "punkt",
+   "h": "NO NOISE.",
+   "pill": "JUST WORK",
+   "vo": "[intense] No noise. No comparing. Just quiet work.",
+   "m": "drop"
+  },
+  {
+   "typ": "berg",
+   "h": "STACK IT.",
+   "pill": "DAY BY DAY",
+   "vo": "[intense] Stack small wins until nobody can ignore you.",
+   "m": "build"
+  },
+  {
+   "typ": "ende",
+   "h": "YOUR RACE.",
+   "pill": "FOLLOW FOR MORE",
+   "vo": "[shouting] Run your own race, and win it!",
+   "m": "end",
+   "pause": 1.5
+  }
+ ]
+}

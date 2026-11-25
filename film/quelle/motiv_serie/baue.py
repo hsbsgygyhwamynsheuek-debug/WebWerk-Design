@@ -42,8 +42,8 @@ def sprich(text):
     # Stimmkette ohne Rauschquellen: De-Esser gegen scharfe S-Laute, Gate fuer stille Pausen
     subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', mp3, '-af',
         'silenceremove=start_periods=1:start_threshold=-45dB:stop_periods=-1:stop_duration=0.12:stop_threshold=-45dB:stop_silence=0.1,'
-        'atempo=1.2,highpass=f=75,lowpass=f=12000,deesser=i=0.7:m=0.5:f=0.5:s=o,'
-        'equalizer=f=180:t=q:w=1:g=2,equalizer=f=2800:t=q:w=1.2:g=2,'
+        'atempo=1.2,highpass=f=90,lowpass=f=14000,deesser=i=0.35:m=0.5:f=0.5:s=o,'
+        'equalizer=f=2800:t=q:w=1.2:g=2,highshelf=f=6000:g=3,'
         'acompressor=threshold=-22dB:ratio=3.5:attack=4:release=120:makeup=3,'
         'agate=threshold=0.012:ratio=6:attack=4:release=140,'
         'aecho=0.8:0.35:28|47:0.08|0.05,alimiter=limit=0.95',
@@ -67,86 +67,85 @@ for s in plan:
     a = lies(s['datei']); laut = a[np.abs(a) > 0.02]; a *= 10 ** (-13 / 20) / np.sqrt((laut ** 2).mean())
     i0 = int(s['vo_a'] * SR); i1 = min(N, i0 + len(a)); stim[i0:i1] += a[:i1 - i0]
 
-# ---------------- epische Musik (rein tonal, kein Rauschen) ----------------
-STAERKE = dict(ruhig=0.45, drums=0.65, peak=1.0, drop=0.30, build=0.75, end=1.0)
-TROMMEL = dict(ruhig=0, drums=2, peak=1, drop=0, build=1, end=1)      # 0 aus, 2 = auf 1+3, 1 = jeder Schlag
+# ---------------- Motivationsmusik, gebaut nach dem 1,5-Mio-Vorbild ----------------
+# Gemessen am Vorbild: ~96 BPM, Cis-Moll/E-Dur, Sub-Bass auf E1 (41 Hz), 86 % der Energie unter 250 Hz,
+# Pegel durchgehend gleich. Die Musik traegt von unten und laesst den Sprachbereich frei.
+STAERKE = dict(ruhig=0.80, drums=0.90, peak=1.0, drop=0.65, build=0.92, end=1.0)
+TROMMEL = dict(ruhig=2, drums=2, peak=1, drop=0, build=1, end=1)      # 0 aus, 2 = auf 1+3, 1 = jeder Schlag
 def phase_bei(ts):
     for s in reversed(plan):
         if ts >= s['a']: return s['m']
     return plan[0]['m']
 def intensitaet(ts): return STAERKE[phase_bei(ts)]
-
-TONARTEN = {   # MIDI-Grundtoene der Dreiklaenge
-    'moll':   [[57, 60, 64], [53, 57, 60], [48, 52, 55], [55, 59, 62]],   # Am F C G
-    'dunkel': [[50, 53, 57], [46, 50, 53], [53, 57, 60], [48, 52, 55]],   # Dm Bb F C
-    'heroisch': [[52, 55, 59], [48, 52, 55], [55, 59, 62], [50, 54, 57]], # Em C G D
-}
-AKK = TONARTEN[S.get('tonart', 'moll')]
-BPM = S.get('bpm', 104); BEAT = 60 / BPM
+# Cis-Moll – A – E – H (vi–IV–I–V in E): die klassische emotionale Motivations-Folge, je Video transponiert
+VERSATZ = dict(moll=0, dunkel=-2, heroisch=3).get(S.get('tonart', 'moll'), 0)
+AKK = [[n + VERSATZ for n in a] for a in ([61, 64, 68], [57, 61, 64], [52, 56, 59], [59, 63, 66])]
+BPM = S.get('bpm', 96); BEAT = 60 / BPM; TAKT = 4 * BEAT
 def hz(n): return 440 * 2 ** ((n - 69) / 12)
-musik = np.zeros(N)
-def lege(sig, ts, g):
-    i0 = int(ts * SR); i1 = min(N, i0 + len(sig))
-    if 0 <= i0 < N: musik[i0:i1] += sig[:i1 - i0] * g
 def q(d): return np.arange(int(SR * d)) / SR
-def ton(f, d, harm=8, ein=0.004, ab=12.0):
-    """Streicherartiger Ton aus Obertoenen (saegezahnaehnlich, ohne Rauschen)."""
-    x = q(d)
-    y = sum(np.sin(2*np.pi*f*hh*x + hh)/hh for hh in range(1, harm + 1))
-    return y * (1 - np.exp(-x/ein)) * np.exp(-x*ab)
+unten = np.zeros(N); oben = np.zeros(N)
+def lege(ziel, sig, ts, g):
+    i0 = int(ts * SR); i1 = min(N, i0 + len(sig))
+    if 0 <= i0 < N: ziel[i0:i1] += sig[:i1 - i0] * g
+def basston(n):                      # Grundton in die Lage 38-76 Hz legen (wie E1 im Vorbild)
+    f = hz(n)
+    while f > 76: f /= 2
+    while f < 38: f *= 2
+    return f
+def sub808(f, d):
+    x = q(d); ff = f * (1 + 0.05*np.exp(-x*40)); ph = 2*np.pi*np.cumsum(ff)/SR
+    y = np.sin(ph) + 0.35*np.sin(2*ph) + 0.12*np.sin(3*ph)       # Obertoene: auch auf Handys hoerbar
+    return y * (1 - np.exp(-x*200)) * np.exp(-x*0.9) * np.clip((d - x)/0.05, 0, 1)
 def kick():
-    """Sauberer Kinoschlag: kurz, ohne Verzerrung und ohne langes Abrutschen (kein "Pfff")."""
-    x = q(0.45); f = 52 + 30*np.exp(-x*30); ph = 2*np.pi*np.cumsum(f)/SR
-    return np.sin(ph) * np.exp(-x*8) * (1 - np.exp(-x*1500))
-def klavier(f, d=1.2):
-    x = q(d); return np.sin(2*np.pi*f*x) * (1 - np.exp(-x*400)) * np.exp(-x*3)
-
-# Laufende tiefe Streicher (Spiccato) auf Achteln - der Motor jeder Motivationsmusik
-AKZ = [1.0, 0.55, 0.75, 0.55, 0.9, 0.55, 0.75, 0.6]
-s = 0
-while s * BEAT < LEN:
-    ts = s * BEAT; akk = AKK[(s // 4) % 4]; ph = phase_bei(ts); I = STAERKE[ph]
-    for hh in (0, 0.5):
-        k8 = int(s*2 + hh*2) % 8; g = AKZ[k8] * (0.35 + 0.65*I)
-        grund = akk[0] - 24 if ph not in ('ruhig', 'drop') else akk[0] - 12
-        lege(ton(hz(grund), 0.3, harm=7, ab=11), ts + hh*BEAT, 0.030*g)
-        lege(ton(hz(grund + 12), 0.3, harm=5, ab=13), ts + hh*BEAT, 0.018*g)
-    # Klavier nur noch als leiser Glanz in den ruhigen Stellen
-    if ph in ('ruhig', 'drop') and s % 2 == 0:
-        lege(klavier(hz(akk[(s // 2) % 3] + 24)), ts, 0.035)
-    # Schlagzeug: sauberer Kick statt Taiko
-    tr = TROMMEL[ph]
-    if tr and (tr == 1 or s % 2 == 0): lege(kick(), ts, 0.55 * I)
-    s += 1
-# Breite Streicherflaeche, weicher Einsatz
-pad = np.zeros(N)
-for k in range(int(LEN / (4*BEAT)) + 1):
-    a0 = k*4*BEAT; akk = AKK[k % 4]; i0 = int(a0*SR); i1 = min(N, int((a0 + 4*BEAT + 0.8)*SR))
+    x = q(0.35); f = 55 + 35*np.exp(-x*35); ph = 2*np.pi*np.cumsum(f)/SR
+    return np.sin(ph) * np.exp(-x*9) * (1 - np.exp(-x*1500))
+def glocke(f):
+    x = q(1.4); return (np.sin(2*np.pi*f*x) + 0.25*np.sin(4*np.pi*f*x)*np.exp(-x*3)) * (1 - np.exp(-x*600)) * np.exp(-x*2.6)
+MOTIV = [(0, 0), (0.75, 1), (1.5, 2), (2.5, 1), (3.0, 2), (3.5, 0)]   # (Schlag im Takt, Akkordton)
+k = 0
+while k * TAKT < LEN:
+    t0 = k * TAKT; akk = AKK[k % 4]; f = basston(akk[0])
+    for hh in range(4):
+        ts = t0 + hh*BEAT; ph = phase_bei(ts); I = STAERKE[ph]; tr = TROMMEL[ph]
+        if tr and (tr == 1 or hh % 2 == 0): lege(unten, kick(), ts, 0.8 * I)
+    I = intensitaet(t0)
+    if phase_bei(t0) != 'drop':
+        lege(unten, sub808(f, 2.5*BEAT), t0, I)
+        lege(unten, sub808(f, 1.5*BEAT), t0 + 2.5*BEAT, 0.85 * I)
+    else:
+        lege(unten, sub808(f, TAKT), t0, 0.6)
+    for sch, ti in MOTIV:
+        lege(oben, glocke(hz(akk[ti] + 12)), t0 + sch*BEAT, 0.5 if sch == 0 else 0.35)
+    k += 1
+# warme Flaeche, wenige Obertoene, weicher Einsatz
+for k in range(int(LEN / TAKT) + 1):
+    a0 = k*TAKT; akk = AKK[k % 4]; i0 = int(a0*SR); i1 = min(N, int((a0 + TAKT + 0.8)*SR))
     if i0 >= N: break
     x = t[i0:i1] - a0
-    w = sum(sum(np.sin(2*np.pi*hz(n)*hh*x*(1 + 0.003*dd))/hh for hh in range(1, 6) for dd in (-1, 1)) for n in akk)
-    w += sum(np.sin(2*np.pi*hz(akk[0] - 24)*x) for _ in (0,))          # tiefer Bass, rein
-    pad[i0:i1] += w * np.clip(x/0.8, 0, 1) * np.clip((4*BEAT + 0.8 - x)/0.8, 0, 1)
+    w = sum(sum(np.sin(2*np.pi*hz(n)*hh*x*(1 + 0.003*dd))*(1, 0.25, 0.08)[hh-1] for hh in (1, 2, 3) for dd in (-1, 1)) for n in akk)
+    oben[i0:i1] += 0.5 * w * np.clip(x/0.9, 0, 1) * np.clip((TAKT + 0.8 - x)/0.8, 0, 1)
 env = np.repeat(np.array([intensitaet(v) for v in t[::480]]), 480)[:N]
 c = np.concatenate([[0.0], np.cumsum(env)]); w = SR // 2
 lo = np.clip(np.arange(N) - w, 0, N); hi = np.clip(np.arange(N) + w, 0, N)
-glatt = (c[hi] - c[lo]) / np.maximum(1, hi - lo)
-musik += pad * 0.030 * glatt
-# Blechblaeser-Anschwellen in Hoehepunkt und Schluss (statt Einschlag mit Abrutschen)
-for sz in plan:
-    if sz['m'] in ('peak', 'end'):
-        d = sz['b'] - sz['a'] + 0.5; x = q(d); akk = AKK[0]
-        y = sum(ton(hz(n - 12), d, harm=9, ein=0.5, ab=0.0) for n in akk)
-        y *= np.clip((d - x)/0.6, 0, 1)
-        lege(y, sz['a'], 0.045)
-        lege(kick(), sz['a'], 0.9)
-# Musik geht unter der Stimme nur etwas zurueck
+oben *= (c[hi] - c[lo]) / np.maximum(1, hi - lo)
+# ---- Pegel exakt auf das Vorbild einstellen (Messung in Frequenzbaendern) ----
+def band(x, lo_, hi_):
+    X = np.abs(np.fft.rfft(x))**2; f = np.fft.rfftfreq(len(x), 1/SR)
+    return 10*np.log10(X[(f >= lo_) & (f < hi_)].sum() + 1e-12)
+aktiv = np.abs(stim) > 1e-4
+STIMME_MITTE = band(stim, 250, 4000) - 10*np.log10(aktiv.mean())
+UNTEN_ZIEL = S.get('bass_db', -1.0)        # Vorbild: Musik-Bass +0,7 dB gegenueber Sprach-Mitten
+OBEN_ZIEL = S.get('mitte_db', -11.0)       # Mitten der Musik deutlich unter der Stimme
+unten *= 10**((STIMME_MITTE + UNTEN_ZIEL - band(unten, 30, 250))/20)
+oben *= 10**((STIMME_MITTE + OBEN_ZIEL - band(oben, 250, 4000))/20)
+musik = unten + oben
+# nur sanft unter der Stimme zurueck - das Vorbild hat einen gleichmaessigen Pegel
 h = np.abs(stim); w = int(SR*0.2); c = np.concatenate([[0.0], np.cumsum(h)])
 lo = np.clip(np.arange(N) - w//2, 0, N); hi = np.clip(np.arange(N) + w//2, 0, N)
 g = (c[hi] - c[lo]) / np.maximum(1, hi - lo); g /= g.max() + 1e-9
-musik *= 1 - 0.40*np.clip(g*3, 0, 1)
-mix = stim + musik*0.85
-mix *= np.clip((LEN - t)/1.0, 0, 1)
+musik *= 1 - 0.20*np.clip(g*3, 0, 1)
+mix = stim + musik
+mix *= np.clip((LEN - t)/1.2, 0, 1)
 mix = mix / np.abs(mix).max() * 10**(-1/20)
 mixp = os.path.join(AUS, 'mix.wav')
 with wave.open(mixp, 'wb') as f:

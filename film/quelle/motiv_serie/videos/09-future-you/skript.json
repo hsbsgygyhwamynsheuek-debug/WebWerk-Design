@@ -1,0 +1,73 @@
+{
+ "titel": "09-future-you",
+ "tonart": "heroisch",
+ "bpm": 96,
+ "szenen": [
+  {
+   "typ": "spiegel",
+   "h": "FUTURE YOU",
+   "pill": "IS WATCHING",
+   "vo": "[intense] Somewhere in the future, there's a version of you looking back at this moment.",
+   "m": "ruhig"
+  },
+  {
+   "typ": "uhr",
+   "h": "5 YEARS",
+   "pill": "FROM NOW",
+   "vo": "[intense] Five years from now, you'll either thank yourself, or wish you had started today.",
+   "liste": [
+    "1 YEAR",
+    "3 YEARS",
+    "5 YEARS"
+   ]
+  },
+  {
+   "typ": "zweiwege",
+   "h": "TWO FUTURES",
+   "pill": "YOU CHOOSE",
+   "vo": "[intense] Two futures. One full of regret. One you're proud of.",
+   "m": "drums",
+   "t1": "REGRET",
+   "t2": "PROUD"
+  },
+  {
+   "typ": "graph",
+   "h": "EVERY CHOICE",
+   "pill": "COUNTS",
+   "vo": "[intense] Every small choice you make today decides which one you get.",
+   "zeige": "beide",
+   "t1": "EXCUSES",
+   "t2": "ACTION"
+  },
+  {
+   "typ": "heute",
+   "h": "TODAY.",
+   "pill": "DAY ONE",
+   "vo": "[shouting] So make future you proud, starting today!",
+   "m": "peak"
+  },
+  {
+   "typ": "punkt",
+   "h": "NOBODY ELSE",
+   "pill": "CAN DO IT",
+   "vo": "[intense] Nobody else can do it for you.",
+   "m": "drop"
+  },
+  {
+   "typ": "zahl",
+   "h": "ONLY",
+   "pill": "IT'S ON YOU",
+   "vo": "[intense] Only you.",
+   "m": "build",
+   "gross": "YOU"
+  },
+  {
+   "typ": "ende",
+   "h": "MAKE THEM PROUD.",
+   "pill": "FOLLOW FOR MORE",
+   "vo": "[shouting] Become the person future you will thank!",
+   "m": "end",
+   "pause": 1.5
+  }
+ ]
+}

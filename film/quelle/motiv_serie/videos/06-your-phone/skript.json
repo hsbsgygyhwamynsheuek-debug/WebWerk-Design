@@ -1,0 +1,82 @@
+{
+ "titel": "06-your-phone",
+ "tonart": "dunkel",
+ "bpm": 96,
+ "szenen": [
+  {
+   "typ": "handy",
+   "h": "4 HOURS A DAY?",
+   "pill": "SCREEN TIME",
+   "vo": "[intense] Four hours a day on your phone, bro? Every single day?",
+   "m": "ruhig",
+   "gross": "4H",
+   "t1": "SCREEN TIME TODAY"
+  },
+  {
+   "typ": "zahl",
+   "h": "1,460 HOURS",
+   "pill": "EVERY YEAR",
+   "vo": "[intense] That's fourteen hundred and sixty hours a year. Gone.",
+   "gross": "0",
+   "von": 0,
+   "bis": 1460,
+   "nach": "H"
+  },
+  {
+   "typ": "uhr",
+   "h": "60 DAYS A YEAR",
+   "pill": "SCROLLING",
+   "vo": "[intense] That's sixty full days of your life, every year, watching other people live theirs.",
+   "m": "drums",
+   "liste": [
+    "DAYS",
+    "WEEKS",
+    "MONTHS"
+   ]
+  },
+  {
+   "typ": "akku",
+   "h": "YOUR FOCUS",
+   "pill": "DRAINED",
+   "vo": "[intense] Every scroll drains your focus a little more.",
+   "von": 100,
+   "bis": 5
+  },
+  {
+   "typ": "graph",
+   "h": "ONE HOUR BACK",
+   "pill": "EVERY DAY",
+   "vo": "[shouting] Take back just one hour a day, and watch what happens to your life!",
+   "m": "peak",
+   "zeige": "treppe",
+   "t2": "YOU",
+   "x1": "TODAY",
+   "x2": "1 YEAR"
+  },
+  {
+   "typ": "zahl",
+   "h": "365 HOURS",
+   "pill": "A YEAR",
+   "vo": "[intense] That's three hundred sixty-five hours. A new skill. A new body. A new you.",
+   "gross": "0",
+   "von": 0,
+   "bis": 365,
+   "nach": "H"
+  },
+  {
+   "typ": "punkt",
+   "h": "PUT IT DOWN.",
+   "pill": "RIGHT NOW",
+   "vo": "[intense] So put the phone down. Seriously.",
+   "m": "drop"
+  },
+  {
+   "typ": "ende",
+   "h": "START LIVING.",
+   "pill": "FOLLOW FOR MORE",
+   "vo": "[shouting] Right after this video, put it down and go build something!",
+   "m": "end",
+   "pause": 1.5
+  }
+ ]
+}
