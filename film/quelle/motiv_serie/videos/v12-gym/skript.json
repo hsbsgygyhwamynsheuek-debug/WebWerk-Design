@@ -1,0 +1,35 @@
+{
+ "hell": true,
+ "tonart": "dunkel",
+ "bpm": 98,
+ "stumm_bass": -6.0,
+ "drop_stil": true,
+ "laut_db": -15,
+ "marken": [
+  [
+   0,
+   "drums"
+  ],
+  [
+   9.6,
+   "peak"
+  ],
+  [
+   10.6,
+   "end"
+  ]
+ ],
+ "szenen": [
+  {
+   "typ": "baelle",
+   "h": "",
+   "pill": "",
+   "oben": "7 hours at the gym, once",
+   "unten": "20 minutes, every day",
+   "extra": "that adds up",
+   "m": "drums",
+   "dauer": 12.5
+  }
+ ],
+ "titel": "v12-gym"
+}

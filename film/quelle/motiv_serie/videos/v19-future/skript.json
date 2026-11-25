@@ -1,0 +1,60 @@
+{
+ "tonart": "heroisch",
+ "bpm": 122,
+ "drop_stil": true,
+ "stumm_bass": 4.0,
+ "szenen": [
+  {
+   "typ": "spiegel",
+   "h": "FUTURE YOU.",
+   "pill": "IS WATCHING",
+   "dauer": 3.6,
+   "m": "ruhig"
+  },
+  {
+   "typ": "uhr",
+   "h": "EVERY DAY",
+   "pill": "COUNTS",
+   "dauer": 3.6,
+   "liste": [
+    "MON",
+    "TUE",
+    "WED"
+   ]
+  },
+  {
+   "typ": "zweiwege",
+   "h": "TODAY'S CHOICE.",
+   "pill": "TOMORROW'S LIFE",
+   "dauer": 4.2,
+   "t1": "COMFORT",
+   "t2": "GROWTH"
+  },
+  {
+   "typ": "berg",
+   "h": "STACK IT.",
+   "pill": "BRICK BY BRICK",
+   "dauer": 3.8,
+   "m": "peak"
+  },
+  {
+   "typ": "graph",
+   "h": "1 YEAR LATER.",
+   "pill": "UNRECOGNIZABLE",
+   "dauer": 3.8,
+   "zeige": "treppe",
+   "t2": "YOU",
+   "x1": "NOW",
+   "x2": "1 YEAR"
+  },
+  {
+   "typ": "zahl",
+   "h": "MAKE THEM PROUD.",
+   "pill": "FOLLOW FOR MORE",
+   "dauer": 4.6,
+   "gross": "YOU",
+   "m": "end"
+  }
+ ],
+ "titel": "v19-future"
+}

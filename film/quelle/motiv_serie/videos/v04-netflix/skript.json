@@ -1,0 +1,39 @@
+{
+ "tonart": "hell",
+ "bpm": 81,
+ "stumm_bass": -3.0,
+ "drop_stil": true,
+ "laut_db": -15,
+ "marken": [
+  [
+   0,
+   "drums"
+  ],
+  [
+   8.1,
+   "peak"
+  ],
+  [
+   10.5,
+   "drop"
+  ],
+  [
+   12.2,
+   "end"
+  ]
+ ],
+ "szenen": [
+  {
+   "typ": "duell",
+   "h": "",
+   "pill": "",
+   "links": "ONE MORE EPISODE",
+   "rechts": "ONE NEW SKILL",
+   "blase1": "NEXT EPISODE",
+   "blase2": "NEXT EPISODE",
+   "m": "drums",
+   "dauer": 14.0
+  }
+ ],
+ "titel": "v04-netflix"
+}

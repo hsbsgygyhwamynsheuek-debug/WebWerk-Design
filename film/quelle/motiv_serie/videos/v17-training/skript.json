@@ -1,0 +1,34 @@
+{
+ "tonart": "heroisch",
+ "bpm": 74,
+ "drop_stil": true,
+ "laut_db": -16,
+ "stumm_bass": 6.0,
+ "marken": [
+  [
+   0,
+   "drums"
+  ],
+  [
+   13.0,
+   "peak"
+  ],
+  [
+   15.5,
+   "end"
+  ]
+ ],
+ "szenen": [
+  {
+   "typ": "pflanze",
+   "h": "",
+   "pill": "",
+   "links": "SKIPS DAYS",
+   "rechts": "SHOWS UP",
+   "start": "DAY 1",
+   "m": "drums",
+   "dauer": 18.0
+  }
+ ],
+ "titel": "v17-training"
+}

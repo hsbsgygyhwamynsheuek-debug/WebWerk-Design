@@ -1,0 +1,39 @@
+{
+ "tonart": "moll",
+ "bpm": 72,
+ "stumm_bass": -3.0,
+ "drop_stil": true,
+ "laut_db": -15,
+ "marken": [
+  [
+   0,
+   "drums"
+  ],
+  [
+   8.1,
+   "peak"
+  ],
+  [
+   10.5,
+   "drop"
+  ],
+  [
+   12.2,
+   "end"
+  ]
+ ],
+ "szenen": [
+  {
+   "typ": "duell",
+   "h": "",
+   "pill": "",
+   "links": "SAYS \"LATER\"",
+   "rechts": "DOES IT NOW",
+   "blase1": "LATER",
+   "blase2": "LATER",
+   "m": "drums",
+   "dauer": 14.0
+  }
+ ],
+ "titel": "v01-later"
+}

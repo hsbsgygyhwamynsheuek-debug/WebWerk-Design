@@ -126,7 +126,7 @@ P.szenen.forEach((s,i)=>{
       <rect x="${x-130}" y="1292" width="14" height="40" fill="${W}"/><rect x="${x+116}" y="1292" width="14" height="40" fill="${W}"/>`;
     let stapel=''; for(let k=0;k<10;k++) stapel+=`<rect class="buch" data-k="${k}" x="${R-140+((k%2)*8)}" y="${1118-(k+1)*26}" width="84" height="22" rx="4" fill="none" stroke="${W}" stroke-width="4" opacity="0"/>`;
     v=`<svg width="1080" height="1920"><g class="glow" transform="translate(540 990) scale(1.25) translate(-540 -990)">
-      ${T(L,650,s.links||'STARTS MONDAY',30,1)}${T(R,650,s.rechts||'STARTS TODAY',30,1)}
+      ${(()=>{const fs=x=>x.length>15?20:(x.length>12?24:30), a=s.links||'STARTS MONDAY', b=s.rechts||'STARTS TODAY'; return T(L,650,a,fs(a),1)+T(R,650,b,fs(b),1);})()}
       <g transform="translate(540 800) scale(.6)">${kalender('dk'+i)}</g>
       <g id="dw${i}">${[[-34,0,30],[0,-14,36],[36,0,28]].map(([x,y,r])=>`<circle cx="${L+x}" cy="${935+y}" r="${r}" fill="#8a8a8a"/>`).join('')}</g>
       <g id="dr${i}" opacity="0">${[0,1,2,3,4].map(k=>`<line class="tropf" data-k="${k}" x1="${L-50+k*25}" y1="960" x2="${L-56+k*25}" y2="985" stroke="#9ab" stroke-width="4" stroke-linecap="round"/>`).join('')}</g>
@@ -173,6 +173,28 @@ P.szenen.forEach((s,i)=>{
       <text id="bx${i}" x="540" y="${YU+112}" text-anchor="middle" font-size="36" font-weight="800" fill="${BL}" opacity="0">${s.extra||'every single day'}</text>
       <circle id="ko${i}" r="9" fill="${D1}"/><circle id="ku${i}" r="9" fill="${BL}" opacity="0"/>
     </svg>`; }
+  /* ---------- Wachstums-Duell: links Party jetzt, rechts pflegt jeden Tag eine Pflanze, dann kommt der Sturm ---------- */
+  if(s.typ==='pflanze'){ const L=300, R=780, G=1300;
+    let regen=''; for(let k=0;k<46;k++) regen+=`<line class="rg" data-k="${k}" x1="0" y1="0" x2="-8" y2="34" stroke="#9fb3c8" stroke-width="3" stroke-linecap="round"/>`;
+    let menge=''; [[-120,0.85],[-60,0.95],[60,0.9],[120,0.8]].forEach(([dx,sc])=>menge+=`<g class="mg" opacity=".45">${figur(L+dx,G,sc*1.2)}</g>`);
+    v=`<svg width="1080" height="1920"><defs>
+      <linearGradient id="pz${i}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff4fd8" stop-opacity=".35"/><stop offset=".5" stop-color="#ffd23f" stop-opacity=".35"/><stop offset="1" stop-color="#3fd0ff" stop-opacity=".35"/></linearGradient>
+      <linearGradient id="pl${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".5"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
+      <g transform="translate(540 1050) scale(1.15) translate(-540 -1050)">
+      <polygon id="pp${i}" points="${L-20},640 ${L+20},640 ${L+200},${G} ${L-200},${G}" fill="url(#pz${i})"/>
+      <polygon points="${R+120},700 ${R+150},700 ${R+60},${G} ${R-140},${G}" fill="url(#pl${i})" opacity=".35"/>
+      <circle cx="${L}" cy="635" r="12" fill="#ddd"/>
+      <line x1="80" y1="${G}" x2="1000" y2="${G}" stroke="${W}" stroke-width="4" opacity=".6"/>
+      ${T(540,560,'YEAR 1',34,1,'middle','pj'+i)}
+      ${T(L,1380,s.links||'SPENDS IT',28,1)}${T(R,1380,s.rechts||'PLANTS IT',28,1)}
+      <g class="glow">${menge}<g id="pa${i}">${figur(L,G,1.2)}</g><rect id="ph${i}" x="${L+22}" y="${G-95}" width="16" height="26" rx="4" fill="${W}"/>
+      <rect x="${R+70}" y="${G-48}" width="56" height="48" rx="6" fill="#a0522d"/>
+      <rect id="ps${i}" x="${R+94}" y="${G-48}" width="8" height="0" fill="#5b8c3a"/>
+      <g id="pk${i}"><circle cx="-38" cy="18" r="62" fill="#2F8A3E"/><circle cx="40" cy="14" r="58" fill="#2F8A3E"/><circle cx="0" cy="-22" r="72" fill="#3FA34D"/><circle cx="-20" cy="-40" r="26" fill="#57BF63" opacity=".6"/></g>
+      <g id="pb${i}">${figur(R,G,1.2)}</g>
+      <g id="pd${i}">${[0,1,2].map(k=>`<circle class="dr" data-k="${k}" cx="${R+60}" cy="${G-90}" r="5" fill="#7cc8ff"/>`).join('')}</g></g>
+      <g id="pw${i}" opacity="0"><ellipse cx="300" cy="560" rx="260" ry="70" fill="#3a3a3a"/><ellipse cx="560" cy="530" rx="280" ry="85" fill="#444"/><ellipse cx="820" cy="565" rx="250" ry="70" fill="#3a3a3a"/>${regen}</g>
+      </g></svg>`; }
   SZ.insertAdjacentHTML('beforeend',`<div class="sz" id="s${i}"><div class="h" style="${s.h.length>13?'font-size:70px':''}">${s.h}</div>${v}<div class="pill">${s.pill}</div></div>`);
 });
 const ut=document.getElementById('ut');
@@ -342,6 +364,27 @@ window.render=function(t){
       const ziel=eSpr(pr(lt,10.2,11.0));
       $('su').setAttribute('transform',`translate(${X1} ${YU}) scale(${(1+1.2*ziel).toFixed(3)})`); $('su').setAttribute('fill', fu>=1?'#2F5BFF':'#151515');
       $('bx').setAttribute('opacity', eOut(pr(lt,10.4,10.9)).toFixed(2));
+    }
+    if(s.typ==='pflanze'){ const L=300, R=780, G=1300, u=lt/D, STURM=0.72;
+      const wg=eIO(pr(u,0.05,STURM)), jahr=Math.min(5,1+Math.floor(wg*5));
+      $('pj').textContent = u<0.04 ? (s.start||'DAY 1') : 'YEAR '+jahr;
+      /* Pflanze waechst */
+      const sh=20+240*wg; $('ps').setAttribute('height',sh.toFixed(1)); $('ps').setAttribute('y',(G-48-sh).toFixed(1));
+      $('pk').setAttribute('transform',`translate(${R+98} ${(G-48-sh).toFixed(1)}) scale(${(Math.max(0.001,wg-0.08)*1.6).toFixed(3)})`);
+      /* rechts giesst (Tropfen), kniet abwechselnd */
+      const giessen = u<STURM && Math.sin(lt*2.2)>-0.2;
+      el.querySelectorAll('.dr').forEach(d=>{const k=+d.dataset.k, f=((lt*1.6+k/3)%1); d.setAttribute('cy',(G-95+f*45).toFixed(1)); d.setAttribute('opacity', giessen?(1-f).toFixed(2):0);});
+      $('pb').setAttribute('transform', giessen?`translate(0 ${(Math.sin(lt*4)*3).toFixed(1)})`:'');
+      /* links: Party-Licht, Menge wippt, Handy leuchtet; im Sturm Licht aus, geduckt */
+      const sturm=pr(u,STURM,STURM+0.05);
+      $('pp').setAttribute('opacity',((1-sturm)*(0.65+0.35*Math.sin(lt*7))).toFixed(2));
+      el.querySelectorAll('.mg').forEach((g,k)=>g.setAttribute('transform',`translate(0 ${(sturm>0?0:Math.abs(Math.sin(lt*6+k))*-10).toFixed(1)})`));
+      $('ph').setAttribute('opacity', sturm>0.5?0:(0.7+0.3*Math.sin(lt*11)).toFixed(2));
+      $('pa').setAttribute('transform', sturm>0 ? `translate(${(Math.sin(lt*40)*3*sturm).toFixed(1)} 0) rotate(${(14*sturm).toFixed(1)} ${L} ${G})` : `translate(0 ${(Math.abs(Math.sin(lt*6))*-10).toFixed(1)})`);
+      /* Sturm: Wolken + Regen, aber nicht unter der Baumkrone */
+      $('pw').setAttribute('opacity',sturm.toFixed(2));
+      el.querySelectorAll('.rg').forEach(r=>{const k=+r.dataset.k, x=60+((k*97)%980), y=600+((lt*900+k*131)%760);
+        const schutz = x>R-40 && x<R+230 && y>G-48-260-140; r.setAttribute('transform',`translate(${x} ${y})`); r.setAttribute('opacity', schutz?0:0.8);});
     }
   });
   /* Untertitel: Wort fuer Wort */

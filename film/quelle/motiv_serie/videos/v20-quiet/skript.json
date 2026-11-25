@@ -1,0 +1,55 @@
+{
+ "tonart": "dunkel",
+ "bpm": 118,
+ "drop_stil": true,
+ "stumm_bass": 4.0,
+ "szenen": [
+  {
+   "typ": "handy",
+   "h": "NO POSTS.",
+   "pill": "NO UPDATES",
+   "dauer": 3.6,
+   "gross": "0",
+   "t1": "POSTS THIS YEAR",
+   "m": "ruhig"
+  },
+  {
+   "typ": "gruppe",
+   "h": "THEY THINK",
+   "pill": "YOU GAVE UP",
+   "dauer": 3.6,
+   "modus": "zaehlen"
+  },
+  {
+   "typ": "allein",
+   "h": "YOU DIDN'T.",
+   "pill": "WORKING IN SILENCE",
+   "dauer": 3.8
+  },
+  {
+   "typ": "tuer",
+   "h": "ONE DAY...",
+   "pill": "EVERYTHING CHANGES",
+   "dauer": 4.0,
+   "m": "peak"
+  },
+  {
+   "typ": "zahl",
+   "h": "RESULTS.",
+   "pill": "LOUD ENOUGH",
+   "dauer": 3.6,
+   "gross": "0",
+   "von": 0,
+   "bis": 100,
+   "nach": "%"
+  },
+  {
+   "typ": "ende",
+   "h": "MOVE IN SILENCE.",
+   "pill": "FOLLOW FOR MORE",
+   "dauer": 4.6,
+   "m": "end"
+  }
+ ],
+ "titel": "v20-quiet"
+}
