@@ -1,0 +1,8 @@
+{"titel":"Mentality 2","tonart":"dunkel","bpm":130,"drop_stil":true,"stumm_bass":4.0,"szenen":[
+ {"typ":"gruppe","modus":"zaehlen","h":"THEY SCROLL.","pill":"EVERY NIGHT","m":"ruhig","dauer":3.6},
+ {"typ":"uhr","h":"HOURS GONE.","pill":"EVERY SINGLE DAY","liste":["10 PM","1 AM","3 AM"],"dauer":3.6},
+ {"typ":"zweiwege","h":"ONE LEAVES.","pill":"THE LOOP","t1":"SCROLL","t2":"BUILD","dauer":4.2},
+ {"typ":"allein","h":"DISCIPLINE.","pill":"WHILE THEY SLEEP","m":"peak","dauer":3.6},
+ {"typ":"graph","zeige":"treppe","h":"SLOW.","pill":"BUT REAL","t2":"YOU","x1":"DAY 1","x2":"DAY 365","dauer":3.8},
+ {"typ":"akku","h":"SETBACK.","pill":"DON'T STOP","von":70,"bis":4,"m":"drop","dauer":3.2},
+ {"typ":"zahl","gross":"$0","von":0,"bis":1000000,"vor":"$","h":"OBSESSION.","pill":"PAYS OFF","m":"end","dauer":5.5}]}

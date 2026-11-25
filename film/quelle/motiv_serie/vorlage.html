@@ -69,7 +69,7 @@ P.szenen.forEach((s,i)=>{
   const T=(x,y,str,fs=28,o=.75,a='middle',id='')=>`<text ${id?`id="${id}"`:''} x="${x}" y="${y}" text-anchor="${a}" font-size="${fs}" font-weight="800" letter-spacing="${fs>40?2:5}" fill="${W}" opacity="${o}">${str}</text>`;
   const SV=inner=>`<svg width="1080" height="1920" class="glow">${inner}</svg>`;
   if(s.typ==='zahl'){ const g=String(s.gross??'1'), endw=s.bis!==undefined?(s.vor||'')+Number(s.bis).toLocaleString('en-US')+(s.nach||''):g, lang=Math.max(g.length,endw.length)>3;
-    v=`<div class="gross glow" style="position:absolute;left:0;right:0;top:${lang?740:640}px;text-align:center;font-weight:800;font-size:${lang?230:380}px;letter-spacing:-.02em;font-variant-numeric:tabular-nums">${g}</div>`; }
+    v=`<div class="gross glow" style="position:absolute;left:0;right:0;top:${Math.max(g.length,endw.length)>6?800:(lang?740:640)}px;text-align:center;font-weight:800;font-size:${Math.max(g.length,endw.length)>6?150:(lang?230:380)}px;letter-spacing:-.02em;font-variant-numeric:tabular-nums">${g}</div>`; }
   if(s.typ==='akku') v=SV(`<g transform="translate(540 930)">
      <rect x="-250" y="-120" width="480" height="240" rx="34" fill="none" stroke="${W}" stroke-width="12"/>
      <rect x="236" y="-46" width="34" height="92" rx="10" fill="${W}"/>

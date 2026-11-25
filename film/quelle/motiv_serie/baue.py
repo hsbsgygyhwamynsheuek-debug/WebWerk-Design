@@ -77,7 +77,8 @@ for s in plan:
 # Trommeln ab der ersten Sekunde, Streicher in Sechzehnteln, 808-Bass, Blechblaeser-Schlaege im Hoehepunkt.
 # Pegel und Frequenzbalance weiter wie beim gemessenen 1,5-Mio-Vorbild: Stimme bleibt vorne.
 STAERKE = dict(ruhig=0.85, drums=0.92, peak=1.0, drop=0.55, build=0.95, end=1.0)
-TROMMEL = dict(ruhig=2, drums=2, peak=1, drop=0, build=1, end=1)      # 2 = Trap-Muster, 1 = voll, 0 aus
+TROMMEL = dict(ruhig=2, drums=2, peak=1, drop=0, build=1, end=1)
+if not any(sz.get('vo') for sz in S['szenen']) and S.get('drop_stil'): TROMMEL['ruhig'] = 0      # 2 = Trap-Muster, 1 = voll, 0 aus
 def phase_bei(ts):
     for s in reversed(plan):
         if ts >= s['a']: return s['m']
@@ -195,7 +196,7 @@ def band(x, lo_, hi_):
     return 10*np.log10(X[(f >= lo_) & (f < hi_)].sum() + 1e-12)
 aktiv = np.abs(stim) > 1e-4
 if STUMM:   # Vorbild ohne Stimme: Melodie vorne (65 % Mitten), Bass nur ~26 %
-    STIMME_MITTE = band(oben, 250, 4000); UNTEN_ZIEL = -7.0; OBEN_ZIEL = 0.0
+    STIMME_MITTE = band(oben, 250, 4000); UNTEN_ZIEL = S.get('stumm_bass', -7.0); OBEN_ZIEL = 0.0
 else:
     STIMME_MITTE = band(stim, 250, 4000) - 10*np.log10(aktiv.mean())
 if not STUMM: UNTEN_ZIEL = S.get('bass_db', -5.0)        # Vorbild: Musik-Bass +0,7 dB gegenueber Sprach-Mitten
@@ -203,6 +204,12 @@ if not STUMM: OBEN_ZIEL = S.get('mitte_db', -12.0)       # Mitten der Musik deut
 unten *= 10**((STIMME_MITTE + UNTEN_ZIEL - band(unten, 30, 250))/20)
 oben *= 10**((STIMME_MITTE + OBEN_ZIEL - band(oben, 250, 4000))/20)
 musik = unten + oben
+if STUMM and S.get('drop_stil'):   # leises Intro, harter Drop am Wendepunkt der Geschichte (+9 dB)
+    PG = dict(ruhig=10**(-9/20), drums=0.75, peak=1.0, drop=0.55, build=0.85, end=1.0)
+    ge = np.repeat(np.array([PG[phase_bei(v)] for v in t[::240]]), 240)[:N]
+    c = np.concatenate([[0.0], np.cumsum(ge)]); w = int(SR*0.04)
+    lo = np.clip(np.arange(N) - w, 0, N); hi = np.clip(np.arange(N) + w, 0, N)
+    musik *= (c[hi] - c[lo]) / np.maximum(1, hi - lo)
 # nur sanft unter der Stimme zurueck - das Vorbild hat einen gleichmaessigen Pegel
 h = np.abs(stim); w = int(SR*0.2); c = np.concatenate([[0.0], np.cumsum(h)])
 lo = np.clip(np.arange(N) - w//2, 0, N); hi = np.clip(np.arange(N) + w//2, 0, N)
@@ -212,7 +219,12 @@ outro = 1 + (10**(5/20) - 1)*np.clip((t - T_OUT)/0.3, 0, 1)
 mix = stim + musik*outro
 if os.environ.get('STEMS'): np.save(os.path.join(AUS, 'stems.npy'), np.stack([stim, musik*outro]))   # nur fuer Messungen
 mix *= np.clip((LEN - t)/1.2, 0, 1)
-mix = mix / np.abs(mix).max() * 10**(-1/20)
+if STUMM and S.get('drop_stil'):   # Dynamik behalten: lauter Teil auf -11 dBFS, Limiter faengt Spitzen
+    laut = mix[int(plan[[s['m'] for s in plan].index('peak')]['a']*SR):]
+    mix = mix * 10**(-9/20) / np.sqrt((laut**2).mean())
+    mix = np.tanh(mix*1.05)/1.05
+else:
+    mix = mix / np.abs(mix).max() * 10**(-1/20)
 mixp = os.path.join(AUS, 'mix.wav')
 with wave.open(mixp, 'wb') as f:
     f.setnchannels(2); f.setsampwidth(2); f.setframerate(SR)
@@ -225,7 +237,7 @@ if not STUMM:
         f.writeframes((np.stack([sv, sv], 1)*32767).astype('<i2').tobytes())
     subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', sp, '-af', 'loudnorm=I=-14:TP=-1.0:LRA=8',
                     '-ar', '48000', os.path.join(AUS, 'ton_ohne_musik.wav')], check=True)
-subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', mixp, '-af', 'loudnorm=I=-13:TP=-1.0:LRA=8',
+subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', mixp, '-af', 'alimiter=limit=0.89:level=false' if (STUMM and S.get('drop_stil')) else 'loudnorm=I=-13:TP=-1.0:LRA=8',
                 '-ar', '48000', os.path.join(AUS, 'ton.wav')], check=True)
 P = dict(dauer=LEN, titel=S.get('titel', ''), szenen=[{k: v for k, v in s.items() if k != 'datei'} for s in plan])
 json.dump(P, open(os.path.join(AUS, 'plan.json'), 'w'), ensure_ascii=False)
