@@ -245,7 +245,7 @@ if not STUMM:
                     '-ar', '48000', os.path.join(AUS, 'ton_ohne_musik.wav')], check=True)
 subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', mixp, '-af', 'alimiter=limit=0.89:level=false' if (STUMM and S.get('drop_stil')) else 'loudnorm=I=-13:TP=-1.0:LRA=8',
                 '-ar', '48000', os.path.join(AUS, 'ton.wav')], check=True)
-P = dict(dauer=LEN, titel=S.get('titel', ''), szenen=[{k: v for k, v in s.items() if k != 'datei'} for s in plan])
+P = dict(dauer=LEN, hell=S.get('hell', False), titel=S.get('titel', ''), szenen=[{k: v for k, v in s.items() if k != 'datei'} for s in plan])
 json.dump(P, open(os.path.join(AUS, 'plan.json'), 'w'), ensure_ascii=False)
 html = open(os.path.join(HIER, 'vorlage.html'), encoding='utf-8').read().replace('__PLAN__', json.dumps(P, ensure_ascii=False))
 open(os.path.join(AUS, 'seite.html'), 'w', encoding='utf-8').write(html)

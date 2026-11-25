@@ -156,6 +156,23 @@ P.szenen.forEach((s,i)=>{
       ${T(0,0,s.rechts||'DISCIPLINE',26,1,'middle','tr'+i)}
       <path id="sx${i}" d="M0,-46 L13,-14 L46,-14 L19,6 L29,40 L0,20 L-29,40 L-19,6 L-46,-14 L-13,-14 Z" fill="#FFD54A" transform="scale(0)"/>
       </g></svg>`; }
+  /* ---------- Sprung-Linien (helles Minimal-Format): oben grosse Spruenge, die verpuffen; unten kleine, die wachsen ---------- */
+  if(s.typ==='baelle'){ const X0=190, X1=890, YO=840, YU=1160, D1='#151515', BL='#2F5BFF';
+    const stern=(x,y,id,f)=>`<path id="${id}" d="M0,-16 L4.7,-5 L16,-5 L7,2 L10.3,14 L0,7 L-10.3,14 L-7,2 L-16,-5 L-4.7,-5 Z" fill="${f}" transform="translate(${x} ${y})"/>`;
+    v=`<svg width="1080" height="1920">
+      <line x1="${X0}" y1="${YO}" x2="${X1}" y2="${YO}" stroke="${D1}" stroke-width="4" stroke-dasharray="3 9" opacity=".55"/>
+      <line id="bo${i}" x1="${X0}" y1="${YO}" x2="${X0}" y2="${YO}" stroke="${D1}" stroke-width="5"/>
+      <polyline id="po${i}" fill="none" stroke="${D1}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="${X0}" cy="${YO}" r="11" fill="${D1}"/>${stern(X1,YO,'so'+i,D1)}
+      <text x="540" y="${YO+62}" text-anchor="middle" font-size="34" font-weight="500" fill="#6b6b6b">${s.oben||'motivation'}</text>
+      <line x1="${X0}" y1="${YU}" x2="${X1}" y2="${YU}" stroke="${D1}" stroke-width="5"/>
+      <polyline id="pu${i}" fill="none" stroke="${D1}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <polyline id="pb${i}" fill="none" stroke="${BL}" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="${X0}" cy="${YU}" r="11" fill="${D1}"/>${stern(X1,YU,'su'+i,D1)}
+      <text x="540" y="${YU+62}" text-anchor="middle" font-size="36" font-weight="800" fill="${D1}">${s.unten||'discipline'}</text>
+      <text id="bx${i}" x="540" y="${YU+112}" text-anchor="middle" font-size="36" font-weight="800" fill="${BL}" opacity="0">${s.extra||'every single day'}</text>
+      <circle id="ko${i}" r="9" fill="${D1}"/><circle id="ku${i}" r="9" fill="${BL}" opacity="0"/>
+    </svg>`; }
   SZ.insertAdjacentHTML('beforeend',`<div class="sz" id="s${i}"><div class="h" style="${s.h.length>13?'font-size:70px':''}">${s.h}</div>${v}<div class="pill">${s.pill}</div></div>`);
 });
 const ut=document.getElementById('ut');
@@ -171,6 +188,7 @@ function kurve(i,t,lt,hoch){
   z.textContent=v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
 }
 if(P.szenen.some(x=>x.typ==='duell'||x.typ==='stufen')) document.getElementById('ut').style.top='1600px';
+if(P.hell){ const st=document.getElementById('stage'); st.style.background='radial-gradient(60% 40% at 30% 12%,#FFFFFF 0%,#F1EFEB 55%,#E7E4DE 100%)'; document.getElementById('korn').style.display='none'; }
 window.render=function(t){
   P.szenen.forEach((s,i)=>{
     /* Erste Szene ist ab Bild 1 voll da – kein schwarzer Anfang */
@@ -306,6 +324,24 @@ window.render=function(t){
       fl.querySelector('.schlaf').setAttribute('opacity', zzz? (0.6+0.4*Math.sin(tt*3)).toFixed(2):0);
       fl.querySelector('.hd').setAttribute('opacity', hd?(0.8+0.2*Math.sin(tt*11)).toFixed(2):0);
       $('tl').setAttribute('x',Math.max(150,Math.min(930,xl-16)).toFixed(0)); $('tl').setAttribute('y',(yl-12-(rot<-40?70:118)).toFixed(0)); $('tl').setAttribute('fill','#FF5A5F');
+    }
+    if(s.typ==='baelle'){ const X0=190, X1=890, YO=840, YU=1160;
+      /* Bogenfolgen als Punktlisten (einmal berechnet) */
+      if(!el._b){ const bogen=(x0,w,hgt,y)=>{const p=[];for(let k=0;k<=24;k++){const f=k/24;p.push([x0+w*f, y-4*hgt*f*(1-f)]);}return p;};
+        let o=[],x=X0; [[150,175],[112,130],[82,92],[58,58],[38,32],[22,15],[12,6]].forEach(([w,hh])=>{o=o.concat(bogen(x,w,hh,YO));x+=w;}); el._ostop=x;
+        let u=[]; x=X0; let w=40; const ws=[]; while(x+w<X1-2){ws.push(w);x+=w;w*=1.15;} ws.push(X1-x); x=X0;
+        ws.forEach(ww=>{u=u.concat(bogen(x,ww,Math.min(185,ww*0.95),YU));x+=ww;}); el._b=[o,u]; }
+      const [o,u]=el._b, zeig=(id,pts,f)=>{const n=Math.max(1,Math.floor(pts.length*f)); $(id).setAttribute('points',pts.slice(0,n).map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ')); return pts[n-1];};
+      const fo=eOut(pr(lt,0.3,4.0)), po=zeig('po',o,fo);
+      $('ko').setAttribute('cx',po[0].toFixed(1)); $('ko').setAttribute('cy',po[1].toFixed(1)); $('ko').setAttribute('opacity', lt>4.4?0:1);
+      $('bo').setAttribute('x2', (fo>=1? el._ostop : X0).toFixed(0));
+      const fu=Math.pow(pr(lt,4.4,10.2),1.35), wechsel=0.55, n=Math.floor(u.length*fu), k=Math.floor(u.length*wechsel);
+      $('pu').setAttribute('points',u.slice(0,Math.max(1,Math.min(n,k+1))).map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' '));
+      $('pb').setAttribute('points', n>k ? u.slice(k,n).map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ') : '');
+      const pu=u[Math.max(0,n-1)]; $('ku').setAttribute('cx',pu[0].toFixed(1)); $('ku').setAttribute('cy',pu[1].toFixed(1)); $('ku').setAttribute('opacity', (lt>4.4&&fu<1)?1:0);
+      const ziel=eSpr(pr(lt,10.2,11.0));
+      $('su').setAttribute('transform',`translate(${X1} ${YU}) scale(${(1+1.2*ziel).toFixed(3)})`); $('su').setAttribute('fill', fu>=1?'#2F5BFF':'#151515');
+      $('bx').setAttribute('opacity', eOut(pr(lt,10.4,10.9)).toFixed(2));
     }
   });
   /* Untertitel: Wort fuer Wort */
