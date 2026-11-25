@@ -1,0 +1,43 @@
+{
+ "titel": "Me and bro",
+ "grau": true,
+ "tonart": "hell",
+ "bpm": 92,
+ "drop_stil": true,
+ "laut_db": -15,
+ "stumm_bass": 2.0,
+ "marken": [
+  [
+   0,
+   "drums"
+  ],
+  [
+   9.4,
+   "peak"
+  ],
+  [
+   17.0,
+   "end"
+  ]
+ ],
+ "szenen": [
+  {
+   "typ": "wege",
+   "h": "",
+   "pill": "",
+   "ende": "FIND YOUR BRO.",
+   "helden": [
+    {
+     "name": "me",
+     "deko": "band"
+    },
+    {
+     "name": "bro",
+     "deko": "muetze"
+    }
+   ],
+   "m": "drums",
+   "dauer": 20.0
+  }
+ ]
+}

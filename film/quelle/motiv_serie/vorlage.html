@@ -195,6 +195,8 @@ P.szenen.forEach((s,i)=>{
       <g id="pd${i}">${[0,1,2].map(k=>`<circle class="dr" data-k="${k}" cx="${R+60}" cy="${G-90}" r="5" fill="#7cc8ff"/>`).join('')}</g></g>
       <g id="pw${i}" opacity="0"><ellipse cx="300" cy="560" rx="260" ry="70" fill="#3a3a3a"/><ellipse cx="560" cy="530" rx="280" ry="85" fill="#444"/><ellipse cx="820" cy="565" rx="250" ry="70" fill="#3a3a3a"/>${regen}</g>
       </g></svg>`; }
+  /* ---------- "Der Weg": Figuren mit echtem Gehzyklus verlassen die Masse, Kamera faehrt mit ---------- */
+  if(s.typ==='wege'){ v=`<svg width="1080" height="1920" id="wv${i}"></svg><div id="we${i}" style="position:absolute;left:60px;right:60px;top:300px;text-align:center;font-weight:800;font-size:64px;letter-spacing:.08em;color:#F4F4F4;opacity:0;text-shadow:0 0 24px rgba(255,255,255,.35)">${s.ende||''}</div>`; }
   SZ.insertAdjacentHTML('beforeend',`<div class="sz" id="s${i}"><div class="h" style="${s.h.length>13?'font-size:70px':''}">${s.h}</div>${v}<div class="pill">${s.pill}</div></div>`);
 });
 const ut=document.getElementById('ut');
@@ -210,6 +212,7 @@ function kurve(i,t,lt,hoch){
   z.textContent=v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
 }
 if(P.szenen.some(x=>x.typ==='duell'||x.typ==='stufen')) document.getElementById('ut').style.top='1600px';
+if(P.grau){ const st=document.getElementById('stage'); st.style.background='linear-gradient(#262626 0%,#3d3d3d 38%,#4b4b4b 55%,#3a3a3a 100%)'; }
 if(P.hell){ const st=document.getElementById('stage'); st.style.background='radial-gradient(60% 40% at 30% 12%,#FFFFFF 0%,#F1EFEB 55%,#E7E4DE 100%)'; document.getElementById('korn').style.display='none'; }
 window.render=function(t){
   P.szenen.forEach((s,i)=>{
@@ -385,6 +388,60 @@ window.render=function(t){
       $('pw').setAttribute('opacity',sturm.toFixed(2));
       el.querySelectorAll('.rg').forEach(r=>{const k=+r.dataset.k, x=60+((k*97)%980), y=600+((lt*900+k*131)%760);
         const schutz = x>R-40 && x<R+230 && y>G-48-260-140; r.setAttribute('transform',`translate(${x} ${y})`); r.setAttribute('opacity', schutz?0:0.8);});
+    }
+    if(s.typ==='wege'){
+      /* --- Gelenkfigur: Kopf, Rumpf, Arme, Beine mit Gehzyklus, Umriss wie im Vorbild --- */
+      const glied=(pts,w,f,o)=>{const d='M'+pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' L');
+        return `<path d="${d}" fill="none" stroke="${o}" stroke-width="${w+9}" stroke-linecap="round" stroke-linejoin="round"/><path d="${d}" fill="none" stroke="${f}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`;};
+      const rad=a=>a*Math.PI/180, seg=(p,l,a)=>[p[0]+l*Math.sin(rad(a)), p[1]+l*Math.cos(rad(a))];
+      const mensch=(x,y,sk,ph,f,o,extra)=>{ const bob=-5*Math.abs(Math.cos(ph)); let g=`<g transform="translate(${x.toFixed(1)} ${(y+bob*sk).toFixed(1)}) scale(${sk.toFixed(3)})">`;
+        const hip=[0,-100], sh=[4,-168], hinten=f2=>f2;
+        const bein=p=>{const a=30*Math.sin(p), k=Math.max(0,48*Math.sin(p-1.25)); const kn=seg(hip,52,a), fu=seg(kn,52,a-k); return [hip,kn,fu];};
+        const arm=p=>{const a=-26*Math.sin(p), el=seg(sh,44,a), ha=seg(el,40,a+26); return [sh,el,ha];};
+        const dunkler=f==='#F4F4F4'?'#D9D9D9':f;
+        g+=`<ellipse cx="0" cy="2" rx="46" ry="9" fill="#000" opacity=".25"/>`;
+        g+=glied(bein(ph+Math.PI),22,dunkler,o)+glied(arm(ph+Math.PI),17,dunkler,o);
+        g+=glied([[2,-112],[5,-166]],46,f,o);
+        g+=`<circle cx="8" cy="-206" r="${31}" fill="${f}" stroke="${o}" stroke-width="5"/>`;
+        if(extra==='band') g+=`<path d="M-21,-222 Q8,-236 38,-224 L39,-210 Q8,-222 -22,-208 Z" fill="#3a3a3a" stroke="${o}" stroke-width="3"/><path d="M14,-196 q8,6 16,0" fill="none" stroke="${o}" stroke-width="3" stroke-linecap="round"/>`;
+        if(extra==='muetze') g+=`<path d="M-24,-212 Q-22,-246 8,-247 Q38,-246 40,-212 Z" fill="#3a3a3a" stroke="${o}" stroke-width="4"/><rect x="-26" y="-218" width="68" height="12" rx="6" fill="#2b2b2b" stroke="${o}" stroke-width="3"/><path d="M16,-196 q8,6 16,0" fill="none" stroke="${o}" stroke-width="3" stroke-linecap="round"/>`;
+        if(extra==='kappe') g+=`<path d="M-22,-214 Q-18,-244 10,-244 Q36,-242 38,-214 Z" fill="#3a3a3a" stroke="${o}" stroke-width="4"/><path d="M30,-216 L64,-212 L36,-206 Z" fill="#2b2b2b" stroke="${o}" stroke-width="3"/>`;
+        g+=glied(bein(ph),22,f,o)+glied(arm(ph),17,f,o);
+        return g+'</g>'; };
+      /* --- Welt --- */
+      const G=1250, V=170, AST=2600, STEIG=0.36, tt=lt, D_=D;
+      const heldX=k=>520+k*130+V*tt;
+      const weg=x=> x<AST ? G : G-(x-AST)*STEIG;
+      const helden=s.helden||[{name:'me',deko:'band'},{name:'bro',deko:'muetze'}];
+      /* Kamera: weit -> nah -> weit (wie im Vorbild) */
+      const mx=helden.reduce((a,h,k)=>a+heldX(k),0)/helden.length, my=weg(mx)-140;
+      const z = tt<1.2 ? 0.62 : (tt<4.6 ? 0.62+1.68*eIO(pr(tt,1.2,4.6)) : (tt<9.4 ? 2.30+0.12*pr(tt,4.6,9.4) : 2.42-1.87*eIO(pr(tt,9.4,13.8))));
+      const nah=tt<4.6?eIO(pr(tt,1.2,4.6)):(tt<9.4?1:1-eIO(pr(tt,9.4,13.8))); const kx = mx + 120*(1-nah), ky = my - 260*(1-nah) + 20*nah;
+      let w=`<defs><linearGradient id="nebel${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a2a2a"/><stop offset="1" stop-color="#444"/></linearGradient><radialGradient id="sonne${i}"><stop offset="0" stop-color="#fff6d8" stop-opacity=".95"/><stop offset=".35" stop-color="#ffe7a3" stop-opacity=".35"/><stop offset="1" stop-color="#ffe7a3" stop-opacity="0"/></radialGradient></defs>`;
+      w+=`<g transform="translate(540 1080) scale(${z.toFixed(4)}) translate(${(-kx).toFixed(1)} ${(-ky).toFixed(1)})">`;
+      /* Strassen mit leuchtenden Kanten */
+      const kante=`stroke="#d9ecff" stroke-width="${(5/z).toFixed(1)}" opacity=".75" fill="none"`;
+      w+=`<rect x="-4000" y="${G-170}" width="14000" height="240" fill="#4a4a4a"/>`;
+      w+=`<line x1="-4000" y1="${G-170}" x2="10000" y2="${G-170}" ${kante}/><line x1="-4000" y1="${G+50}" x2="${AST-60}" y2="${G+50}" ${kante}/><line x1="${AST+260}" y1="${G+50}" x2="10000" y2="${G+50}" ${kante}/>`;
+      const bx1=AST, bx2=AST+6000, by1=G-60, by2=G-60-6000*STEIG;
+      w+=`<polygon points="${bx1-60},${G+50} ${bx1+260},${G+50} ${bx2+320},${by2+110} ${bx2},${by2-110}" fill="#474747"/>`;
+      w+=`<path d="M${AST-60},${G+50} Q${AST+80},${G+40} ${AST+200},${G-30} L${bx2},${by2-110}" ${kante}/><path d="M${AST+260},${G+50} L${bx2+320},${by2+110}" ${kante}/>`;
+      /* Licht am Ende des eigenen Weges */
+      const sonne=eOut(pr(tt,D_-7,D_-1.5)); w+=`<circle cx="${AST+5200}" cy="${G-5200*STEIG-200}" r="1400" fill="url(#sonne${i})" opacity="${sonne.toFixed(2)}"/>`;
+      /* Masse: drei Reihen grauer Gaenger auf der geraden Strasse */
+      w+=`<rect x="-4000" y="${G-2600}" width="14000" height="2440" fill="#444"/><rect x="-4000" y="${G-2600}" width="14000" height="1900" fill="url(#nebel${i})"/>`;
+      for(let r=6;r>=0;r--) for(let k=0;k<22;k++){ const sk=0.92-0.075*r, x=-1900+k*(170*sk+18)+((r*67+k*41)%70)+V*tt+r*35;
+        const ph=(x/165)*Math.PI + k*1.3 + r; if(Math.abs(x-mx)<240 && r===0 && tt<9.6) continue;
+        const c=Math.round(160-11*r); w+=mensch(x, G-40-r*62, sk, ph, `rgb(${c},${c},${c})`, '#262626', ''); }
+      /* Helden vorne */
+      helden.forEach((h,k)=>{ const x=heldX(k), y=weg(x)+(x<AST?10:0), ph=(x/165)*Math.PI;
+        w+=mensch(x, y, 1, ph+k*0.9, '#F4F4F4', '#151515', h.deko||'');
+        w+=`<text x="${x+8}" y="${y-275}" text-anchor="middle" font-size="${(46/Math.max(0.6,z)).toFixed(0)}" font-weight="800" fill="#fff">${h.name}</text>`; });
+      /* vordere Masse (unscharf, vor den Helden in der Nahaufnahme) */
+      for(let k=0;k<7;k++){ const x=-600+k*260+V*tt*1.0+90; if(tt>9.6) break; if(Math.abs(x-mx)<230) continue; w+=`<g opacity=".95">`+mensch(x, G+260, 1.6, (x/165)*Math.PI+k, '#8f8f8f','#2a2a2a','')+`</g>`; }
+      w+=`</g>`;
+      $('wv').innerHTML=w;
+      const ende=document.getElementById('we'+i); ende.style.opacity=eOut(pr(tt,D_-4.5,D_-3.6)).toFixed(2);
     }
   });
   /* Untertitel: Wort fuer Wort */

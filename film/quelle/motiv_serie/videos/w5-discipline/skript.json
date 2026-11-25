@@ -1,0 +1,43 @@
+{
+ "titel": "w5-discipline",
+ "grau": true,
+ "tonart": "dunkel",
+ "bpm": 86,
+ "drop_stil": true,
+ "laut_db": -15,
+ "stumm_bass": 2.0,
+ "marken": [
+  [
+   0,
+   "drums"
+  ],
+  [
+   9.4,
+   "peak"
+  ],
+  [
+   17.0,
+   "end"
+  ]
+ ],
+ "szenen": [
+  {
+   "typ": "wege",
+   "h": "",
+   "pill": "",
+   "ende": "NOT EVERYONE WILL GET IT.",
+   "helden": [
+    {
+     "name": "me",
+     "deko": "band"
+    },
+    {
+     "name": "discipline",
+     "deko": ""
+    }
+   ],
+   "m": "drums",
+   "dauer": 20.0
+  }
+ ]
+}
