@@ -1,0 +1,9 @@
+{"titel":"Mentality 1","tonart":"hell","bpm":87,"szenen":[
+ {"typ":"gruppe","modus":"zaehlen","h":"EVERYONE WANTS IT.","pill":"SUCCESS","m":"ruhig","dauer":3.4},
+ {"typ":"berg","h":"FEW BUILD IT.","pill":"BRICK BY BRICK","dauer":3.4},
+ {"typ":"ende","h":"ONE MAKES IT.","pill":"THE ONE WHO STAYED","m":"drums","dauer":3.6},
+ {"typ":"akku","h":"YOUR ENERGY IS LIMITED.","pill":"WATCH WHO DRAINS IT","von":100,"bis":8,"dauer":3.8},
+ {"typ":"akku","h":"AND WHO CHARGES IT.","pill":"KEEP THOSE CLOSE","von":8,"bis":100,"m":"build","dauer":3.8},
+ {"typ":"zweiwege","h":"TWO ROADS.","pill":"ONE CHOICE","t1":"EASY","t2":"WORTH IT","m":"peak","dauer":4.0},
+ {"typ":"graph","zeige":"beide","h":"ONE YEAR LATER","pill":"IT SHOWS","t1":"EXCUSES","t2":"WORK","dauer":4.0},
+ {"typ":"zahl","gross":"YOU","h":"CHOOSE.","pill":"FOLLOW FOR MORE","m":"end","dauer":4.5}]}

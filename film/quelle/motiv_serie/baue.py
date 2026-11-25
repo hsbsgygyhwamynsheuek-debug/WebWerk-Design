@@ -52,11 +52,16 @@ def sprich(text):
 
 # ---------------- Zeitplan aus den gesprochenen Saetzen ----------------
 zeit = 0.25; plan = []; phase = 'ruhig'
+# Ohne Sprechtext (wie das "Mentality."-Vorbild) erzaehlen nur Bilder und Musik - kostet keine Zeichen
+STUMM = not any(sz.get('vo') for sz in S['szenen'])
 for sz in S['szenen']:
     phase = sz.get('m', phase)
-    p = sprich(sz['vo']); d = len(lies(p)) / SR
-    dauer = max(1.3, d + 0.12 + sz.get('pause', 0.0))   # wie im Vorbild: Satz an Satz, kaum Luft
-    anzeige = re.sub(r'\[[^\]]*\]\s*', '', sz['vo']).strip()
+    if sz.get('vo'):
+        p = sprich(sz['vo']); d = len(lies(p)) / SR
+        dauer = max(1.3, d + 0.12 + sz.get('pause', 0.0))   # wie im Vorbild: Satz an Satz, kaum Luft
+    else:
+        p = None; d = 0.0; dauer = sz.get('dauer', 3.5)
+    anzeige = re.sub(r'\[[^\]]*\]\s*', '', sz.get('vo', '')).strip()
     plan.append(dict(sz, m=phase, vo=anzeige, a=round(zeit, 3), b=round(zeit + dauer, 3),
                      vo_a=round(zeit + 0.04, 3), vo_d=round(d, 3), datei=p))
     zeit += dauer
@@ -64,6 +69,7 @@ LEN = round(zeit, 3); N = int(SR * LEN); t = np.arange(N) / SR
 
 stim = np.zeros(N)
 for s in plan:
+    if not s['datei']: continue
     a = lies(s['datei']); laut = a[np.abs(a) > 0.02]; a *= 10 ** (-13 / 20) / np.sqrt((laut ** 2).mean())
     i0 = int(s['vo_a'] * SR); i1 = min(N, i0 + len(a)); stim[i0:i1] += a[:i1 - i0]
 
@@ -78,7 +84,7 @@ def phase_bei(ts):
     return plan[0]['m']
 def intensitaet(ts): return STAERKE[phase_bei(ts)]
 # Cis-Moll – A – E – H (vi–IV–I–V in E): die klassische emotionale Motivations-Folge, je Video transponiert
-VERSATZ = dict(moll=0, dunkel=-2, heroisch=3).get(S.get('tonart', 'moll'), 0)
+VERSATZ = dict(moll=0, dunkel=-2, heroisch=3, hell=-5).get(S.get('tonart', 'moll'), 0)
 AKK = [[n + VERSATZ for n in a] for a in ([61, 64, 68], [57, 61, 64], [52, 56, 59], [59, 63, 66])]
 BPM = S.get('bpm', 110); BEAT = 60 / BPM; TAKT = 4 * BEAT
 def hz(n): return 440 * 2 ** ((n - 69) / 12)
@@ -137,7 +143,7 @@ while k * TAKT < LEN:
     # Streicher-Motor in Sechzehnteln (im Drop pausiert)
     if ph0 != 'drop':
         for s16 in range(16):
-            n = akk[0] - 12 + FIG[s16]
+            n = akk[0] + (12 if STUMM else -12) + FIG[s16]   # ohne Stimme eine Oktave hoeher: Melodie statt Brummen
             lege(oben, streicher(hz(n), 0.22), t0 + s16*BEAT/4, 0.55 * AKZ[s16] * I0)
     # Aufbau: Trommelwirbel im Takt vor jedem Hoehepunkt
     for pk in peak_starts:
@@ -150,7 +156,7 @@ while k * TAKT < LEN:
         lege(oben, blech(akk), t0, 0.9); lege(oben, blech(akk, 0.35), t0 + 2.5*BEAT, 0.6)
     k += 1
 # ---- Outro wie in beiden Vorbildern: nach dem letzten Satz kommt der "Song" ----
-T_OUT = plan[-1]['vo_a'] + plan[-1]['vo_d'] + 0.05
+T_OUT = (LEN - 3.0) if STUMM else plan[-1]['vo_a'] + plan[-1]['vo_d'] + 0.05
 def lead(f, d):
     x = q(d); y = sum(np.sin(2*np.pi*f*hh*x*(1 + 0.004*np.sin(2*np.pi*5.5*x)))/hh for hh in range(1, 7))
     return y * (1 - np.exp(-x*120)) * np.exp(-x*2.5) * np.clip((d - x)/0.04, 0, 1)
@@ -161,7 +167,7 @@ while k * TAKT < T_OUT:
     t0 = k * TAKT; akk = AKK[k % 4]
     for sch, ti, d in HOOK:
         ts = t0 + sch*BEAT
-        if ts < T_OUT and phase_bei(ts) != 'drop': lege(oben, lead(hz(akk[ti] + 12), d*BEAT), ts, 0.32)
+        if ts < T_OUT and phase_bei(ts) != 'drop': lege(oben, lead(hz(akk[ti] + 12), d*BEAT), ts, 0.8 if STUMM else 0.32)
     k += 1
 k0 = int(T_OUT // TAKT)
 for k in range(k0, int(LEN // TAKT) + 2):
@@ -177,7 +183,7 @@ for k in range(int(LEN / TAKT) + 1):
     a0 = k*TAKT; akk = AKK[k % 4]; i0 = int(a0*SR); i1 = min(N, int((a0 + TAKT + 0.6)*SR))
     if i0 >= N: break
     x = t[i0:i1] - a0
-    w = sum(sum(np.sin(2*np.pi*hz(n)*hh*x*(1 + 0.004*dd))/hh for hh in range(1, 6) for dd in (-1, 1)) for n in akk)
+    w = sum(sum(np.sin(2*np.pi*hz(n + (12 if STUMM else 0))*hh*x*(1 + 0.004*dd))/hh for hh in range(1, 6) for dd in (-1, 1)) for n in akk)
     oben[i0:i1] += 0.18 * w * np.clip(x/0.5, 0, 1) * np.clip((TAKT + 0.6 - x)/0.6, 0, 1)
 env = np.repeat(np.array([intensitaet(v) for v in t[::480]]), 480)[:N]
 c = np.concatenate([[0.0], np.cumsum(env)]); w = SR // 2
@@ -188,9 +194,12 @@ def band(x, lo_, hi_):
     X = np.abs(np.fft.rfft(x))**2; f = np.fft.rfftfreq(len(x), 1/SR)
     return 10*np.log10(X[(f >= lo_) & (f < hi_)].sum() + 1e-12)
 aktiv = np.abs(stim) > 1e-4
-STIMME_MITTE = band(stim, 250, 4000) - 10*np.log10(aktiv.mean())
-UNTEN_ZIEL = S.get('bass_db', -5.0)        # Vorbild: Musik-Bass +0,7 dB gegenueber Sprach-Mitten
-OBEN_ZIEL = S.get('mitte_db', -12.0)       # Mitten der Musik deutlich unter der Stimme
+if STUMM:   # Vorbild ohne Stimme: Melodie vorne (65 % Mitten), Bass nur ~26 %
+    STIMME_MITTE = band(oben, 250, 4000); UNTEN_ZIEL = -7.0; OBEN_ZIEL = 0.0
+else:
+    STIMME_MITTE = band(stim, 250, 4000) - 10*np.log10(aktiv.mean())
+if not STUMM: UNTEN_ZIEL = S.get('bass_db', -5.0)        # Vorbild: Musik-Bass +0,7 dB gegenueber Sprach-Mitten
+if not STUMM: OBEN_ZIEL = S.get('mitte_db', -12.0)       # Mitten der Musik deutlich unter der Stimme
 unten *= 10**((STIMME_MITTE + UNTEN_ZIEL - band(unten, 30, 250))/20)
 oben *= 10**((STIMME_MITTE + OBEN_ZIEL - band(oben, 250, 4000))/20)
 musik = unten + oben
@@ -208,19 +217,20 @@ mixp = os.path.join(AUS, 'mix.wav')
 with wave.open(mixp, 'wb') as f:
     f.setnchannels(2); f.setsampwidth(2); f.setframerate(SR)
     f.writeframes((np.clip(np.stack([mix, mix], 1), -1, 1)*32767).astype('<i2').tobytes())
-sp = os.path.join(AUS, 'stimme.wav')
-with wave.open(sp, 'wb') as f:
-    sv = stim / np.abs(stim).max() * 0.9
-    f.setnchannels(2); f.setsampwidth(2); f.setframerate(SR)
-    f.writeframes((np.stack([sv, sv], 1)*32767).astype('<i2').tobytes())
-subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', sp, '-af', 'loudnorm=I=-14:TP=-1.0:LRA=8',
-                '-ar', '48000', os.path.join(AUS, 'ton_ohne_musik.wav')], check=True)
+if not STUMM:
+    sp = os.path.join(AUS, 'stimme.wav')
+    with wave.open(sp, 'wb') as f:
+        sv = stim / np.abs(stim).max() * 0.9
+        f.setnchannels(2); f.setsampwidth(2); f.setframerate(SR)
+        f.writeframes((np.stack([sv, sv], 1)*32767).astype('<i2').tobytes())
+    subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', sp, '-af', 'loudnorm=I=-14:TP=-1.0:LRA=8',
+                    '-ar', '48000', os.path.join(AUS, 'ton_ohne_musik.wav')], check=True)
 subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', mixp, '-af', 'loudnorm=I=-13:TP=-1.0:LRA=8',
                 '-ar', '48000', os.path.join(AUS, 'ton.wav')], check=True)
 P = dict(dauer=LEN, titel=S.get('titel', ''), szenen=[{k: v for k, v in s.items() if k != 'datei'} for s in plan])
 json.dump(P, open(os.path.join(AUS, 'plan.json'), 'w'), ensure_ascii=False)
 html = open(os.path.join(HIER, 'vorlage.html'), encoding='utf-8').read().replace('__PLAN__', json.dumps(P, ensure_ascii=False))
 open(os.path.join(AUS, 'seite.html'), 'w', encoding='utf-8').write(html)
-zeichen = sum(len(sz['vo']) for sz in S['szenen'])
+zeichen = sum(len(sz.get('vo', '')) for sz in S['szenen'])
 for s in plan: print(f"{s['a']:6.2f}–{s['b']:6.2f} {s['m']:6s} {s['typ']:8s} {s['vo']}")
 print('Gesamt', LEN, 's |', zeichen, 'Zeichen im Skript')
