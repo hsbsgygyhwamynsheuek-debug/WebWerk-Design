@@ -212,6 +212,7 @@ function kurve(i,t,lt,hoch){
   z.textContent=v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
 }
 if(P.szenen.some(x=>x.typ==='duell'||x.typ==='stufen')) document.getElementById('ut').style.top='1600px';
+if(P.tipp){ const st=document.createElement('style'); st.textContent='.h{font-size:54px!important;letter-spacing:.06em!important;line-height:1.18!important;top:300px!important;left:70px!important;right:70px!important}.pill{display:none}'; document.head.appendChild(st); }
 if(P.grau){ const st=document.getElementById('stage'); st.style.background='linear-gradient(#262626 0%,#3d3d3d 38%,#4b4b4b 55%,#3a3a3a 100%)'; }
 if(P.hell){ const st=document.getElementById('stage'); st.style.background='radial-gradient(60% 40% at 30% 12%,#FFFFFF 0%,#F1EFEB 55%,#E7E4DE 100%)'; document.getElementById('korn').style.display='none'; }
 window.render=function(t){
@@ -223,7 +224,8 @@ window.render=function(t){
     const ein= (i===0||dv) ? 1 : eOut(pr(lt,0,0.45)), aus= dn ? 1 : 1-pr(t,s.b-0.32,s.b);
     const o=(t>=a0-0.01&&t<s.b+0.01)?ein*aus:0;
     el.style.opacity=o.toFixed(3); if(o<=0) return;
-    const h=el.querySelector('.h'); h.style.transform=`translateY(${((1-ein)*-24).toFixed(1)}px) scale(${(0.96+0.04*ein).toFixed(3)})`;
+    const h=el.querySelector('.h'); if(P.tipp){ const nz=Math.floor(Math.max(0,lt-0.15)*26); if(h.dataset.n!=nz){h.dataset.n=nz; h.textContent=s.h.slice(0,nz);} }
+    h.style.transform=`translateY(${((1-ein)*-24).toFixed(1)}px) scale(${(0.96+0.04*ein).toFixed(3)})`;
     el.querySelector('.pill').style.transform=`translateX(-50%) translateY(${((1-eOut(pr(lt,0.2,0.7)))*20).toFixed(1)}px)`;
     el.querySelector('.pill').style.opacity=eOut(pr(lt,0.2,0.6)).toFixed(3);
     if(s.typ==='stopp'){ const u=el.querySelector('.uhr'), k=pr(lt,0.4,s.b-s.a);

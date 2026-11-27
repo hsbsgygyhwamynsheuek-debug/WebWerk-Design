@@ -1,0 +1,67 @@
+{
+ "titel": "st2-laughed",
+ "tipp": true,
+ "tonart": "moll",
+ "bpm": 86,
+ "drop_stil": true,
+ "stumm_bass": 3.0,
+ "szenen": [
+  {
+   "typ": "gruppe",
+   "h": "THE KID EVERYONE LAUGHED AT FOR HIS BIG DREAMS",
+   "pill": "",
+   "dauer": 3.77,
+   "m": "ruhig",
+   "modus": "zaehlen"
+  },
+  {
+   "typ": "handy",
+   "h": "HAD ZERO SUPPORT. NOT FROM FRIENDS. NOT FROM FAMILY.",
+   "pill": "",
+   "dauer": 4.0,
+   "gross": "0",
+   "t1": "SUPPORTERS"
+  },
+  {
+   "typ": "berg",
+   "h": "SO HE BUILT IT ALONE. BRICK BY BRICK.",
+   "pill": "",
+   "dauer": 3.42
+  },
+  {
+   "typ": "graph",
+   "h": "SLOWLY. QUIETLY. EVERY SINGLE DAY.",
+   "pill": "",
+   "dauer": 3.31,
+   "zeige": "treppe",
+   "t2": "HIM",
+   "x1": "YEAR 1",
+   "x2": "YEAR 5"
+  },
+  {
+   "typ": "zahl",
+   "h": "FIVE YEARS LATER,",
+   "pill": "",
+   "dauer": 2.65,
+   "m": "peak",
+   "gross": "$0",
+   "von": 0,
+   "bis": 1000000,
+   "vor": "$"
+  },
+  {
+   "typ": "gruppe",
+   "h": "THE SAME PEOPLE ASK HIM FOR ADVICE.",
+   "pill": "",
+   "dauer": 3.35,
+   "modus": "du"
+  },
+  {
+   "typ": "ende",
+   "h": "LET THEM LAUGH. KEEP BUILDING.",
+   "pill": "",
+   "dauer": 4.65,
+   "m": "end"
+  }
+ ]
+}

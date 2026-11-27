@@ -239,6 +239,11 @@ def whoosh():        # Uebergang: tonaler Sweep statt Rauschen
 def impact():        # Ueberraschung / Hoehepunkt
     x = q(1.2); return np.sin(2*np.pi*np.cumsum(42 + 90*np.exp(-x*18))/SR) * np.exp(-x*3) * (1 - np.exp(-x*900))
 sfx_lege(synthhit(), 0.02, 0.55)
+if S.get('tipp'):    # Tipp-Geraeusch je Buchstabe (tonaler Klick, kein Rauschen)
+    xk = q(0.018); klick = np.sin(2*np.pi*2300*xk) * np.exp(-xk*320)
+    for s in plan:
+        for j, ch in enumerate(s.get('h', '')):
+            if ch != ' ': sfx_lege(klick, s['a'] + 0.15 + j/26, 0.10 + 0.03*((j*7) % 3))
 for i, s in enumerate(plan):
     if i > 0: sfx_lege(whoosh(), s['a'] - 0.2, 0.10)
     if s.get('pill') or s.get('h'): sfx_lege(pop(), s['a'] + 0.22, 0.22)
@@ -272,7 +277,7 @@ if not STUMM:
                     '-ar', '48000', os.path.join(AUS, 'ton_ohne_musik.wav')], check=True)
 subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', mixp, '-af', 'alimiter=limit=0.89:level=false' if (STUMM and S.get('drop_stil')) else 'loudnorm=I=-13:TP=-1.0:LRA=8',
                 '-ar', '48000', os.path.join(AUS, 'ton.wav')], check=True)
-P = dict(dauer=LEN, hell=S.get('hell', False), grau=S.get('grau', False), titel=S.get('titel', ''), szenen=[{k: v for k, v in s.items() if k != 'datei'} for s in plan])
+P = dict(dauer=LEN, tipp=S.get('tipp', False), hell=S.get('hell', False), grau=S.get('grau', False), titel=S.get('titel', ''), szenen=[{k: v for k, v in s.items() if k != 'datei'} for s in plan])
 json.dump(P, open(os.path.join(AUS, 'plan.json'), 'w'), ensure_ascii=False)
 html = open(os.path.join(HIER, 'vorlage.html'), encoding='utf-8').read().replace('__PLAN__', json.dumps(P, ensure_ascii=False))
 open(os.path.join(AUS, 'seite.html'), 'w', encoding='utf-8').write(html)
