@@ -220,6 +220,33 @@ h = np.abs(stim); w = int(SR*0.2); c = np.concatenate([[0.0], np.cumsum(h)])
 lo = np.clip(np.arange(N) - w//2, 0, N); hi = np.clip(np.arange(N) + w//2, 0, N)
 g = (c[hi] - c[lo]) / np.maximum(1, hi - lo); g /= g.max() + 1e-9
 musik *= 1 - 0.20*np.clip(g*3, 0, 1)
+# ---- Soundeffekte an den richtigen Stellen (nach dem Sounddesign-Vorbild), rein tonal ----
+sfx = np.zeros(N)
+def sfx_lege(sig, ts, g):
+    i0 = int(ts*SR); i1 = min(N, i0+len(sig))
+    if 0 <= i0 < N: sfx[i0:i1] += sig[:i1-i0]*g
+def synthhit():      # Start des Videos: Akkordschlag mit Sub
+    x = q(0.9); f0 = hz(AKK[0][0] - 12)
+    y = sum(sum(np.sin(2*np.pi*hz(n-12)*hh*x)/hh for hh in range(1, 7)) for n in AKK[0])
+    sub = np.sin(2*np.pi*np.cumsum(55 + 60*np.exp(-x*25))/SR)
+    return (0.5*y/3 + sub) * (1 - np.exp(-x*800)) * np.exp(-x*4.5)
+def pop():           # Text erscheint
+    x = q(0.08); f = 1500*np.exp(-x*30) + 500
+    return np.sin(2*np.pi*np.cumsum(f)/SR) * np.exp(-x*45)
+def whoosh():        # Uebergang: tonaler Sweep statt Rauschen
+    x = q(0.38); f = 220 + 1300*(x/0.38)**1.6
+    return np.sin(2*np.pi*np.cumsum(f)/SR) * np.sin(np.pi*x/0.38)**2
+def impact():        # Ueberraschung / Hoehepunkt
+    x = q(1.2); return np.sin(2*np.pi*np.cumsum(42 + 90*np.exp(-x*18))/SR) * np.exp(-x*3) * (1 - np.exp(-x*900))
+sfx_lege(synthhit(), 0.02, 0.55)
+for i, s in enumerate(plan):
+    if i > 0: sfx_lege(whoosh(), s['a'] - 0.2, 0.10)
+    if s.get('pill') or s.get('h'): sfx_lege(pop(), s['a'] + 0.22, 0.22)
+for i, s in enumerate(plan):
+    if s['m'] in ('peak', 'end') and (i == 0 or plan[i-1]['m'] != s['m']): sfx_lege(impact(), s['a'], 0.45)
+for tm, pm in S.get('marken', []):
+    if pm in ('peak', 'end'): sfx_lege(impact(), tm, 0.4)
+if S.get('sfx', True): musik = musik + sfx * (np.sqrt((musik**2).mean()) / (np.sqrt((sfx**2).mean()) + 1e-9)) * 0.35
 outro = 1 + (10**(5/20) - 1)*np.clip((t - T_OUT)/0.3, 0, 1)
 mix = stim + musik*outro
 if os.environ.get('STEMS'): np.save(os.path.join(AUS, 'stems.npy'), np.stack([stim, musik*outro]))   # nur fuer Messungen

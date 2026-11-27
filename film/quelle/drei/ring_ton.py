@@ -30,6 +30,10 @@ for s in E['stoesse']:
 # leise Flaeche als Boden (a-Moll), steigert sich bis zum Sieg
 pad = sum(np.sin(2*np.pi*hz(n)*t) for n in (45, 52, 57, 60, 64)) / 5
 pad *= 0.05 + 0.07*np.clip(t / E['tGewinn'], 0, 1)
+# Start-Synthhit und Pop beim Siegertext (Sounddesign-Vorbild)
+x = q(0.9); hit = sum(np.sin(2*np.pi*hz(n)*x*hh)/hh for n in (45,52,57) for hh in range(1,6))/3*(1-np.exp(-x*800))*np.exp(-x*4.5)
+lege(hit, 0.02, 0.35)
+xp = q(0.08); lege(np.sin(2*np.pi*np.cumsum(1500*np.exp(-xp*30)+500)/SR)*np.exp(-xp*45), E['tGewinn']+0.15, 0.3)
 mix = spur + pad
 mix *= np.clip(t/0.3, 0, 1) * np.clip((DAUER - t)/1.2, 0, 1)
 mix = np.tanh(mix / np.abs(mix).max() * 1.2) / np.tanh(1.2) * 0.89

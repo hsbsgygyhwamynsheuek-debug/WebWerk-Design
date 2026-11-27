@@ -1,0 +1,35 @@
+{
+ "hell": true,
+ "tonart": "dunkel",
+ "bpm": 100,
+ "stumm_bass": -6.0,
+ "drop_stil": true,
+ "laut_db": -15,
+ "marken": [
+  [
+   0,
+   "drums"
+  ],
+  [
+   9.6,
+   "peak"
+  ],
+  [
+   10.6,
+   "end"
+  ]
+ ],
+ "szenen": [
+  {
+   "typ": "baelle",
+   "h": "",
+   "pill": "",
+   "oben": "posting once in a while",
+   "unten": "posting every single day",
+   "extra": "and actually growing",
+   "m": "drums",
+   "dauer": 12.5
+  }
+ ],
+ "titel": "x08-posting"
+}

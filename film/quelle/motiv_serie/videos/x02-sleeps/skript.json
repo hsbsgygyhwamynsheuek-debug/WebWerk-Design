@@ -1,0 +1,39 @@
+{
+ "tonart": "dunkel",
+ "bpm": 76,
+ "stumm_bass": -3.0,
+ "drop_stil": true,
+ "laut_db": -15,
+ "marken": [
+  [
+   0,
+   "drums"
+  ],
+  [
+   8.1,
+   "peak"
+  ],
+  [
+   10.5,
+   "drop"
+  ],
+  [
+   12.2,
+   "end"
+  ]
+ ],
+ "szenen": [
+  {
+   "typ": "duell",
+   "h": "",
+   "pill": "",
+   "links": "SLEEPS IN",
+   "rechts": "WAKES UP EARLY",
+   "blase1": "5 MORE MIN",
+   "blase2": "5 MORE MIN",
+   "m": "drums",
+   "dauer": 14.0
+  }
+ ],
+ "titel": "x02-sleeps"
+}
