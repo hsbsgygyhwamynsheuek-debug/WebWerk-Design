@@ -1,0 +1,62 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Finde den Fehler</title>
+<link rel="stylesheet" href="tt.css">
+<style>
+#s1{background:var(--ink)}
+.titel{position:absolute;left:70px;right:140px;top:150px;text-align:center}
+.titel .gross{font-size:82px}
+.feld{position:absolute;left:50%;top:410px;transform:translateX(-50%);
+  display:grid;grid-template-columns:repeat(6,118px);gap:10px}
+.kachel{width:118px;height:118px;border-radius:22px;background:#202025;
+  display:flex;align-items:center;justify-content:center}
+.kachel i{display:block;width:52px;height:8px;border-radius:99px;background:#A7A29A;
+  transform:rotate(45deg)}
+.kachel.x i{transform:rotate(-45deg)}
+.ring{position:absolute;border:8px solid var(--glut);border-radius:32px;opacity:0;
+  width:142px;height:142px;margin:-12px}
+.balken{position:absolute;left:70px;right:140px;top:1350px;height:10px;
+  background:rgba(250,249,246,.16);border-radius:99px;overflow:hidden}
+.balken i{display:block;height:100%;background:var(--glut)}
+.unten{position:absolute;left:70px;right:140px;top:1395px;text-align:center}
+</style></head><body>
+<div id="stage">
+  <div class="scene" id="s1">
+    <div class="titel"><div class="gross"><span class="ln"><i>Finde das,</i></span><span class="ln"><i>was anders ist.</i></span></div></div>
+    <div class="feld"></div>
+    <div class="balken"><i></i></div>
+    <div class="unten"><div class="mittel" style="font-size:54px;opacity:0">Da war es.</div></div>
+  </div>
+</div>
+<script src="tt.js"></script>
+<script>
+stage.insertAdjacentHTML('beforeend', WM);
+const SP=6, ZE=7, ANDERS=25;          /* Reihe 6, Spalte 2 – nicht am Rand, nicht in der Mitte */
+const f=q('.feld');
+for(let i=0;i<SP*ZE;i++){
+  const d=document.createElement('div');
+  d.className='kachel'+(i===ANDERS?' x':'');
+  d.innerHTML='<i></i>'; f.appendChild(d);
+}
+f.insertAdjacentHTML('beforeend','<span class="ring"></span>');
+const K=[...f.querySelectorAll('.kachel')], ring=q('.ring');
+const SUCHE=6.6, DAUER=11.4;
+starte([{id:'s1',a:0,b:DAUER}],(id,lt)=>{
+  zeilen(q('.titel'),lt,0.08,0.09,0.65);
+  K.forEach((k,i)=>{
+    const auf=eOut(pr(lt,0.35+(i%SP)*0.015+Math.floor(i/SP)*0.03,1.2));
+    k.style.opacity=String(auf);
+    k.style.transform=`scale(${(0.8+0.2*auf).toFixed(3)})`;
+  });
+  q('.balken i').style.width=(pr(lt,1.1,SUCHE)*100)+'%';
+  q('.balken').style.opacity = lt<SUCHE?'1':'0';
+
+  if(lt>SUCHE){
+    const e=eSpr(pr(lt,SUCHE,SUCHE+0.8));
+    K.forEach((k,i)=>{ if(i!==ANDERS){ k.style.opacity=String(1-0.78*e); } });
+    const z=K[ANDERS];
+    z.style.transform=`scale(${(1+0.22*e).toFixed(3)})`;
+    ring.style.opacity=String(e);
+    ring.style.left=z.offsetLeft+'px'; ring.style.top=z.offsetTop+'px';
+    steig(q('.unten .mittel'),lt,SUCHE+0.5,0.6,24);
+  } else { ring.style.opacity='0'; }
+});
+</script></body></html>

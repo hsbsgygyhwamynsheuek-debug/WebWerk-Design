@@ -1,0 +1,48 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Reaktionstest</title>
+<link rel="stylesheet" href="tt.css">
+<style>
+#s2{background:var(--rot)} #s3{background:var(--gruen)}
+.riesig{font-family:"Inter Display","Inter",sans-serif;font-weight:800;
+  letter-spacing:-.05em;font-size:170px;line-height:1}
+.uhr{font-family:"JetBrains Mono",monospace;font-weight:700;font-size:200px;
+  font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.punkt{width:40px;height:40px;border-radius:99px;background:#fff}
+</style></head><body>
+<div id="stage">
+  <div class="scene" id="s1"><div class="safe">
+    <div class="gross"><span class="ln"><i>Reaktionstest</i></span></div>
+    <div class="klein">Finger bereit halten.</div>
+  </div></div>
+  <div class="scene" id="s2"><div class="safe">
+    <div class="riesig">WARTEN</div>
+    <div class="punkt"></div>
+  </div></div>
+  <div class="scene" id="s3"><div class="safe">
+    <div class="riesig" id="jetzt">JETZT</div>
+    <div class="uhr">000</div>
+    <div class="klein" id="frage" style="opacity:0">Wie schnell warst du?<br>Schreib deine ms in die Kommentare.</div>
+  </div></div>
+</div>
+<script src="tt.js"></script>
+<script>
+stage.insertAdjacentHTML('beforeend', WM);
+const SZ=[{id:'s1',a:0,b:1.5},{id:'s2',a:1.5,b:4.3},{id:'s3',a:4.3,b:11.6}];
+starte(SZ,(id,lt)=>{
+  if(id==='s1'){ zeilen(q('#s1 .gross'),lt,0.05,0,0.6); steig(q('#s1 .klein'),lt,0.45,0.6,26); }
+  if(id==='s2'){
+    /* ruhiges Pulsieren, kein Blitzen */
+    const p=(1+Math.sin(lt*Math.PI*1.4))/2;
+    q('#s2 .punkt').style.transform=`scale(${(0.7+0.5*p).toFixed(3)})`;
+    q('#s2 .punkt').style.opacity=(0.45+0.55*p).toFixed(3);
+    q('#s2 .riesig').style.opacity=String(cl(pr(lt,0,0.18)));
+  }
+  if(id==='s3'){
+    const ms=Math.min(999, Math.round(lt*1000));
+    q('#s3 .uhr').textContent=String(ms).padStart(3,'0');
+    const j=q('#jetzt');
+    j.style.transform=`scale(${(1+0.12*(1-cl(lt/0.25))).toFixed(3)})`;
+    j.style.opacity = lt<1.3?'1':String(cl(1-pr(lt,1.3,1.7)));
+    steig(q('#frage'),lt,1.5,0.7,30);
+  }
+});
+</script></body></html>

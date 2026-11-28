@@ -1,0 +1,66 @@
+{
+ "titel": "st1-quiet-kid",
+ "tipp": true,
+ "tonart": "dunkel",
+ "bpm": 84,
+ "drop_stil": true,
+ "stumm_bass": 3.0,
+ "szenen": [
+  {
+   "typ": "gruppe",
+   "h": "THE QUIET KID IN THE BACK OF THE CLASS,",
+   "pill": "",
+   "dauer": 3.5,
+   "m": "ruhig",
+   "modus": "zaehlen"
+  },
+  {
+   "typ": "allein",
+   "h": "THE ONE NOBODY EVER NOTICED,",
+   "pill": "",
+   "dauer": 3.08
+  },
+  {
+   "typ": "uhr",
+   "h": "WAS LEARNING SKILLS AT NIGHT WHILE EVERYONE ELSE WAS GAMING.",
+   "pill": "",
+   "dauer": 4.31,
+   "liste": [
+    "10 PM",
+    "1 AM",
+    "3 AM"
+   ]
+  },
+  {
+   "typ": "graph",
+   "h": "EVERY SINGLE DAY. FOR YEARS. NO ONE SAW IT.",
+   "pill": "",
+   "dauer": 3.65,
+   "zeige": "treppe",
+   "t2": "HIM",
+   "x1": "AGE 14",
+   "x2": "AGE 24"
+  },
+  {
+   "typ": "tuer",
+   "h": "TEN YEARS LATER, EVERYONE KNOWS HIS NAME.",
+   "pill": "",
+   "dauer": 3.58,
+   "m": "peak"
+  },
+  {
+   "typ": "spiegel",
+   "h": "NOBODY SAW IT COMING. EXCEPT HIM.",
+   "pill": "",
+   "dauer": 3.27
+  },
+  {
+   "typ": "zahl",
+   "h": "MAYBE YOU ARE THE QUIET KID.",
+   "pill": "",
+   "dauer": 4.58,
+   "m": "end",
+   "gross": "YOU?"
+  }
+ ]
+}

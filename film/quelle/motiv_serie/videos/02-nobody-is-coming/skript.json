@@ -1,0 +1,71 @@
+{
+ "titel": "02-nobody-is-coming",
+ "tonart": "moll",
+ "bpm": 110,
+ "szenen": [
+  {
+   "typ": "allein",
+   "h": "NOBODY IS COMING.",
+   "pill": "TO SAVE YOU",
+   "vo": "[intense] Listen to me, bro. Nobody is coming to save you. Nobody.",
+   "m": "ruhig"
+  },
+  {
+   "typ": "handy",
+   "h": "NO MESSAGE.",
+   "pill": "NO PERFECT CHANCE",
+   "vo": "[intense] No message, no perfect chance, no one knocking on your door with the life you want.",
+   "t1": "NEW MESSAGES"
+  },
+  {
+   "typ": "tuer",
+   "h": "THE DOOR?",
+   "pill": "NEVER LOCKED",
+   "vo": "[intense] And here's the crazy part. That door was never locked. You just never pushed it.",
+   "m": "drums"
+  },
+  {
+   "typ": "gruppe",
+   "h": "EVERYONE ELSE",
+   "pill": "IS BUSY",
+   "vo": "[intense] Everyone else is busy fighting their own battles. They're not thinking about you.",
+   "modus": "zaehlen"
+  },
+  {
+   "typ": "zahl",
+   "h": "ONE PERSON",
+   "pill": "CAN CHANGE YOUR LIFE",
+   "vo": "[intense] There is exactly one person who can change your life.",
+   "gross": "1"
+  },
+  {
+   "typ": "spiegel",
+   "h": "THE MIRROR.",
+   "pill": "IT'S YOU",
+   "vo": "[shouting] And you see that person every single morning in the mirror!",
+   "m": "peak"
+  },
+  {
+   "typ": "punkt",
+   "h": "SCARY?",
+   "pill": "GOOD",
+   "vo": "[intense] Scary? Good. That means it actually matters.",
+   "m": "drop"
+  },
+  {
+   "typ": "berg",
+   "h": "BUILD IT.",
+   "pill": "BRICK BY BRICK",
+   "vo": "[intense] Nobody will build it for you, so build it yourself. Brick by brick.",
+   "m": "build"
+  },
+  {
+   "typ": "ende",
+   "h": "SAVE YOURSELF.",
+   "pill": "FOLLOW FOR MORE",
+   "vo": "[shouting] Stop waiting to be saved. Be the one who saves you!",
+   "m": "end",
+   "pause": 4.5
+  }
+ ]
+}

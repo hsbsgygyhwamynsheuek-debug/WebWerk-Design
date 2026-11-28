@@ -1,0 +1,69 @@
+{
+ "titel": "08-failure",
+ "tonart": "moll",
+ "bpm": 110,
+ "szenen": [
+  {
+   "typ": "akku",
+   "h": "YOU FAILED?",
+   "pill": "GOOD",
+   "vo": "[shouting] You failed? Good! [intense] That means you actually tried.",
+   "m": "ruhig",
+   "von": 60,
+   "bis": 0
+  },
+  {
+   "typ": "graph",
+   "h": "UP. DOWN.",
+   "pill": "THAT'S THE PATH",
+   "vo": "[intense] Success is never a straight line. It goes up, down, and up again.",
+   "zeige": "welle",
+   "t1": "SUCCESS"
+  },
+  {
+   "typ": "zahl",
+   "h": "EVERY FAIL",
+   "pill": "IS A LESSON",
+   "vo": "[intense] Every failure teaches you something the winners already learned.",
+   "m": "drums",
+   "gross": "+1"
+  },
+  {
+   "typ": "ringe",
+   "h": "BEHIND THE FEAR",
+   "pill": "IS GROWTH",
+   "vo": "[intense] Fear tells you to stop. But growth is waiting right behind it."
+  },
+  {
+   "typ": "zweiwege",
+   "h": "QUIT OR GO?",
+   "pill": "YOUR CHOICE",
+   "vo": "[shouting] The only real failure is quitting! So get back up!",
+   "m": "peak",
+   "t1": "QUIT",
+   "t2": "GO"
+  },
+  {
+   "typ": "punkt",
+   "h": "FALL SEVEN TIMES.",
+   "pill": "STAND UP EIGHT",
+   "vo": "[intense] Fall seven times. Stand up eight.",
+   "m": "drop"
+  },
+  {
+   "typ": "berg",
+   "h": "AGAIN.",
+   "pill": "AND AGAIN",
+   "vo": "[intense] Try again. Fail better. Try again.",
+   "m": "build"
+  },
+  {
+   "typ": "ende",
+   "h": "GET BACK UP.",
+   "pill": "FOLLOW FOR MORE",
+   "vo": "[shouting] Get back up, and keep going!",
+   "m": "end",
+   "pause": 4.5
+  }
+ ]
+}

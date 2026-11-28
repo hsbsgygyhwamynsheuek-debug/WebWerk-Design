@@ -1,0 +1,39 @@
+{
+ "titel": "TALKS ABOUT IT vs DOES IT",
+ "tonart": "hell",
+ "bpm": 76,
+ "stumm_bass": -3.0,
+ "drop_stil": true,
+ "laut_db": -15,
+ "marken": [
+  [
+   0,
+   "drums"
+  ],
+  [
+   8.1,
+   "peak"
+  ],
+  [
+   10.5,
+   "drop"
+  ],
+  [
+   12.2,
+   "end"
+  ]
+ ],
+ "szenen": [
+  {
+   "typ": "duell",
+   "h": "",
+   "pill": "",
+   "links": "TALKS ABOUT IT",
+   "rechts": "DOES IT",
+   "blase1": "SOON",
+   "blase2": "SOON!",
+   "m": "drums",
+   "dauer": 14.0
+  }
+ ]
+}

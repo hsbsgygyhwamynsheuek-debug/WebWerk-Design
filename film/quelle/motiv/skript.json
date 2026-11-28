@@ -1,0 +1,68 @@
+{
+ "szenen": [
+  {
+   "typ": "stopp",
+   "h": "STOPP.",
+   "pill": "WARTEN",
+   "vo": "Stopp. Hör auf, auf den perfekten Moment zu warten."
+  },
+  {
+   "typ": "berg",
+   "h": "ALLES AUF EINMAL?",
+   "pill": "DEINE TO-DO-LISTE",
+   "vo": "Du musst nicht alles auf einmal ändern."
+  },
+  {
+   "typ": "prozent",
+   "h": "NUR EIN PROZENT.",
+   "pill": "JEDEN TAG",
+   "vo": "Nur ein Prozent. Jeden Tag."
+  },
+  {
+   "typ": "punkt",
+   "h": "KLINGT NACH NICHTS.",
+   "pill": "FAST UNSICHTBAR",
+   "vo": "Klingt nach nichts."
+  },
+  {
+   "typ": "kalender",
+   "h": "365 TAGE",
+   "pill": "EIN JAHR",
+   "vo": "Aber mach das ein Jahr lang."
+  },
+  {
+   "typ": "hoch",
+   "h": "37× BESSER",
+   "pill": "1,01 HOCH 365",
+   "vo": "Dann bist du siebenunddreißig mal besser als heute.",
+   "pause": 0.9
+  },
+  {
+   "typ": "runter",
+   "h": "UND ANDERSHERUM?",
+   "pill": "0,99 HOCH 365",
+   "vo": "Und wenn du jeden Tag ein Prozent nachlässt, bleibt fast nichts übrig.",
+   "pause": 0.9
+  },
+  {
+   "typ": "talent",
+   "h": "KEIN TALENT.",
+   "pill": "DER UNTERSCHIED",
+   "vo": "Der Unterschied ist kein Talent."
+  },
+  {
+   "typ": "heute",
+   "h": "HEUTE.",
+   "pill": "TAG 1",
+   "vo": "Es ist das, was du heute machst.",
+   "pause": 0.8
+  },
+  {
+   "typ": "ende",
+   "h": "FANG AN.",
+   "pill": "FOLG FÜR MEHR",
+   "vo": "Fang an.",
+   "pause": 2.2
+  }
+ ]
+}

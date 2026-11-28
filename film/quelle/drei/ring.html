@@ -1,0 +1,50 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Escape</title>
+<style>html,body{margin:0;background:#000;overflow:hidden}#w{position:relative;width:1080px;height:1920px}canvas{display:block}
+.t{position:absolute;left:40px;right:40px;text-align:center;font-family:Inter,Arial,sans-serif;font-weight:800;color:#fff;letter-spacing:.04em}
+#kopf{top:230px;font-size:74px;line-height:1.08;text-shadow:0 0 30px rgba(255,255,255,.35)}#unter{top:410px;font-size:38px;font-weight:600;opacity:.75;letter-spacing:.12em}
+#sieg{top:1530px;font-size:120px;opacity:0;transform:scale(.6)}</style></head><body>
+<div id="w"><canvas id="c" width="1080" height="1920"></canvas>
+<div class="t" id="kopf">WHICH COLOR<br>ESCAPES FIRST?</div><div class="t" id="unter">COMMENT YOUR GUESS</div><div class="t" id="sieg"></div></div>
+<script src="three.min.js"></script><script src="ring_daten.js"></script>
+<script>
+const D=DATEN, FARBE={red:0xff3b4f,blue:0x3b8bff,green:0x2fe07a,yellow:0xffd23b}, CSS={red:'#ff3b4f',blue:'#3b8bff',green:'#2fe07a',yellow:'#ffd23b'};
+window.FILM_DAUER=+(D.tGewinn+3.6).toFixed(2);
+const r=new THREE.WebGLRenderer({canvas:document.getElementById('c'),antialias:true,preserveDrawingBuffer:true});
+r.setPixelRatio(1); r.setSize(1080,1920,false); r.toneMapping=THREE.NoToneMapping; r.outputEncoding=THREE.sRGBEncoding;
+const sz=new THREE.Scene(); sz.background=new THREE.Color(0x050508);
+const cam=new THREE.PerspectiveCamera(34,1080/1920,0.1,100); cam.position.set(0,-0.3,30.5); cam.lookAt(0,-0.9,0);
+sz.add(new THREE.AmbientLight(0x404050,0.6)); const pl=new THREE.PointLight(0xffffff,1.2,30); pl.position.set(0,2,8); sz.add(pl);
+const welt=new THREE.Group(); welt.rotation.x=-0.32; welt.position.y=-0.2; sz.add(welt);
+/* Glow-Textur */
+const gc=document.createElement('canvas'); gc.width=gc.height=128; const gg=gc.getContext('2d'); const rg=gg.createRadialGradient(64,64,0,64,64,64);
+rg.addColorStop(0,'rgba(255,255,255,1)'); rg.addColorStop(.25,'rgba(255,255,255,.45)'); rg.addColorStop(1,'rgba(255,255,255,0)'); gg.fillStyle=rg; gg.fillRect(0,0,128,128);
+const glowTex=new THREE.CanvasTexture(gc);
+/* Ring mit Luecke + Leuchten */
+const bogen=2*Math.PI-D.LUECKE;
+const ringMat=new THREE.MeshStandardMaterial({color:0xffffff,emissive:0xbfe6ff,emissiveIntensity:1.4,roughness:.3});
+const ring=new THREE.Mesh(new THREE.TorusGeometry(D.R+0.08,0.09,20,240,bogen),ringMat); welt.add(ring);
+const halo=new THREE.Mesh(new THREE.TorusGeometry(D.R+0.08,0.38,16,240,bogen),new THREE.MeshBasicMaterial({color:0x7cc8ff,transparent:true,opacity:.10,blending:THREE.AdditiveBlending,depthWrite:false})); welt.add(halo);
+/* Boden-Scheibe fuer Tiefe */
+const scheibe=new THREE.Mesh(new THREE.CircleGeometry(D.R+0.05,120),new THREE.MeshBasicMaterial({color:0x010204})); scheibe.position.z=-0.4; welt.add(scheibe);
+/* Baelle, Glow, Spuren */
+const SP=26, kugeln=D.farben.map(f=>{const m=new THREE.Mesh(new THREE.SphereGeometry(D.r,32,24),new THREE.MeshStandardMaterial({color:FARBE[f],emissive:FARBE[f],emissiveIntensity:.35,roughness:.3,metalness:.05}));
+  const g=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex,color:FARBE[f],transparent:true,blending:THREE.AdditiveBlending,depthWrite:false})); g.scale.set(2.0,2.0,1); g.material.opacity=.55;
+  const spur=[]; for(let j=0;j<SP;j++){ const s=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex,color:FARBE[f],transparent:true,blending:THREE.AdditiveBlending,depthWrite:false})); const gr=0.62*(1-j/SP)+0.12; s.scale.set(gr,gr,1); s.material.opacity=0.75*(1-j/SP); welt.add(s); spur.push(s); } welt.add(g); welt.add(m); return {m,g,spur,c:new THREE.Color(FARBE[f])};});
+const ringStoesse=D.stoesse.filter(s=>s.art==='ring');
+const kl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+window.render=function(t){
+  const n=Math.min(D.bilder.length-1,Math.round(t*D.FPS)), B=D.bilder[n];
+  ring.rotation.z=halo.rotation.z=Math.PI/2+B.w+D.LUECKE/2;
+  /* Ring blitzt bei jedem Aufprall kurz auf */
+  let blitz=0; for(const s of ringStoesse){ const d=t-s.t; if(d>=0&&d<0.18) blitz=Math.max(blitz,(1-d/0.18)*(0.5+s.staerke)); }
+  ringMat.emissiveIntensity=1.2+1.6*blitz; halo.material.opacity=0.08+0.16*blitz;
+  kugeln.forEach((k,i)=>{ const [x,y]=B.b[i]; k.m.position.set(x,y,0); k.g.position.set(x,y,-0.05);
+    k.spur.forEach((s,j)=>{ const q=D.bilder[Math.max(0,n-j)].b[i]; s.position.set(q[0],q[1],-0.03); }); });
+  /* Kamera atmet leicht */
+  cam.position.x=Math.sin(t*0.35)*0.9; cam.lookAt(0,-0.9,0);
+  const sg=document.getElementById('sieg'), w=D.farben[D.gewinner], f=kl((t-D.tGewinn-0.15)/0.35);
+  sg.textContent=w.toUpperCase()+' WINS!'; sg.style.color=CSS[w]; sg.style.textShadow='0 0 40px '+CSS[w]; sg.style.opacity=f; sg.style.transform='scale('+(0.6+0.4*(1-Math.pow(1-f,3)))+')';
+  r.render(sz,cam);
+};
+window.render(0); window.bereit=true;
+</script></body></html>

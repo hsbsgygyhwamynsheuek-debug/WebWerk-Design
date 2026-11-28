@@ -1,0 +1,39 @@
+{
+ "titel": "w4-14",
+ "grau": true,
+ "tonart": "moll",
+ "bpm": 90,
+ "drop_stil": true,
+ "laut_db": -15,
+ "stumm_bass": 2.0,
+ "marken": [
+  [
+   0,
+   "drums"
+  ],
+  [
+   9.4,
+   "peak"
+  ],
+  [
+   17.0,
+   "end"
+  ]
+ ],
+ "szenen": [
+  {
+   "typ": "wege",
+   "h": "",
+   "pill": "",
+   "ende": "START YOUNG.",
+   "helden": [
+    {
+     "name": "14 y/o me",
+     "deko": "kappe"
+    }
+   ],
+   "m": "drums",
+   "dauer": 20.0
+  }
+ ]
+}

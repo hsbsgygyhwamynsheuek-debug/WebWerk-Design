@@ -1,0 +1,34 @@
+{
+ "tonart": "moll",
+ "bpm": 84,
+ "drop_stil": true,
+ "laut_db": -14,
+ "stumm_bass": -3.0,
+ "marken": [
+  [
+   0,
+   "drums"
+  ],
+  [
+   13.2,
+   "peak"
+  ],
+  [
+   16.0,
+   "end"
+  ]
+ ],
+ "szenen": [
+  {
+   "typ": "stufen",
+   "h": "",
+   "pill": "",
+   "links": "COPYING",
+   "rechts": "LEARNING",
+   "rolle": "burnout",
+   "m": "drums",
+   "dauer": 17.0
+  }
+ ],
+ "titel": "x04-copying"
+}

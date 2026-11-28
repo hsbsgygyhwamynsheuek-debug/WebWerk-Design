@@ -1,0 +1,100 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><title>67</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#000;overflow:hidden}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:#000;
+  font-family:"Inter Display","Inter",sans-serif;-webkit-font-smoothing:antialiased}
+/* Die Szene liegt in Originalgröße in einem Rahmen; Bild und Zahlen
+   bewegen sich dadurch zusammen, wenn die Kamera hineinfährt. */
+#rahmen{position:absolute;left:50%;top:50%;width:1360px;height:1712px;
+  transform-origin:50% 50%}
+#rahmen img{display:block;width:1360px;height:1712px}
+.z{position:absolute;transform:translate(-50%,-50%);
+  font-weight:800;letter-spacing:-.02em;color:#fff;
+  text-shadow:0 0 4px #fff, 0 0 14px #fff, 0 0 34px #FFD08A, 0 0 70px #FF9F43, 0 0 120px #FF7A1A;
+  font-variant-numeric:tabular-nums}
+/* Untertitel – über der TikTok-Beschriftungszone */
+#ut{position:absolute;left:60px;right:60px;top:1395px;text-align:center;
+  font-weight:800;font-size:60px;line-height:1.18;color:#fff;letter-spacing:-.02em;
+  text-shadow:0 4px 0 rgba(0,0,0,.9),0 0 18px rgba(0,0,0,.85),0 0 46px rgba(0,0,0,.6)}
+#ut span{opacity:0;display:inline-block;margin:0 .14em}
+#staub{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+#staub i{position:absolute;display:block;border-radius:99px;background:#FFF3DC;
+  filter:blur(.6px)}
+#vig{position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(118% 84% at 50% 44%,transparent 46%,rgba(0,0,0,.55) 100%)}
+</style></head><body>
+<div id="stage">
+  <div id="rahmen">
+    <img src="szene.jpg" alt="Klassenzimmer">
+    <!-- Positionen in Originalkoordinaten des Bildes (1360 x 1712) -->
+    <div class="z" id="zKartoffel" style="left:762px;top:158px;font-size:96px">970</div>
+    <div class="z" id="zPfirsich"  style="left:396px;top:762px;font-size:84px">67</div>
+    <div class="z" id="zPaprika"   style="left:1002px;top:800px;font-size:84px">88</div>
+  </div>
+  <div id="staub"></div>
+  <div id="vig"></div>
+  <div id="ut"></div>
+</div>
+<script>
+const stage=document.getElementById('stage');
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const pr=(t,a,b)=>cl((t-a)/(b-a));
+const eOut=x=>1-Math.pow(1-x,3);
+const eSpr=x=>{if(x>=1)return 1;const w=13,z=.6;
+  return 1-Math.exp(-z*w*x)*Math.cos(w*Math.sqrt(1-z*z)*x);};
+
+const WORTE='Mit der 970 legt sich keiner an.'.split(' ');
+document.getElementById('ut').innerHTML=WORTE.map(w=>`<span>${w}</span>`).join('');
+const SPANS=[...document.querySelectorAll('#ut span')];
+
+/* Staubpartikel: feste Startwerte, damit jedes Einzelbild berechenbar bleibt */
+const ST=[]; let seed=7;
+const zuf=()=>{ seed=(seed*1103515245+12345)%2147483648; return seed/2147483648; };
+const staub=document.getElementById('staub');
+for(let i=0;i<34;i++){
+  const d=document.createElement('i');
+  const g=1.6+zuf()*4.2;
+  d.style.width=g+'px'; d.style.height=g+'px';
+  ST.push({el:d, x:zuf()*1080, y:zuf()*1920, v:9+zuf()*22, a:zuf()*6.28,
+           sw:18+zuf()*46, o:0.18+zuf()*0.5});
+  staub.appendChild(d);
+}
+const DAUER=8.6;
+window.FILM_DAUER=DAUER;
+window.render=function(t){
+  /* Langsame Kamerafahrt hinein – nie unter Formatfüllung */
+  const s=1.132+0.145*eOut(pr(t,0,DAUER));
+  /* minimaler seitlicher Drift, damit es nicht wie ein Standbild wirkt */
+  const dx=-10*eOut(pr(t,0,DAUER));
+  document.getElementById('rahmen').style.transform=
+    `translate(-50%,-50%) translate(${dx.toFixed(2)}px,0) scale(${s.toFixed(4)})`;
+
+  /* Staub steigt langsam im Gegenlicht */
+  ST.forEach(d=>{
+    const y=((d.y - t*d.v) % 1980 + 1980) % 1980 - 30;
+    const x=d.x + Math.sin(t*0.5 + d.a)*d.sw;
+    d.el.style.transform=`translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0)`;
+    d.el.style.opacity=(d.o*(0.55+0.45*Math.sin(t*0.9+d.a))).toFixed(3);
+  });
+
+  /* Zahlen springen nacheinander auf und pulsieren leicht */
+  [['zKartoffel',0.25],['zPfirsich',0.55],['zPaprika',0.80]].forEach(([id,st])=>{
+    const el=document.getElementById(id);
+    const e=eSpr(pr(t,st,st+0.75));
+    const puls=1+0.035*Math.sin((t-st)*3.1);
+    el.style.opacity=String(cl(pr(t,st,st+0.2)));
+    el.style.transform=`translate(-50%,-50%) scale(${(e*puls).toFixed(3)})`;
+    el.style.filter=`brightness(${(1+0.12*Math.sin((t-st)*2.3)).toFixed(3)})`;
+  });
+
+  /* Untertitel Wort für Wort – hält die Leute im Bild */
+  SPANS.forEach((sp,i)=>{
+    const st=1.35+i*0.165;
+    const k=eOut(pr(t,st,st+0.3));
+    sp.style.opacity=String(k);
+    sp.style.transform=`translateY(${((1-k)*14).toFixed(1)}px)`;
+  });
+};
+window.render(0);
+</script></body></html>

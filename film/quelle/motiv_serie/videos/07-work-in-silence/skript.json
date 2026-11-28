@@ -1,0 +1,69 @@
+{
+ "titel": "07-work-in-silence",
+ "tonart": "heroisch",
+ "bpm": 110,
+ "szenen": [
+  {
+   "typ": "allein",
+   "h": "WORK IN SILENCE",
+   "pill": "NO ANNOUNCEMENT",
+   "vo": "[intense] Stop telling everyone your plans, bro. Just work in silence.",
+   "m": "ruhig"
+  },
+  {
+   "typ": "gruppe",
+   "h": "THEY'LL DOUBT YOU",
+   "pill": "LET THEM",
+   "vo": "[intense] People will doubt you, laugh at you, and tell you it won't work.",
+   "modus": "zaehlen"
+  },
+  {
+   "typ": "uhr",
+   "h": "WHILE THEY SLEEP",
+   "pill": "YOU BUILD",
+   "vo": "[intense] While they sleep, you build. While they party, you practice.",
+   "m": "drums",
+   "liste": [
+    "NIGHT",
+    "MORNING",
+    "NIGHT"
+   ]
+  },
+  {
+   "typ": "berg",
+   "h": "BRICK BY BRICK",
+   "pill": "NO ONE SEES IT",
+   "vo": "[intense] Nobody sees the work. Nobody sees the grind. And that's fine."
+  },
+  {
+   "typ": "tuer",
+   "h": "THEN ONE DAY",
+   "pill": "THE DOOR OPENS",
+   "vo": "[shouting] Then one day, the results speak so loud you don't have to say a word!",
+   "m": "peak"
+  },
+  {
+   "typ": "punkt",
+   "h": "SILENCE.",
+   "pill": "IS POWER",
+   "vo": "[intense] Silence is power.",
+   "m": "drop"
+  },
+  {
+   "typ": "zahl",
+   "h": "WORDS NEEDED",
+   "pill": "LET RESULTS TALK",
+   "vo": "[intense] Zero words needed. Let the results do the talking.",
+   "m": "build",
+   "gross": "0"
+  },
+  {
+   "typ": "ende",
+   "h": "MOVE IN SILENCE.",
+   "pill": "FOLLOW FOR MORE",
+   "vo": "[shouting] Move in silence, and let success make the noise!",
+   "m": "end",
+   "pause": 4.5
+  }
+ ]
+}

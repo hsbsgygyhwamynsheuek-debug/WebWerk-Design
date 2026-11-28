@@ -1,0 +1,151 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><title>970 - Profi</title>
+<link rel="stylesheet" href="profi.css"></head><body>
+<svg width="0" height="0" style="position:absolute"><filter id="wisch" x="-20%" y="0" width="140%" height="100%">
+<feGaussianBlur id="wischblur" stdDeviation="0 0"/></filter></svg>
+<div id="stage">
+  <div id="rahmen">
+    <canvas id="szene" width="1360" height="1712"></canvas>
+    <div class="z" data-p="762,158"  style="left:762px;top:158px;font-size:96px">970</div>
+    <div class="z" data-p="396,762"  style="left:396px;top:762px;font-size:84px">67</div>
+    <div class="z" data-p="1002,800" style="left:1002px;top:800px;font-size:84px">88</div>
+  </div>
+  <div id="staub"></div>
+  <div id="vig"></div>
+  <div id="hook">Mit der 970 legt sich keiner an.</div>
+  <div id="ut"></div>
+  <div id="ende"><div class="gr">Wollt ihr<b>Part 2?</b></div>
+    <div class="kl">Kommentier „Part 2“ 👇</div></div>
+</div>
+<script src="bild.js"></script>
+<script src="warp.js"></script>
+<script src="kino.js"></script>
+<script>
+const PLAN = {"dauer": 23.5714, "beat": 0.42857142857142855, "shots": [{"a": 0.0, "b": 1.7143, "cam": "PF", "cx": 470, "cy": 1010, "z0": 1.62, "z1": 1.72}, {"a": 1.7143, "b": 3.0, "cam": "PA", "cx": 960, "cy": 1020, "z0": 1.62, "z1": 1.72}, {"a": 3.0, "b": 5.5714, "cam": "PF2", "cx": 430, "cy": 985, "z0": 1.56, "z1": 1.48}, {"a": 5.5714, "b": 7.2857, "cam": "REV", "cx": 762, "cy": 470, "z0": 2.28, "z1": 1.96, "kalt": 1}, {"a": 7.2857, "b": 10.2857, "cam": "ZWEI", "cx": 690, "cy": 1000, "z0": 1.32, "z1": 1.4}, {"a": 10.2857, "b": 12.4286, "cam": "KECU", "cx": 715, "cy": 405, "z0": 2.3, "z1": 2.42, "kalt": 1}, {"a": 12.4286, "b": 15.0, "cam": "PF", "cx": 470, "cy": 1010, "z0": 1.62, "z1": 1.72}, {"a": 15.0, "b": 16.7143, "cam": "STIRN", "cx": 420, "cy": 830, "z0": 2.0, "z1": 2.26}, {"a": 16.7143, "b": 20.5714, "cam": "KEND", "cx": 720, "cy": 432, "z0": 2.18, "z1": 2.4, "kalt": 1}, {"a": 20.5714, "b": 23.5714, "cam": "ENDE"}], "reden": [{"a": 0.1, "d": 1.203, "w": "P", "t": "Dreh dich nicht um.", "env": [0.0, 0.0, 0.001, 0.001, 0.015, 0.625, 0.144, 1.0, 0.935, 0.778, 0.736, 0.231, 0.748, 0.689, 0.271, 0.381, 0.884, 0.433, 0.026, 0.547, 0.603, 0.739, 0.522, 0.374, 0.244, 0.039, 0.005, 0.003, 0.003, 0.003]}, {"a": 1.8143, "d": 0.824, "w": "A", "t": "Warum denn?", "env": [0.0, 0.0, 0.0, 0.192, 0.388, 0.867, 0.637, 0.732, 0.942, 0.829, 0.61, 0.542, 0.475, 1.0, 0.846, 0.569, 0.646, 0.544, 0.525, 0.39]}, {"a": 3.1, "d": 2.069, "w": "P", "t": "Die hinten hat neunhundertsiebzig.", "env": [0.0, 0.001, 0.001, 0.001, 0.001, 0.56, 0.954, 0.947, 0.697, 0.388, 0.968, 0.945, 0.772, 0.688, 0.232, 0.1, 0.873, 0.814, 0.641, 0.753, 0.834, 0.37, 0.031, 0.995, 0.902, 0.872, 0.908, 0.957, 0.716, 0.647, 0.74, 0.78, 0.732, 1.0, 0.772, 0.055, 0.386, 0.575, 0.871, 0.115, 0.02, 0.392, 0.597, 0.64, 0.674, 0.187, 0.267, 0.183, 0.04, 0.004, 0.001]}, {"a": 7.3857, "d": 2.434, "w": "P", "t": "Sie war schon da, bevor es die Zahlen gab.", "env": [0.0, 0.0, 0.0, 0.0, 0.023, 0.334, 0.324, 0.706, 0.668, 0.53, 0.915, 0.912, 0.774, 0.271, 0.222, 0.692, 0.782, 0.561, 0.575, 1.0, 0.738, 0.608, 0.622, 0.523, 0.368, 0.159, 0.022, 0.008, 0.008, 0.032, 0.71, 0.614, 0.131, 0.149, 0.963, 0.913, 0.575, 0.545, 0.322, 0.193, 0.601, 0.163, 0.311, 0.395, 0.734, 0.995, 0.69, 0.727, 0.635, 0.59, 0.52, 0.666, 0.825, 0.668, 0.573, 0.03, 0.016, 0.006, 0.004, 0.004]}, {"a": 10.3857, "d": 1.619, "w": "P", "t": "Bei null geht das Licht aus.", "env": [0.0, 0.0, 0.001, 0.001, 0.001, 0.088, 1.0, 0.794, 0.689, 0.64, 0.571, 0.657, 0.67, 0.673, 0.497, 0.408, 0.597, 0.869, 0.671, 0.245, 0.683, 0.582, 0.474, 0.244, 0.588, 0.562, 0.578, 0.506, 0.264, 0.358, 0.278, 0.646, 0.594, 0.3, 0.225, 0.16, 0.158, 0.129, 0.037, 0.007]}, {"a": 12.5286, "d": 1.811, "w": "A", "t": "Pfirsich. Deine Zahl.", "env": [0.0, 0.0, 0.0, 0.166, 0.295, 0.726, 0.635, 0.677, 0.614, 0.55, 0.38, 0.631, 0.568, 0.35, 0.108, 0.078, 0.0, 0.0, 0.0, 0.0, 0.61, 0.716, 0.891, 0.767, 0.78, 0.785, 0.727, 0.612, 0.689, 0.674, 0.115, 0.154, 0.564, 0.638, 1.0, 0.981, 0.783, 0.755, 0.848, 0.618, 0.542, 0.475, 0.398, 0.323, 0.0]}, {"a": 16.8143, "d": 3.064, "w": "K", "t": "Sieben. Und. Sechzig.", "env": [0.139, 0.559, 0.498, 0.433, 0.508, 0.653, 0.796, 0.689, 0.831, 0.724, 0.191, 0.878, 0.612, 0.543, 0.571, 0.538, 0.599, 0.323, 0.209, 0.032, 0.013, 0.012, 0.007, 0.009, 0.008, 0.01, 0.143, 0.867, 0.829, 0.772, 0.644, 0.393, 0.474, 0.493, 0.154, 0.814, 0.716, 0.71, 0.701, 0.31, 0.08, 0.011, 0.009, 0.011, 0.012, 0.159, 0.136, 0.359, 0.381, 0.509, 0.771, 1.0, 0.576, 0.426, 0.248, 0.246, 0.259, 0.024, 0.011, 0.065, 0.235, 0.204, 0.714, 0.528, 0.233, 0.344, 0.303, 0.24, 0.272, 0.098, 0.051, 0.034, 0.014, 0.006, 0.007, 0.007]}], "marken": {"drop": 5.5714, "glitch": 15.0, "stille": 16.7143, "ende": 20.5714}};
+const M=PLAN.marken, BEAT=PLAN.beat, BAR=BEAT*4, S16=BEAT/4, DAUER=PLAN.dauer;
+window.FILM_DAUER=DAUER; window.bereit=false;
+const FARBE={P:'#FFB86B',A:'#FF7A66',K:'#F1E2BE'};
+staubAn(26);
+
+/* Kick-Zeiten nach dem Drop (gleiches Muster wie im Beat) */
+const KICKS=[];
+for(let b=M.drop; b<M.stille-0.01; b+=BAR) for(const s of [0,6,10]){ const k=b+s*S16; if(k<M.stille) KICKS.push(k); }
+
+/* Blinzeln fest vorberechnet */
+const BL={}; ['K','P','A'].forEach((k,n)=>{ const l=[]; let z=0.9+n*0.8, s=31+n*13;
+  while(z<DAUER){ l.push(z); s=(s*1103515245+12345)%2147483648; z+=2.1+(s/2147483648)*3.0; } BL[k]=l; });
+const blz=(k,t)=>{ let m=0; for(const z of BL[k]){ const d=t-z; if(d>=0&&d<0.16) m=Math.max(m,Math.sin(Math.PI*d/0.16)); } return m; };
+const RUHE={K:{t:3.9,p:0,amp:3.2},P:{t:3.2,p:1.7,amp:2.6},A:{t:3.6,p:3.1,amp:2.4}};
+
+function aktiveRede(t){ for(const r of PLAN.reden) if(t>=r.a && t<r.a+r.d+0.05) return r; return null; }
+function env(r,t){ const n=Math.min(r.env.length-1,Math.max(0,Math.floor((t-r.a)*25))); return r.env[n]; }
+
+function zustand(t){
+  const r=aktiveRede(t), z={};
+  ['K','P','A'].forEach(k=>{ const q=RUHE[k], w=2*Math.PI/q.t;
+    let dy=Math.sin(w*t+q.p)*q.amp, dx=Math.sin(w*.63*t+q.p*1.7)*q.amp*1.5,
+        rot=Math.sin(w*.47*t+q.p*.8)*.011, sc=Math.sin(w*t+q.p)*.0045, mund=0;
+    if(r && r.w===k){ const a=env(r,t); mund=a; dy-=a*(k==='K'?8:5);
+      rot+=a*(k==='P'?.016:k==='A'?-.016:.009); sc+=a*.004; }
+    /* Auf dem Drop zuckt die Kartoffel kurz nach vorn */
+    if(k==='K'){ const d=t-M.drop; if(d>=0&&d<0.5) sc+=0.03*Math.exp(-d*9); }
+    z[k]={dx,dy,rot,sc,mund,blinzel:blz(k,t)}; });
+  return z;
+}
+
+/* Untertitel */
+const ut=document.getElementById('ut');
+let zeileJetzt=null;
+function untertitel(t){
+  const r=aktiveRede(t);
+  if(!r){ ut.innerHTML=''; zeileJetzt=null; return; }
+  if(zeileJetzt!==r){ zeileJetzt=r; ut.innerHTML=r.t.split(' ').map(w=>`<span>${w}</span>`).join(''); }
+  const W=[...ut.querySelectorAll('span')], laenge=W.map(s=>s.textContent.length+2);
+  const summe=laenge.reduce((a,b)=>a+b,0); let acc=0;
+  const fort=(t-r.a)/(r.d*0.9);
+  W.forEach((s,i)=>{ const a0=acc/summe, a1=(acc+laenge[i])/summe; acc+=laenge[i];
+    const jetzt=fort>=a0 && fort<a1, vorbei=fort>=a1;
+    s.style.color = jetzt ? FARBE[r.w] : '#fff';
+    s.style.opacity = (jetzt||vorbei) ? '1' : '0.42';
+    const k = jetzt ? eSpr(cl((fort-a0)/(a1-a0)*2.4)) : 1;
+    s.style.transform = `scale(${jetzt ? (1.0+0.10*k).toFixed(3) : 1})`;
+  });
+  const e=eOut(pr(t,r.a,r.a+0.16));
+  ut.style.transform=`translateY(${((1-e)*18).toFixed(1)}px)`; ut.style.opacity=String(e);
+}
+
+const bild=new Image();
+bild.onload=()=>{
+  const zeichne=baueWarp(document.getElementById('szene'), bild);
+  const blur=document.getElementById('wischblur');
+  const ZAHLEN=[...document.querySelectorAll('.z')];
+  window.render=function(t){
+    /* Einstellung */
+    let i=0; PLAN.shots.forEach((s,n)=>{ if(t>=s.a) i=n; });
+    const sh=PLAN.shots[i];
+    const ende = sh.cam==='ENDE';
+    const kam = ende ? PLAN.shots[i-1] : sh;
+    const lt=t-kam.a, d=(ende? sh.b : kam.b)-kam.a;
+    const f=eIO(cl(lt/d));
+    let z=kam.z0+(kam.z1-kam.z0)*f;
+    /* Zoom-Schlag auf jedem Schnitt */
+    const ls=t-sh.a;
+    if(i>0 && !ende) z*=1+0.075*(1-eOut(cl(ls/0.26)));
+    let tr=kamera(kam.cx,kam.cy,z), ox=0, oy=0, bx=0;
+    /* Wischuebergang in den Drop */
+    const vd=t-M.drop;
+    if(vd>-0.17 && vd<0){ const k=eIO(cl((vd+0.17)/0.17)); ox=-300*k; bx=46*k; }
+    if(vd>=0 && vd<0.20){ const k=1-eOut(cl(vd/0.20)); ox=300*k; bx=46*k; }
+    /* Wackler auf jedem Kick */
+    for(const kk of KICKS){ const dd=t-kk; if(dd>=0&&dd<0.16){ const a=7*Math.exp(-dd*24);
+      ox+=Math.sin(dd*120)*a; oy+=Math.cos(dd*97)*a*0.7; } }
+    q('#rahmen').style.transform=tr+` translate(${ox.toFixed(2)}px,${oy.toFixed(2)}px)`;
+    blur.setAttribute('stdDeviation', `${bx.toFixed(1)} 0`);
+    const kalt = kam.kalt ? ' saturate(.84) brightness(.93) hue-rotate(-6deg)' : ' saturate(1.10)';
+    q('#rahmen').style.filter = (bx>0.3?'url(#wisch) ':'') + 'contrast(1.07)'+kalt;
+
+    /* Aufblitzen auf dem Schnitt */
+    const blitz = i>0 ? (1-pr(ls,0,0.09))*0.38 : 0;
+    q('#vig').style.background=`radial-gradient(118% 84% at 50% 44%,rgba(255,240,220,${blitz.toFixed(3)}) 0%,transparent 46%,rgba(0,0,0,.64) 100%)`;
+
+    /* Figuren */
+    const zu=zustand(t); zeichne(zu);
+    const r=aktiveRede(t);
+    ZAHLEN.forEach(el=>{
+      const [px,py]=el.dataset.p.split(',').map(Number);
+      const [vx,vy]=versatz(px,py,zu);
+      let s=1, hell=1, schatten='';
+      if(r && ({K:0,P:1,A:2})[r.w]===ZAHLEN.indexOf(el)){ const a=env(r,t); s=1+0.07*a; hell=1.05+0.45*a; }
+      /* Die 970 flammt auf dem Drop auf */
+      if(el.textContent==='970'||el.dataset.p==='762,158'){ const dd=t-M.drop; if(dd>=0&&dd<0.9){ const a=Math.exp(-dd*4); hell+=1.6*a; s+=0.18*a; } }
+      /* 67 -> 66 mit Farbversatz-Glitch */
+      if(el.dataset.p==='396,762'){
+        const g=t-M.glitch;
+        if(g<0) el.textContent='67';
+        else if(g<0.36){ el.textContent=(Math.floor(g*28)%2===0)?'67':'66';
+          const v=10*(1-g/0.36);
+          schatten=`${v}px 0 0 rgba(255,0,60,.85), ${-v}px 0 0 rgba(0,230,255,.85), `; hell+=1.2*(1-g/0.36); s+=0.12*(1-g/0.36); }
+        else el.textContent='66';
+      }
+      el.style.transform=`translate(-50%,-50%) translate(${vx.toFixed(2)}px,${vy.toFixed(2)}px) scale(${s.toFixed(3)})`;
+      el.style.filter=`brightness(${hell.toFixed(3)})`;
+      el.style.textShadow = schatten ? schatten+'0 0 14px #fff,0 0 40px #FF9F43' : '';
+    });
+
+    /* Hook oben: weg, sobald die Kartoffel kommt */
+    const h=q('#hook'); const he=eOut(pr(t,0.05,0.35))*(1-pr(t,M.drop-0.2,M.drop));
+    h.style.opacity=String(he); h.style.transform=`translateY(${((1-eOut(pr(t,0.05,0.35)))*-16).toFixed(1)}px)`;
+
+    staubMal(t);
+    untertitel(t);
+
+    /* Endkarte */
+    const e=q('#ende'), k=pr(t,M.ende,M.ende+0.12);
+    e.style.opacity=String(k);
+    if(k>0){ const sp=eSpr(pr(t,M.ende,M.ende+0.8));
+      const puls=1+0.025*Math.max(0,Math.sin((t-M.ende)/BEAT*Math.PI));
+      q('.gr',e).style.transform=`scale(${((0.78+0.22*sp)*puls).toFixed(3)})`; ut.style.opacity='0'; }
+  };
+  window.render(0); window.bereit=true;
+};
+bild.src=window.SZENE_DATEN;
+</script></body></html>

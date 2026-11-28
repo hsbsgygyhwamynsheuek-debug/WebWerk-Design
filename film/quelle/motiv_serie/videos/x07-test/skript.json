@@ -1,0 +1,35 @@
+{
+ "hell": true,
+ "tonart": "moll",
+ "bpm": 98,
+ "stumm_bass": -6.0,
+ "drop_stil": true,
+ "laut_db": -15,
+ "marken": [
+  [
+   0,
+   "drums"
+  ],
+  [
+   9.6,
+   "peak"
+  ],
+  [
+   10.6,
+   "end"
+  ]
+ ],
+ "szenen": [
+  {
+   "typ": "baelle",
+   "h": "",
+   "pill": "",
+   "oben": "5 hours the night before the test",
+   "unten": "15 minutes every day",
+   "extra": "and an A",
+   "m": "drums",
+   "dauer": 12.5
+  }
+ ],
+ "titel": "x07-test"
+}

@@ -1,0 +1,132 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><title>1 Prozent</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#000;overflow:hidden}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;
+  background:radial-gradient(70% 45% at 50% 46%,#151515 0%,#070707 60%,#000 100%);
+  font-family:"Inter Display","Inter",sans-serif;color:#F4F4F4;-webkit-font-smoothing:antialiased}
+.sz{position:absolute;inset:0;opacity:0}
+.h{position:absolute;left:40px;right:40px;top:470px;text-align:center;font-weight:800;
+  font-size:92px;letter-spacing:.11em;line-height:1.05;text-transform:uppercase;
+  text-shadow:0 0 18px rgba(255,255,255,.55),0 0 46px rgba(255,255,255,.22)}
+.pill{position:absolute;left:50%;top:1310px;transform:translateX(-50%);background:#F4F4F4;color:#0A0A0A;
+  font-weight:800;font-size:26px;letter-spacing:.16em;padding:12px 26px;border-radius:999px;white-space:nowrap;
+  box-shadow:0 0 30px rgba(255,255,255,.35)}
+#ut{position:absolute;left:90px;right:90px;top:1415px;text-align:center;font-family:"Inter",sans-serif;
+  font-weight:600;font-size:36px;line-height:1.35;color:rgba(255,255,255,.82)}
+#ut span{opacity:.25}
+.glow{filter:drop-shadow(0 0 10px rgba(255,255,255,.7)) drop-shadow(0 0 26px rgba(255,255,255,.25))}
+svg{position:absolute;overflow:visible}
+#korn{position:absolute;inset:0;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E")}
+</style></head><body>
+<div id="stage"><div id="szenen"></div><div id="ut"></div><div id="korn"></div></div>
+<script>
+const P={"dauer": 36.438, "szenen": [{"typ": "stopp", "h": "STOPP.", "pill": "WARTEN", "vo": "Stopp. Hör auf, auf den perfekten Moment zu warten.", "a": 0.35, "b": 5.118, "vo_a": 0.6, "vo_d": 3.868, "env": [0.001, 0.001, 0.044, 0.327, 0.56, 0.048, 1.0, 0.739, 0.594, 0.101, 0.061, 0.05, 0.012, 0.009, 0.003, 0.003, 0.002, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.04, 0.05, 0.366, 0.706, 0.522, 0.361, 0.221, 0.051, 0.767, 0.668, 0.624, 0.583, 0.568, 0.403, 0.08, 0.069, 0.071, 0.015, 0.004, 0.002, 0.002, 0.002, 0.003, 0.772, 0.38, 0.123, 0.455, 0.685, 0.49, 0.205, 0.192, 0.479, 0.591, 0.101, 0.615, 0.747, 0.169, 0.014, 0.007, 0.002, 0.602, 0.503, 0.51, 0.608, 0.579, 0.477, 0.503, 0.482, 0.454, 0.229, 0.491, 0.473, 0.645, 0.428, 0.636, 0.615, 0.514, 0.437, 0.009, 0.167, 0.509, 0.366, 0.095, 0.008, 0.005, 0.004, 0.003, 0.002]}, {"typ": "berg", "h": "ALLES AUF EINMAL?", "pill": "DEINE TO-DO-LISTE", "vo": "Du musst nicht alles auf einmal ändern.", "a": 5.118, "b": 8.298, "vo_a": 5.368, "vo_d": 2.28, "env": [0.0, 0.0, 0.0, 0.015, 0.628, 0.688, 0.531, 0.583, 0.553, 0.549, 0.511, 0.443, 0.026, 0.012, 0.741, 0.69, 0.593, 0.327, 0.01, 0.456, 0.219, 0.904, 1.0, 0.61, 0.593, 0.305, 0.261, 0.234, 0.639, 0.698, 0.09, 0.163, 0.879, 0.776, 0.687, 0.65, 0.6, 0.521, 0.518, 0.323, 0.242, 0.709, 0.683, 0.609, 0.592, 0.56, 0.584, 0.432, 0.466, 0.286, 0.228, 0.167, 0.006, 0.005, 0.005, 0.003]}, {"typ": "prozent", "h": "NUR EIN PROZENT.", "pill": "JEDEN TAG", "vo": "Nur ein Prozent. Jeden Tag.", "a": 8.298, "b": 11.956, "vo_a": 8.548, "vo_d": 2.758, "env": [0.0, 0.0, 0.0, 0.0, 0.001, 0.002, 0.012, 0.752, 0.702, 0.644, 0.639, 0.638, 0.314, 0.227, 0.209, 0.684, 0.77, 0.583, 0.259, 0.1, 0.165, 0.913, 0.503, 0.13, 0.421, 0.523, 0.923, 0.591, 0.533, 0.348, 0.217, 0.62, 0.281, 0.013, 0.007, 0.004, 0.003, 0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.001, 0.001, 0.001, 0.004, 0.004, 0.051, 0.775, 0.712, 0.385, 0.716, 0.649, 0.664, 0.275, 1.0, 0.752, 0.594, 0.236, 0.046, 0.627, 0.013, 0.005, 0.002, 0.002]}, {"typ": "punkt", "h": "KLINGT NACH NICHTS.", "pill": "FAST UNSICHTBAR", "vo": "Klingt nach nichts.", "a": 11.956, "b": 14.156, "vo_a": 12.206, "vo_d": 1.168, "env": [0.001, 0.001, 0.001, 0.001, 0.002, 0.768, 0.621, 0.293, 0.999, 1.0, 0.889, 0.775, 0.128, 0.034, 0.77, 0.887, 0.823, 0.639, 0.146, 0.976, 0.887, 0.788, 0.342, 0.346, 0.068, 0.007, 0.235, 0.248, 0.07]}, {"typ": "kalender", "h": "365 TAGE", "pill": "EIN JAHR", "vo": "Aber mach das ein Jahr lang.", "a": 14.156, "b": 16.711, "vo_a": 14.406, "vo_d": 1.655, "env": [0.0, 0.001, 0.125, 0.24, 1.0, 0.597, 0.58, 0.739, 0.468, 0.526, 0.65, 0.555, 0.236, 0.198, 0.488, 0.618, 0.599, 0.252, 0.158, 0.361, 0.58, 0.528, 0.61, 0.622, 0.546, 0.593, 0.593, 0.538, 0.451, 0.551, 0.47, 0.396, 0.279, 0.204, 0.031, 0.008, 0.006, 0.005, 0.004, 0.004, 0.002]}, {"typ": "hoch", "h": "37× BESSER", "pill": "1,01 HOCH 365", "vo": "Dann bist du siebenunddreißig mal besser als heute.", "pause": 0.9, "a": 16.711, "b": 21.073, "vo_a": 16.961, "vo_d": 2.912, "env": [0.0, 0.0, 0.0, 0.0, 0.002, 0.0, 0.029, 1.0, 0.837, 0.757, 0.693, 0.663, 0.295, 0.999, 0.846, 0.384, 0.053, 0.264, 0.351, 0.795, 0.33, 0.241, 0.756, 0.764, 0.687, 0.566, 0.634, 0.662, 0.694, 0.668, 0.708, 0.824, 0.892, 0.936, 0.828, 0.743, 0.443, 0.268, 0.637, 0.44, 0.345, 0.745, 0.848, 0.82, 0.756, 0.743, 0.148, 0.938, 0.76, 0.744, 0.29, 0.465, 0.735, 0.916, 0.549, 0.705, 0.655, 0.429, 0.542, 0.154, 0.776, 0.732, 0.68, 0.621, 0.03, 0.579, 0.599, 0.21, 0.073, 0.01, 0.006, 0.003]}, {"typ": "runter", "h": "UND ANDERSHERUM?", "pill": "0,99 HOCH 365", "vo": "Und wenn du jeden Tag ein Prozent nachlässt, bleibt fast nichts übrig.", "pause": 0.9, "a": 21.073, "b": 26.577, "vo_a": 21.323, "vo_d": 4.054, "env": [0.0, 0.0, 0.001, 0.001, 0.0, 0.0, 0.075, 0.659, 0.624, 0.588, 0.236, 0.069, 0.649, 0.788, 0.639, 0.57, 0.498, 0.549, 0.527, 0.392, 0.522, 0.618, 0.61, 0.608, 0.578, 0.362, 0.152, 0.888, 0.795, 0.621, 0.033, 0.614, 0.109, 0.75, 0.629, 0.29, 0.084, 0.077, 0.743, 0.303, 0.2, 0.5, 0.527, 1.0, 0.628, 0.453, 0.234, 0.017, 0.047, 0.667, 0.663, 0.67, 0.685, 0.251, 0.183, 0.175, 0.635, 0.551, 0.529, 0.42, 0.327, 0.149, 0.064, 0.051, 0.156, 0.006, 0.004, 0.532, 0.697, 0.659, 0.533, 0.04, 0.101, 0.26, 0.172, 0.763, 0.475, 0.27, 0.062, 0.004, 0.314, 0.657, 0.528, 0.297, 0.062, 0.114, 0.283, 0.142, 0.492, 0.578, 0.027, 0.145, 0.472, 0.464, 0.047, 0.331, 0.29, 0.004, 0.003, 0.003, 0.002]}, {"typ": "talent", "h": "KEIN TALENT.", "pill": "DER UNTERSCHIED", "vo": "Der Unterschied ist kein Talent.", "a": 26.577, "b": 29.521, "vo_a": 26.827, "vo_d": 2.044, "env": [0.0, 0.0, 0.0, 0.0, 0.0, 0.451, 0.664, 0.561, 0.555, 0.403, 0.538, 0.589, 0.498, 0.286, 0.668, 0.529, 0.3, 0.357, 0.309, 0.611, 0.566, 0.408, 0.024, 0.48, 0.056, 0.594, 0.33, 0.228, 0.087, 0.652, 0.914, 0.405, 1.0, 0.497, 0.546, 0.463, 0.304, 0.608, 0.504, 0.429, 0.593, 0.507, 0.364, 0.412, 0.318, 0.515, 0.112, 0.016, 0.007, 0.003, 0.003]}, {"typ": "heute", "h": "HEUTE.", "pill": "TAG 1", "vo": "Es ist das, was du heute machst.", "pause": 0.8, "a": 29.521, "b": 32.771, "vo_a": 29.771, "vo_d": 1.9, "env": [0.0, 0.0, 0.0, 0.001, 0.0, 0.0, 0.229, 0.916, 0.439, 0.375, 0.278, 0.857, 0.739, 0.521, 0.363, 0.086, 0.218, 0.968, 0.713, 0.554, 0.335, 0.298, 0.211, 0.005, 0.771, 1.0, 0.714, 0.201, 0.334, 0.912, 0.743, 0.862, 0.853, 0.664, 0.634, 0.621, 0.6, 0.633, 0.555, 0.298, 0.13, 0.522, 0.577, 0.331, 0.023, 0.332, 0.248]}, {"typ": "ende", "h": "FANG AN.", "pill": "FOLG FÜR MEHR", "vo": "Fang an.", "pause": 2.2, "a": 32.771, "b": 36.438, "vo_a": 33.021, "vo_d": 0.917, "env": [0.0, 0.0, 0.0, 0.003, 0.082, 0.253, 0.425, 1.0, 0.68, 0.645, 0.284, 0.349, 0.963, 0.819, 0.511, 0.391, 0.284, 0.222, 0.01, 0.011, 0.005, 0.005]}]}; window.FILM_DAUER=P.dauer;
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)), pr=(t,a,b)=>cl((t-a)/(b-a));
+const eOut=x=>1-Math.pow(1-x,3), eIO=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const eSpr=x=>{if(x>=1)return 1;const w=11,z=.62;return 1-Math.exp(-z*w*x)*Math.cos(w*Math.sqrt(1-z*z)*x);};
+const W='#F4F4F4';
+/* Strichfigur: Kopf + gewoelbter Koerper */
+const figur=(x,y,s=1,o=1)=>`<g transform="translate(${x} ${y}) scale(${s})" opacity="${o}">
+  <circle cx="0" cy="-74" r="22" fill="${W}"/><path d="M-36,0 Q-36,-46 0,-46 Q36,-46 36,0 Z" fill="${W}"/></g>`;
+const sanduhr=(x,y,s=1)=>`<g transform="translate(${x} ${y}) scale(${s})" class="uhr">
+  <rect x="-46" y="-90" width="92" height="10" rx="4" fill="${W}"/><rect x="-46" y="80" width="92" height="10" rx="4" fill="${W}"/>
+  <path d="M-36,-80 L36,-80 L4,0 L36,80 L-36,80 L-4,0 Z" fill="none" stroke="${W}" stroke-width="5"/>
+  <path class="oben" d="M-28,-72 L28,-72 L2,-6 L-2,-6 Z" fill="${W}"/><path class="unten" d="M-30,74 L30,74 L2,30 L-2,30 Z" fill="${W}"/></g>`;
+const kalender=(id)=>`<g id="${id}"><rect x="-150" y="-170" width="300" height="320" rx="22" fill="none" stroke="${W}" stroke-width="7"/>
+  <rect x="-150" y="-170" width="300" height="78" rx="22" fill="${W}"/><rect x="-150" y="-110" width="300" height="18" fill="${W}"/>
+  <text class="kopf" x="0" y="-118" text-anchor="middle" font-size="34" font-weight="800" letter-spacing="5" fill="#0A0A0A">TAG</text>
+  <text class="zahl" x="0" y="80" text-anchor="middle" font-size="150" font-weight="800" fill="${W}">1</text></g>`;
+const SZ=document.getElementById('szenen');
+P.szenen.forEach((s,i)=>{
+  let v='';
+  if(s.typ==='stopp') v=`<svg width="1080" height="1920" class="glow">${sanduhr(540,960,2.1)}${figur(300,1110,1.6)}</svg>`;
+  if(s.typ==='berg'){ let b=''; for(let k=0;k<9;k++) b+=`<rect class="block" data-k="${k}" x="${540-150+((k%2)*24-12)}" y="${1100-(k+1)*62}" width="300" height="50" rx="10" fill="none" stroke="${W}" stroke-width="5"/>`;
+    v=`<svg width="1080" height="1920" class="glow">${b}${figur(540,1230,1.7)}</svg>`; }
+  if(s.typ==='prozent') v=`<div class="gross glow" style="position:absolute;left:0;right:0;top:640px;text-align:center;font-weight:800;font-size:380px;letter-spacing:-.02em">1%</div>
+     <svg width="1080" height="1920" class="glow" id="plus${i}"></svg>`;
+  if(s.typ==='punkt') v=`<svg width="1080" height="1920" class="glow"><circle id="dot" cx="540" cy="960" r="9" fill="${W}"/></svg>`;
+  if(s.typ==='kalender') v=`<svg width="1080" height="1920" class="glow"><g transform="translate(540 990) scale(1.25)">${kalender('kal'+i)}</g>${sanduhr(180,990,1.1)}${sanduhr(900,990,1.1)}</svg>`;
+  if(s.typ==='hoch'||s.typ==='runter') v=`<svg width="1080" height="1920" class="glow">
+     <line x1="140" y1="1240" x2="960" y2="1240" stroke="${W}" stroke-width="4" opacity=".55"/>
+     <line x1="140" y1="1240" x2="140" y2="700" stroke="${W}" stroke-width="4" opacity=".55"/>
+     <path id="kv${i}" fill="none" stroke="${W}" stroke-width="9" stroke-linecap="round"/>
+     <circle id="kp${i}" r="14" fill="${W}"/>
+     <text id="kz${i}" font-size="64" font-weight="800" fill="${W}" text-anchor="end"></text>
+     <text x="140" y="1290" font-size="26" font-weight="700" letter-spacing="4" fill="${W}" opacity=".7">TAG 1</text>
+     <text x="960" y="1290" font-size="26" font-weight="700" letter-spacing="4" fill="${W}" opacity=".7" text-anchor="end">TAG 365</text></svg>`;
+  if(s.typ==='talent'){ let m=''; [[200,1150],[330,1210],[760,1210],[880,1150],[260,1290],[820,1290]].forEach(([x,y])=>m+=figur(x,y,1.0,.28));
+    v=`<svg width="1080" height="1920"><defs><linearGradient id="kegel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity=".04"/></linearGradient></defs>
+      <polygon id="licht" points="490,640 590,640 720,1240 360,1240" fill="url(#kegel)"/>
+      <ellipse id="boden" cx="540" cy="1240" rx="190" ry="26" fill="#fff" opacity=".25"/>
+      <g class="glow">${m}${figur(540,1230,1.7)}</g></svg>`; }
+  if(s.typ==='heute') v=`<svg width="1080" height="1920" class="glow"><g transform="translate(540 990) scale(1.45)">${kalender('kal'+i)}</g></svg>`;
+  if(s.typ==='ende'){ let st=''; for(let k=0;k<6;k++) st+=`<rect class="stufe" x="${150+k*125}" y="${1240-k*70}" width="125" height="${18}" rx="6" fill="${W}"/>`;
+    v=`<svg width="1080" height="1920" class="glow">${st}<path id="stern" d="M0,-46 L13,-14 L46,-14 L19,6 L29,40 L0,20 L-29,40 L-19,6 L-46,-14 L-13,-14 Z" transform="translate(925 830)" fill="${W}"/>
+       <g id="laeufer">${figur(0,0,1.15)}</g></svg>`; }
+  SZ.insertAdjacentHTML('beforeend',`<div class="sz" id="s${i}"><div class="h">${s.h}</div>${v}<div class="pill">${s.pill}</div></div>`);
+});
+const ut=document.getElementById('ut');
+function kurve(i,t,lt,hoch){
+  const pfad=document.getElementById('kv'+i), pkt=document.getElementById('kp'+i), z=document.getElementById('kz'+i);
+  const f=eIO(pr(lt,0.5,3.2)), n=Math.max(1,Math.round(365*f));
+  const ymax=hoch?40:1.05, X=x=>140+820*x/365, Y=v=>1240-540*v/ymax;
+  let d=''; for(let x=0;x<=n;x+=2){ const v=hoch?Math.pow(1.01,x):Math.pow(0.99,x); d+=(x?'L':'M')+X(x).toFixed(1)+','+Y(v).toFixed(1); }
+  pfad.setAttribute('d',d);
+  const v=hoch?Math.pow(1.01,n):Math.pow(0.99,n);
+  pkt.setAttribute('cx',X(n)); pkt.setAttribute('cy',Y(v));
+  z.setAttribute('x',Math.min(960,X(n)+10)); z.setAttribute('y',Math.max(760,Y(v)-40));
+  z.textContent=v.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+window.render=function(t){
+  P.szenen.forEach((s,i)=>{
+    /* Erste Szene ist ab Bild 1 voll da – kein schwarzer Anfang */
+    const a0 = i===0 ? 0 : s.a;
+    const el=document.getElementById('s'+i), lt=t-a0;
+    const ein= i===0 ? 1 : eOut(pr(lt,0,0.45)), aus=1-pr(t,s.b-0.32,s.b);
+    const o=(t>=a0-0.01&&t<s.b+0.01)?ein*aus:0;
+    el.style.opacity=o.toFixed(3); if(o<=0) return;
+    const h=el.querySelector('.h'); h.style.transform=`translateY(${((1-ein)*-24).toFixed(1)}px) scale(${(0.96+0.04*ein).toFixed(3)})`;
+    el.querySelector('.pill').style.transform=`translateX(-50%) translateY(${((1-eOut(pr(lt,0.2,0.7)))*20).toFixed(1)}px)`;
+    el.querySelector('.pill').style.opacity=eOut(pr(lt,0.2,0.6)).toFixed(3);
+    if(s.typ==='stopp'){ const u=el.querySelector('.uhr'), k=pr(lt,0.4,s.b-s.a);
+      u.querySelector('.oben').setAttribute('transform',`translate(0 ${(-36*k*0.0).toFixed(1)}) scale(1 ${(1-k*0.9).toFixed(3)})`);
+      u.querySelector('.oben').style.transformOrigin='0px -6px';
+      u.querySelector('.unten').setAttribute('transform',`scale(1 ${(0.1+k*0.9).toFixed(3)})`);
+      u.querySelector('.unten').style.transformOrigin='0px 74px';
+      /* STOPP knallt gross rein und setzt sich weich */
+      const k2=eOut(pr(lt,0.55,1.15)); h.style.transform=`scale(${(1.75-0.75*k2).toFixed(3)})`;
+      h.style.transformOrigin='50% 50%'; }
+    if(s.typ==='berg') el.querySelectorAll('.block').forEach(b=>{const k=+b.dataset.k, e=eSpr(pr(lt,0.15+k*0.18,0.75+k*0.18));
+      b.setAttribute('transform',`translate(${(Math.sin(t*2+k)*3*e).toFixed(1)} ${(-(1-e)*500).toFixed(1)})`); b.style.opacity=cl(e*2);});
+    if(s.typ==='prozent'){ const g=el.querySelector('.gross'); const p=1+0.03*Math.sin(lt*5);
+      g.style.transform=`scale(${(eSpr(pr(lt,0,0.8))*p).toFixed(3)})`;
+      let pl=''; for(let k=0;k<14;k++){const a=(lt*0.9+k/14)%1; const x=150+((k*137)%780); pl+=`<text x="${x}" y="${(1350-a*700).toFixed(0)}" font-size="34" font-weight="800" fill="#F4F4F4" opacity="${(Math.sin(a*Math.PI)*0.6).toFixed(2)}">+1%</text>`;}
+      document.getElementById('plus'+i).innerHTML=pl; }
+    if(s.typ==='punkt'){ const d=document.getElementById('dot'); d.setAttribute('r',(9+2*Math.sin(lt*4)).toFixed(1)); }
+    if(s.typ==='kalender'){ const n=Math.max(1,Math.round(365*eIO(pr(lt,0.4,s.b-s.a-0.5))));
+      el.querySelector('.zahl').textContent=n; el.querySelector('.zahl').setAttribute('font-size', n>99?120:150);
+      el.querySelectorAll('.uhr').forEach((u,j)=>u.setAttribute('transform',u.getAttribute('transform').replace(/ rotate\([^)]*\)/,'')+` rotate(${((Math.floor(lt/0.9)%2)*180+(j?0:0)).toFixed(0)})`)); }
+    if(s.typ==='hoch') kurve(i,t,lt,true);
+    if(s.typ==='runter'){ kurve(i,t,lt,false); }
+    if(s.typ==='talent'){ const l=eOut(pr(lt,0.3,1.0)); document.getElementById('licht').style.opacity=(l*(0.85+0.15*Math.sin(lt*9)*Math.sin(lt*3))).toFixed(3);
+      document.getElementById('boden').style.opacity=(0.25*l).toFixed(3); }
+    if(s.typ==='heute'){ el.querySelector('.kopf').textContent='HEUTE'; el.querySelector('.zahl').textContent='1';
+      const g=el.querySelector('#kal'+i); g.style.transform=`scale(${eSpr(pr(lt,0,0.8)).toFixed(3)})`; g.style.transformOrigin='0 0'; }
+    if(s.typ==='ende'){ const k=eIO(pr(lt,0.3,2.4)), stufe=k*5;
+      const x=150+62+stufe*125, y=1240-stufe*70-9+Math.abs(Math.sin(stufe*Math.PI))*-26;
+      document.getElementById('laeufer').setAttribute('transform',`translate(${x.toFixed(1)} ${y.toFixed(1)})`);
+      document.getElementById('stern').setAttribute('transform',`translate(925 830) scale(${(1+0.08*Math.sin(lt*6)).toFixed(3)}) rotate(${(lt*20).toFixed(1)})`);
+      el.querySelectorAll('.stufe').forEach((r,k)=>r.style.opacity=cl(eOut(pr(lt,k*0.08,k*0.08+0.4)))); }
+  });
+  /* Untertitel: Wort fuer Wort */
+  let a=null; for(const s of P.szenen) if(t>=s.vo_a && t<s.vo_a+s.vo_d+0.4) a=s;
+  if(!a){ ut.style.opacity='0'; return; }
+  if(ut.dataset.f!==a.vo){ ut.dataset.f=a.vo; ut.innerHTML=a.vo.split(' ').map(w=>`<span>${w}</span>`).join(' '); }
+  const W_=[...ut.querySelectorAll('span')], f=(t-a.vo_a)/(a.vo_d*0.92);
+  W_.forEach((w,k)=>w.style.opacity = (k/W_.length<=f)?'1':'.25');
+  ut.style.opacity=eOut(pr(t,a.vo_a,a.vo_a+0.2)).toFixed(3);
+};
+window.render(0); window.bereit=true;
+</script></body></html>

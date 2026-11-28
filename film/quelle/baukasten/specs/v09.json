@@ -1,0 +1,117 @@
+{
+ "name": "v09-pausenhof",
+ "szenen": {
+  "n5": {
+   "bild": "/tmp/claude-0/-home-user-WebWerk-Design/21ce08ea-274b-522f-8718-d96f1cd65571/scratchpad/film/neu/roh2/n5.png",
+   "grade": "warm",
+   "fig": {
+    "P": {
+     "kopf": [
+      113,
+      630,
+      110
+     ],
+     "mund": [
+      140,
+      691,
+      15
+     ],
+     "auge": [
+      140,
+      648,
+      50,
+      20
+     ]
+    },
+    "K": {
+     "kopf": [
+      648,
+      535,
+      130
+     ],
+     "mund": [
+      670,
+      626,
+      20
+     ],
+     "auge": [
+      675,
+      572,
+      60,
+      20
+     ]
+    }
+   },
+   "zahlen": [
+    {
+     "t": "67",
+     "x": 112,
+     "y": 590,
+     "fs": 40,
+     "wer": "P"
+    },
+    {
+     "t": "970",
+     "x": 645,
+     "y": 480,
+     "fs": 50,
+     "wer": "K"
+    }
+   ]
+  }
+ },
+ "titel": [
+  {
+   "t": "Niemand setzt sich neben die 970.",
+   "von": 0.05,
+   "bis": "drop"
+  },
+  {
+   "t": "Fast niemand.",
+   "von": "drop",
+   "bis": "drop+1.8"
+  }
+ ],
+ "shots": [
+  {
+   "sz": "n5",
+   "cx": 432,
+   "cy": 820,
+   "z0": 1.27,
+   "z1": 1.38,
+   "min": 7
+  },
+  {
+   "sz": "n5",
+   "cx": 160,
+   "cy": 660,
+   "z0": 2.2,
+   "z1": 2.34,
+   "min": 3,
+   "rede": {
+    "w": "P",
+    "t": "Ist hier noch frei?",
+    "hall": false
+   },
+   "mark": "drop"
+  },
+  {
+   "sz": "n5",
+   "cx": 650,
+   "cy": 570,
+   "z0": 2.2,
+   "z1": 2.34,
+   "min": 4,
+   "rede": {
+    "w": "K",
+    "t": "Ja.",
+    "hall": false
+   }
+  }
+ ],
+ "ende": {
+  "gr1": "Hättest du",
+  "gr2": "dich getraut?",
+  "kl": "Ehrlich 👇"
+ }
+}

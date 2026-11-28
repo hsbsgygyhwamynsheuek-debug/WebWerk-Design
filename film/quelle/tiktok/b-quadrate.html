@@ -1,0 +1,64 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Quadrate</title>
+<link rel="stylesheet" href="tt.css">
+<style>
+#s1{background:var(--ink)}
+.frage{position:absolute;left:70px;right:140px;top:170px;text-align:center}
+.netz{position:absolute;left:50%;top:470px;transform:translateX(-50%);
+  width:660px;height:660px;border:5px solid var(--paper)}
+.netz .l{position:absolute;background:rgba(250,249,246,.62)}
+.netz .lv{width:4px;top:0;bottom:0}
+.netz .lh{height:4px;left:0;right:0}
+.mark{position:absolute;border:7px solid var(--glut);border-radius:6px;
+  background:rgba(255,138,91,.18);opacity:0}
+.zaehler{position:absolute;left:70px;right:140px;top:1265px;text-align:center}
+.zaehler .z{font-family:"Inter Display","Inter",sans-serif;font-weight:800;
+  font-size:150px;letter-spacing:-.05em;font-variant-numeric:tabular-nums;color:var(--glut)}
+.zaehler .u{font-size:38px;opacity:.7;margin-top:6px}
+.balken{position:absolute;left:70px;right:140px;top:1215px;height:8px;
+  background:rgba(250,249,246,.16);border-radius:99px;overflow:hidden}
+.balken i{display:block;height:100%;width:0;background:var(--glut)}
+</style></head><body>
+<div id="stage">
+  <div class="scene" id="s1">
+    <div class="frage"><div class="gross"><span class="ln"><i>Wie viele</i></span><span class="ln"><i>Quadrate?</i></span></div></div>
+    <div class="netz">
+      <span class="l lv" style="left:163px"></span><span class="l lv" style="left:328px"></span><span class="l lv" style="left:493px"></span>
+      <span class="l lh" style="top:163px"></span><span class="l lh" style="top:328px"></span><span class="l lh" style="top:493px"></span>
+      <span class="mark"></span>
+    </div>
+    <div class="balken"><i></i></div>
+    <div class="zaehler"><div class="z">0</div><div class="u">gefunden</div></div>
+  </div>
+</div>
+<script src="tt.js"></script>
+<script>
+stage.insertAdjacentHTML('beforeend', WM);
+/* Ein 4x4-Netz enthält 16 + 9 + 4 + 1 = 30 Quadrate. Das ist nachrechenbar:
+   für Kantenlänge k gibt es (5-k)^2 mögliche Lagen. */
+const POS=[]; for(let k=1;k<=4;k++) for(let r=0;r+k<=4;r++) for(let c=0;c+k<=4;c++) POS.push({k,r,c});
+const Z=165, DAUER=13.5, START=6.4, ENDE=11.4;
+starte([{id:'s1',a:0,b:DAUER}],(id,lt)=>{
+  zeilen(q('.frage'),lt,0.1,0.1,0.7);
+  const netz=q('.netz'), e=eSpr(pr(lt,0.35,1.3));
+  netz.style.transform=`translateX(-50%) scale(${(0.9+0.1*e).toFixed(3)})`;
+  netz.style.opacity=cl(pr(lt,0.35,0.8));
+
+  /* Wartezeit zum Mitzählen, der Balken läuft ab */
+  q('.balken i').style.width=(pr(lt,1.4,START)*100)+'%';
+  q('.balken').style.opacity = lt<START?'1':'0';
+
+  const m=q('.mark'), zz=q('.zaehler .z');
+  if(lt<START){ m.style.opacity='0'; zz.textContent='0'; q('.zaehler .u').textContent='Zähl mit'; }
+  else {
+    const i=Math.min(POS.length-1, Math.floor(pr(lt,START,ENDE)*POS.length));
+    const p=POS[i];
+    m.style.opacity='1';
+    m.style.left=(p.c*Z-3)+'px'; m.style.top=(p.r*Z-3)+'px';
+    m.style.width=(p.k*Z)+'px'; m.style.height=(p.k*Z)+'px';
+    zz.textContent=String(i+1);
+    q('.zaehler .u').textContent = p.k+'×'+p.k;
+    if(lt>ENDE){ zz.textContent='30'; q('.zaehler .u').textContent='16 + 9 + 4 + 1';
+      m.style.opacity=String(0.3+0.7*Math.abs(Math.sin(lt*3))); }
+  }
+});
+</script></body></html>

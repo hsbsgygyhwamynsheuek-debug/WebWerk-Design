@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>WebWerk Design – Film</title>
+<style>
+/* ---------------------------------------------------------------
+   WebWerk Design – Filmbühne
+   Deterministisch: window.render(t) zeichnet exakt den Zustand
+   zum Zeitpunkt t (Sekunden). Keine CSS-Animationen, keine rAF.
+   Alle Schriften lokal (Inter / Inter Display), keine externen
+   Requests – gleiche Regel wie auf der Website.
+   --------------------------------------------------------------- */
+:root{
+  --paper:#FAF9F6; --ink:#1A1A1B; --grau:#5C5A57; --linie:#E2DFD9;
+  --akzent:#C2410C; --glut:#FF8A5B; --sand:#F3F1EC; --nacht:#121213;
+  --k:1;              /* globaler Maßstab */
+  --sp:1;             /* Abstandsmaßstab */
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#000;overflow:hidden}
+#stage{
+  position:relative;width:1920px;height:1080px;overflow:hidden;
+  background:var(--paper);
+  font-family:"Inter","Inter Display",sans-serif;
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:geometricPrecision;
+  font-feature-settings:"ss01","cv11","calt";
+}
+#stage.port{width:1080px;height:1920px;--k:.80;--sp:.92}
+
+/* ---------- Grundbausteine ---------- */
+.scene{position:absolute;inset:0;display:none}
+.scene.dark{background:var(--nacht);color:var(--paper)}
+.scene.sand{background:var(--sand)}
+.pad{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;
+     padding:0 calc(150px * var(--k))}
+#stage.port .pad{padding:0 calc(88px * var(--k));padding-bottom:calc(230px * var(--k))}
+
+h1,h2,.gross{font-family:"Inter Display","Inter",sans-serif;font-weight:700;
+  letter-spacing:-.038em;line-height:1.02}
+.h-xl{font-size:calc(126px * var(--k))}
+.h-l {font-size:calc(96px  * var(--k))}
+.h-m {font-size:calc(68px  * var(--k))}
+.lead{font-size:calc(34px * var(--k));line-height:1.45;color:var(--grau);
+  max-width:calc(1040px * var(--k));font-weight:400;letter-spacing:-.011em}
+.dark .lead{color:#C9C4BB}
+.lab{font-size:calc(20px * var(--k));letter-spacing:.22em;text-transform:uppercase;
+  font-weight:700;color:var(--akzent)}
+.dark .lab{color:var(--glut)}
+.num{font-variant-numeric:tabular-nums}
+
+/* Maskierte Zeilen: Text schiebt sich hinter einer Kante hervor */
+.ln{overflow:hidden;display:block;padding-bottom:.08em}
+.ln > i{display:block;font-style:normal;will-change:transform}
+
+/* ---------- Szene 1 – Suche ---------- */
+#s1 .suchfeld{
+  position:absolute;left:50%;top:50%;width:calc(1180px * var(--k));
+  transform:translate(-50%,-50%);
+}
+#s1 .bar{
+  display:flex;align-items:center;gap:calc(28px * var(--k));
+  height:calc(118px * var(--k));padding:0 calc(40px * var(--k));
+  border-radius:999px;background:#1E1E20;border:1px solid #303033;
+  box-shadow:0 40px 90px -40px #000;
+}
+#s1 .lupe{width:calc(38px * var(--k));height:calc(38px * var(--k));flex:none;
+  border:calc(3.4px * var(--k)) solid #6E6B66;border-radius:50%;position:relative}
+#s1 .lupe::after{content:"";position:absolute;right:calc(-12px * var(--k));bottom:calc(-5px * var(--k));
+  width:calc(16px * var(--k));height:calc(3.4px * var(--k));background:#6E6B66;
+  transform:rotate(45deg);border-radius:2px}
+#s1 .tippen{font-size:calc(42px * var(--k));color:#F2EFE9;letter-spacing:-.01em;white-space:nowrap}
+#s1 .caret{display:inline-block;width:calc(3px * var(--k));height:calc(46px * var(--k));
+  background:var(--glut);vertical-align:-9px;margin-left:calc(5px * var(--k))}
+#s1 .treffer{margin-top:calc(42px * var(--k));display:flex;flex-direction:column;
+  gap:calc(22px * var(--k))}
+#s1 .tr{display:flex;align-items:center;gap:calc(26px * var(--k));
+  padding:calc(26px * var(--k)) calc(34px * var(--k));border-radius:calc(18px * var(--k));
+  background:#191919;border:1px solid #28282B}
+#s1 .tr .ico{width:calc(52px * var(--k));height:calc(52px * var(--k));border-radius:calc(13px * var(--k));
+  background:#2C2C30;flex:none}
+#s1 .tr .zeilen{flex:1;display:flex;flex-direction:column;gap:calc(13px * var(--k))}
+#s1 .tr .zeilen b{height:calc(15px * var(--k));width:46%;background:#4A4A4F;border-radius:99px;display:block}
+#s1 .tr .zeilen span{height:calc(11px * var(--k));width:72%;background:#333337;border-radius:99px;display:block}
+#s1 .tr.leer{border-color:rgba(255,138,91,.5);background:rgba(194,65,12,.13)}
+#s1 .tr.leer .ico{background:rgba(255,138,91,.22)}
+#s1 .tr.leer .txt{font-size:calc(30px * var(--k));color:#FFBFA3;font-weight:600;letter-spacing:-.01em}
+#s1 .schluss{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:var(--nacht)}
+#s1 .schluss .t{font-family:"Inter Display","Inter",sans-serif;font-weight:700;
+  font-size:calc(104px * var(--k));letter-spacing:-.04em;line-height:1.05;text-align:center;
+  color:var(--paper);max-width:calc(1420px * var(--k))}
+
+/* ---------- Szene 3 – Preis ---------- */
+#s3 .preisreihe{display:flex;align-items:flex-end;gap:calc(120px * var(--k))}
+#stage.port #s3 .preisreihe{flex-direction:column;align-items:flex-start;gap:calc(60px * var(--k))}
+#s3 .zahl{font-family:"Inter Display","Inter",sans-serif;font-weight:800;
+  font-size:calc(300px * var(--k));line-height:.86;letter-spacing:-.055em;
+  font-variant-numeric:tabular-nums}
+#s3 .dabei{list-style:none;display:flex;flex-direction:column;gap:calc(4px * var(--k));
+  min-width:calc(620px * var(--k))}
+#s3 .dabei li{display:flex;gap:calc(22px * var(--k));align-items:baseline;
+  font-size:calc(31px * var(--k));padding:calc(26px * var(--k)) 0;
+  border-bottom:1px solid rgba(250,249,246,.14);color:#EDE9E2}
+#s3 .dabei li:last-child{border-bottom:0}
+#s3 .dabei .h{color:var(--glut);flex:none;font-weight:700}
+
+/* ---------- Szene 4 – Ablauf ---------- */
+#s4 .schiene{position:relative;margin-top:calc(90px * var(--k));height:calc(3px * var(--k));
+  background:var(--linie)}
+#s4 .schiene .fuell{position:absolute;left:0;top:0;height:100%;background:var(--ink);width:0}
+#s4 .stufen{display:grid;grid-template-columns:repeat(4,1fr);gap:calc(54px * var(--k));
+  margin-top:calc(-2px * var(--k))}
+#stage.port #s4 .schiene{display:none}
+#stage.port #s4 .stufen{grid-template-columns:1fr;gap:calc(34px * var(--k));margin-top:calc(16px * var(--k))}
+#stage.port #s4 .stufe{padding-top:calc(26px * var(--k));border-top:calc(3px * var(--k)) solid var(--linie);
+  position:relative}
+#stage.port #s4 .stufe::after{content:"";position:absolute;left:0;top:calc(-3px * var(--k));
+  height:calc(3px * var(--k));width:100%;background:var(--ink);
+  transform:scaleX(var(--kante,0));transform-origin:left}
+#stage.port #s4 .stufe .punkt{display:none}
+#stage.port #s4 .stufe p{margin-top:calc(10px * var(--k))}
+#s4 .stufe{padding-top:calc(40px * var(--k));position:relative}
+#s4 .stufe .punkt{position:absolute;top:calc(-9px * var(--k));left:0;
+  width:calc(19px * var(--k));height:calc(19px * var(--k));border-radius:99px;
+  background:var(--paper);border:calc(3px * var(--k)) solid var(--linie)}
+#s4 .stufe .nr{font-size:calc(19px * var(--k));letter-spacing:.2em;font-weight:700;
+  color:var(--akzent);display:block;margin-bottom:calc(16px * var(--k))}
+#s4 .stufe h3{font-family:"Inter Display","Inter",sans-serif;font-size:calc(40px * var(--k));
+  font-weight:650;letter-spacing:-.026em;line-height:1.14}
+#s4 .stufe p{margin-top:calc(16px * var(--k));font-size:calc(26px * var(--k));line-height:1.45;
+  color:var(--grau)}
+
+/* ---------- Szene 5 – Demo ---------- */
+#s5 .buehne{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+#s5 .fenster{width:calc(1120px * var(--k));margin-bottom:calc(150px * var(--k));border-radius:calc(22px * var(--k));
+  background:#fff;border:1px solid var(--linie);overflow:hidden;
+  box-shadow:0 70px 130px -60px rgba(26,26,27,.55)}
+#stage.port #s5 .fenster{width:calc(840px * var(--k));margin-bottom:calc(620px * var(--k))}
+#s5 .kopf{height:calc(62px * var(--k));background:#F6F4F0;border-bottom:1px solid var(--linie);
+  display:flex;align-items:center;gap:calc(11px * var(--k));padding:0 calc(26px * var(--k))}
+#s5 .kopf i{width:calc(13px * var(--k));height:calc(13px * var(--k));border-radius:99px;background:#D5D1C9;display:block}
+#s5 .kopf .url{margin-left:calc(22px * var(--k));height:calc(26px * var(--k));flex:1;max-width:calc(420px * var(--k));
+  background:#EAE7E1;border-radius:99px}
+#s5 .held{background:var(--ink);color:#fff;padding:calc(66px * var(--k)) calc(62px * var(--k));
+  display:flex;flex-direction:column;gap:calc(22px * var(--k))}
+#s5 .held .t{height:calc(40px * var(--k));width:78%;background:#fff;border-radius:calc(7px * var(--k));transform-origin:left}
+#s5 .held .t2{height:calc(40px * var(--k));width:52%;background:#fff;border-radius:calc(7px * var(--k));transform-origin:left}
+#s5 .held .s{height:calc(19px * var(--k));width:62%;background:rgba(255,255,255,.42);
+  border-radius:calc(5px * var(--k));transform-origin:left}
+#s5 .held .knopf{margin-top:calc(16px * var(--k));height:calc(62px * var(--k));width:calc(300px * var(--k));
+  background:var(--akzent);border-radius:999px;transform-origin:left}
+#s5 .reihe{display:flex;gap:calc(24px * var(--k));padding:calc(44px * var(--k)) calc(62px * var(--k))}
+#s5 .reihe span{flex:1;height:calc(136px * var(--k));background:var(--sand);
+  border:1px solid var(--linie);border-radius:calc(13px * var(--k));transform-origin:bottom}
+#s5 .handy{position:absolute;right:calc(150px * var(--k));bottom:calc(150px * var(--k));
+  width:calc(320px * var(--k));height:calc(650px * var(--k));
+  border-radius:calc(46px * var(--k));background:#101011;padding:calc(13px * var(--k));
+  box-shadow:0 60px 110px -40px rgba(26,26,27,.6)}
+#stage.port #s5 .handy{right:calc(70px * var(--k));bottom:calc(640px * var(--k))}
+#s5 .handy .glas{width:100%;height:100%;border-radius:calc(36px * var(--k));background:#fff;
+  overflow:hidden;display:flex;flex-direction:column}
+#s5 .handy .hh{background:var(--ink);padding:calc(30px * var(--k)) calc(26px * var(--k));
+  display:flex;flex-direction:column;gap:calc(13px * var(--k))}
+#s5 .handy .hh b{height:calc(17px * var(--k));width:82%;background:#fff;border-radius:4px;display:block}
+#s5 .handy .hh u{height:calc(17px * var(--k));width:58%;background:#fff;border-radius:4px;display:block}
+#s5 .handy .hh s{height:calc(32px * var(--k));width:62%;background:var(--akzent);border-radius:99px;
+  display:block;margin-top:calc(10px * var(--k))}
+#s5 .handy .hb{padding:calc(24px * var(--k));display:flex;flex-direction:column;gap:calc(16px * var(--k))}
+#s5 .handy .hb i{height:calc(72px * var(--k));background:var(--sand);border:1px solid var(--linie);
+  border-radius:calc(11px * var(--k));display:block}
+#s5 .fuss{position:absolute;left:calc(150px * var(--k));bottom:calc(96px * var(--k))}
+#stage.port #s5 .fuss{left:calc(88px * var(--k));bottom:calc(230px * var(--k))}
+
+/* ---------- Szene 7 – Kontakt ---------- */
+#s7 .tel{font-family:"Inter Display","Inter",sans-serif;font-weight:700;
+  font-size:calc(150px * var(--k));letter-spacing:-.045em;font-variant-numeric:tabular-nums;
+  line-height:1.04}
+#stage.port #s7 .tel{font-size:calc(118px * var(--k))}
+#s7 .marke{position:absolute;left:calc(150px * var(--k));bottom:calc(92px * var(--k));
+  display:flex;align-items:center;gap:calc(22px * var(--k))}
+#stage.port #s7 .marke{left:calc(88px * var(--k));bottom:calc(210px * var(--k))}
+#s7 .marke .w{width:calc(68px * var(--k));height:calc(68px * var(--k));border-radius:calc(16px * var(--k));
+  background:var(--akzent);color:#fff;display:flex;align-items:center;justify-content:center;
+  font-family:"Inter Display","Inter",sans-serif;font-weight:800;font-size:calc(40px * var(--k))}
+#s7 .marke .n{font-size:calc(34px * var(--k));font-weight:650;letter-spacing:-.02em}
+#s7 .klein{position:absolute;right:calc(150px * var(--k));bottom:calc(96px * var(--k));
+  text-align:right;font-size:calc(21px * var(--k));line-height:1.6;color:#8D8880}
+#stage.port #s7 .klein{right:auto;left:calc(88px * var(--k));bottom:calc(110px * var(--k));text-align:left}
+
+/* Vignette für die dunklen Szenen – gibt Tiefe */
+.vig{position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(130% 95% at 50% 42%,transparent 38%,rgba(0,0,0,.55) 100%)}
+/* Feines Korn, damit Flächen nicht digital-flach wirken */
+.korn{position:absolute;inset:0;pointer-events:none;opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E")}
+</style>
+</head>
+<body>
+<div id="stage" class="land">
+
+  <!-- 1 — Suche: der Betrieb ist nicht dabei -->
+  <div class="scene dark" id="s1">
+    <div class="suchfeld">
+      <div class="bar"><span class="lupe"></span><span class="tippen"></span></div>
+      <div class="treffer">
+        <div class="tr"><span class="ico"></span><span class="zeilen"><b></b><span></span></span></div>
+        <div class="tr"><span class="ico"></span><span class="zeilen"><b></b><span></span></span></div>
+        <div class="tr leer"><span class="ico"></span><span class="txt">Ihr Betrieb — nicht dabei</span></div>
+      </div>
+    </div>
+    <div class="vig"></div>
+    <div class="schluss"><div class="t"><span class="ln"><i>Wer keine Seite hat,</i></span><span class="ln"><i>wird nicht gefunden.</i></span></div></div>
+  </div>
+
+  <!-- 2 — Das Problem -->
+  <div class="scene" id="s2">
+    <div class="pad">
+      <p class="lab">Aus Jena</p>
+      <h1 class="h-xl" style="margin-top:calc(34px * var(--k))">
+        <span class="ln"><i>Websites für Handwerker,</i></span>
+        <span class="ln"><i>die keine haben.</i></span>
+      </h1>
+      <p class="lead" style="margin-top:calc(46px * var(--k))">
+        Die meisten Betriebe haben keine Seite — weil das immer teuer ist
+        und ewig dauert.
+      </p>
+    </div>
+    <div class="korn"></div>
+  </div>
+
+  <!-- 3 — Preis -->
+  <div class="scene dark" id="s3">
+    <div class="pad">
+      <p class="lab">Preis</p>
+      <div class="preisreihe" style="margin-top:calc(40px * var(--k))">
+        <div>
+          <div class="zahl"><span class="zz">0</span> €</div>
+          <p class="lead" style="margin-top:calc(26px * var(--k));max-width:calc(680px * var(--k))">
+            Einmalig. Danach kommt nichts mehr.
+          </p>
+        </div>
+        <ul class="dabei">
+          <li><span class="h">✓</span><span>Keine monatlichen Kosten</span></li>
+          <li><span class="h">✓</span><span>Fertig in einer Woche</span></li>
+          <li><span class="h">✓</span><span>Bezahlt wird erst, wenn sie online ist</span></li>
+          <li><span class="h">✓</span><span>Änderungen im ersten Monat kostenlos</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="vig"></div>
+  </div>
+
+  <!-- 4 — Ablauf -->
+  <div class="scene sand" id="s4">
+    <div class="pad">
+      <p class="lab">Ablauf</p>
+      <h2 class="h-l" style="margin-top:calc(28px * var(--k))">
+        <span class="ln"><i>Sie sagen was, ich baue.</i></span>
+      </h2>
+      <div class="schiene"><span class="fuell"></span></div>
+      <div class="stufen">
+        <div class="stufe"><span class="punkt"></span><span class="nr">SCHRITT 1</span>
+          <h3>Wir telefonieren</h3><p>Zehn Minuten. Was macht Ihr Betrieb, was soll drauf.</p></div>
+        <div class="stufe"><span class="punkt"></span><span class="nr">SCHRITT 2</span>
+          <h3>Ich baue den Entwurf</h3><p>Zwei bis drei Tage. Sie bekommen einen Link.</p></div>
+        <div class="stufe"><span class="punkt"></span><span class="nr">SCHRITT 3</span>
+          <h3>Sie sagen, was anders soll</h3><p>So oft Sie wollen. Änderungen am selben Tag.</p></div>
+        <div class="stufe"><span class="punkt"></span><span class="nr">SCHRITT 4</span>
+          <h3>Die Seite geht online</h3><p>Erst wenn Sie ja sagen. Vorher sieht sie niemand.</p></div>
+      </div>
+    </div>
+    <div class="korn"></div>
+  </div>
+
+  <!-- 5 — Demo -->
+  <div class="scene" id="s5">
+    <div class="buehne">
+      <div class="fenster">
+        <div class="kopf"><i></i><i></i><i></i><span class="url"></span></div>
+        <div class="held"><span class="t"></span><span class="t2"></span><span class="s"></span><span class="knopf"></span></div>
+        <div class="reihe"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+    <div class="handy"><div class="glas">
+      <div class="hh"><b></b><u></u><s></s></div>
+      <div class="hb"><i></i><i></i><i></i></div>
+    </div></div>
+    <div class="fuss">
+      <h2 class="h-m"><span class="ln"><i>Läuft auf dem Handy.</i></span></h2>
+      <p class="lead" style="margin-top:calc(18px * var(--k))">Da schauen die meisten drauf.</p>
+    </div>
+    <div class="korn"></div>
+  </div>
+
+  <!-- 6 — Wer -->
+  <div class="scene" id="s6">
+    <div class="pad">
+      <p class="lab">Wer das macht</p>
+      <h2 class="h-xl" style="margin-top:calc(32px * var(--k))">
+        <span class="ln"><i>Ich bin Richard, 14.</i></span>
+      </h2>
+      <p class="lead" style="margin-top:calc(44px * var(--k))">
+        Ich baue Websites, weil es mir Spaß macht und ich besser werden will.
+        Deswegen der Preis — eine Agentur nimmt das Zehnfache.
+      </p>
+      <p class="lead" style="margin-top:calc(26px * var(--k));font-size:calc(26px * var(--k));color:#8D8880">
+        Ich arbeite mit KI-Unterstützung. Das sage ich vorher, nicht hinterher.
+      </p>
+    </div>
+    <div class="korn"></div>
+  </div>
+
+  <!-- 7 — Kontakt -->
+  <div class="scene dark" id="s7">
+    <div class="pad">
+      <p class="lab">Kontakt</p>
+      <h2 class="h-m" style="margin-top:calc(26px * var(--k))">
+        <span class="ln"><i>Rufen Sie einfach an.</i></span>
+      </h2>
+      <div class="tel" style="margin-top:calc(30px * var(--k))">
+        <span class="ln"><i>0151 72678183</i></span>
+      </div>
+      <p class="lead" style="margin-top:calc(30px * var(--k))">
+        Bis 16 Uhr bin ich in der Schule. Danach erreichen Sie mich.
+      </p>
+    </div>
+    <div class="marke"><span class="w">W</span><span class="n">WebWerk Design</span></div>
+    <div class="klein">richardbaumgart65@gmail.com<br>Erstellt mit KI-Unterstützung</div>
+    <div class="vig"></div>
+  </div>
+
+</div>
+
+<script>
+/* =====================================================================
+   Zeitachse & Zeichner
+   ===================================================================== */
+const stage = document.getElementById('stage');
+const q  = (s,r=document)=>r.querySelector(s);
+const qa = (s,r=document)=>[...r.querySelectorAll(s)];
+
+/* Maßstab: Bewegungswege skalieren mit der Bühne, damit Hoch- und
+   Querformat gleich schnell/gleich weit wirken. */
+const K = () => parseFloat(getComputedStyle(stage).getPropertyValue('--k')) || 1;
+
+/* --- Zeitfunktionen ------------------------------------------------- */
+const cl   = (x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const pr   = (t,a,b)=>cl((t-a)/(b-a));              // 0..1 im Fenster
+const eOut = x=>1-Math.pow(1-x,3);                   // ruhig auslaufend
+const eExp = x=>x>=1?1:1-Math.pow(2,-10*x);          // schnell rein
+const eIO  = x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2; // sanft beides
+/* Feder ohne Überschwingen ins Negative – für Karten und Einblendungen */
+const eSpr = x=>{ if(x>=1) return 1; const w=11, z=.74;
+  return 1-Math.exp(-z*w*x)*Math.cos(w*Math.sqrt(1-z*z)*x); };
+
+/* --- Setzer --------------------------------------------------------- */
+function put(el,{o=null,x=0,y=0,s=1,b=0,rot=0}={}){
+  if(o!==null) el.style.opacity=o;
+  el.style.transform = `translate3d(${x}px,${y}px,0)`+(s!==1?` scale(${s})`:'')+(rot?` rotate(${rot}deg)`:'');
+  el.style.filter = b>0.01 ? `blur(${b}px)` : '';
+}
+/* Zeile steigt hinter der Maskenkante hervor */
+function zeile(el,t,start,dauer=1.0){
+  const k = eOut(pr(t,start,start+dauer));
+  const i = el.querySelector('i') || el;
+  i.style.transform = `translate3d(0,${(1-k)*112}%,0)`;
+  i.style.opacity = cl(k*1.6);
+}
+function zeilen(wrap,t,start,abstand=0.1,dauer=1.0){
+  qa('.ln',wrap).forEach((l,n)=>zeile(l,t,start+n*abstand,dauer));
+}
+/* Aufsteigen mit leichter Unschärfe – wirkt wie Fokus, nicht wie Schieben */
+function steig(el,t,start,dauer=0.9,weg=34){
+  const k=eOut(pr(t,start,start+dauer));
+  put(el,{o:cl(k*1.25),y:(1-k)*weg*K(),b:(1-k)*5});
+}
+/* Breite/Höhe wachsen lassen */
+function wachs(el,t,start,dauer,richtung='x'){
+  const k=eOut(pr(t,start,start+dauer));
+  el.style.transform = richtung==='x'?`scaleX(${k})`:`scaleY(${k})`;
+  el.style.opacity = cl(k*4);
+}
+
+/* =====================================================================
+   Szenen – Anfang, Ende (Sekunden)
+   ===================================================================== */
+const SZ = [
+  {id:'s1', a:0.00,  b:7.20},
+  {id:'s2', a:7.20,  b:11.80},
+  {id:'s3', a:11.80, b:17.60},
+  {id:'s4', a:17.60, b:25.20},
+  {id:'s5', a:25.20, b:31.40},
+  {id:'s6', a:31.40, b:35.80},
+  {id:'s7', a:35.80, b:41.60},
+];
+const DAUER = 41.60;
+window.FILM_DAUER = DAUER;
+
+/* Weiche Übergänge nur dort, wo ein harter Schnitt zu abrupt wäre */
+const BLENDE = { s5:0.30, s6:0.30, s7:0.35 };
+
+/* =====================================================================
+   render(t)
+   ===================================================================== */
+window.render = function(t){
+  const k = K();
+
+  /* Szenen ein-/ausblenden */
+  SZ.forEach(s=>{
+    const el = q('#'+s.id);
+    const bl = BLENDE[s.id] || 0;
+    const an = t >= s.a - bl && t < s.b;
+    el.style.display = an ? 'block' : 'none';
+    if(!an) return;
+    el.style.opacity = bl ? cl(pr(t,s.a-bl,s.a)) : 1;
+    el.style.zIndex = Math.round(s.a*10);
+  });
+
+  /* ---------------- 1 — Suche ---------------- */
+  {
+    const s=q('#s1'), lt=t-0.0;
+    const feld=q('.suchfeld',s), bar=q('.bar',s);
+    /* Feld kommt heran */
+    const e=eOut(pr(lt,0.15,1.15));
+    feld.style.transform=`translate(-50%,-50%) scale(${0.955+0.045*e})`;
+    feld.style.opacity=cl(e*1.5);
+
+    /* Tippen */
+    const wort='dachdecker jena';
+    const tp=pr(lt,0.95,3.05);
+    const n=Math.floor(tp*wort.length+0.0001);
+    const blink=(Math.floor(lt*1.8)%2===0)?1:0.08;
+    const fertig=lt>3.05;
+    q('.tippen',s).innerHTML =
+      wort.slice(0,n).replace(/ /g,'&nbsp;')+
+      `<span class="caret" style="opacity:${fertig?0:blink}"></span>`;
+
+    /* Eingabe-Druck auf das Feld */
+    const dr=pr(lt,3.05,3.22), auf=pr(lt,3.22,3.5);
+    bar.style.transform=`scale(${1-0.014*eIO(dr)+0.014*eIO(auf)})`;
+
+    /* Treffer erscheinen, der letzte als Leerstelle */
+    qa('.tr',s).forEach((r,i)=>{
+      const st=3.30+i*0.26;
+      const e2=eSpr(pr(lt,st,st+0.85));
+      put(r,{o:cl(pr(lt,st,st+0.3)),y:(1-e2)*26*k});
+      if(r.classList.contains('leer')){
+        /* der Hinweis pulst einmal ruhig auf */
+        const pl=pr(lt,4.35,5.05);
+        r.style.boxShadow=`0 0 0 ${(1-Math.abs(0.5-pl)*2)*10*k}px rgba(255,138,91,.13)`;
+      }
+    });
+
+    /* Schlussaussage legt sich darüber */
+    const sch=q('.schluss',s), sp=pr(lt,5.30,5.70);
+    sch.style.display = lt>5.25?'flex':'none';
+    sch.style.opacity = eIO(sp);
+    zeilen(sch,lt,5.52,0.12,1.0);
+    /* Suchbild weicht zurück */
+    if(lt>5.25){ feld.style.opacity=String(1-eIO(sp)); }
+  }
+
+  /* ---------------- 2 — Problem ---------------- */
+  {
+    const s=q('#s2'), lt=t-7.20;
+    steig(q('.lab',s),lt,0.10,0.8,22);
+    zeilen(q('h1',s),lt,0.28,0.14,1.05);
+    steig(q('.lead',s),lt,0.78,1.0,30);
+  }
+
+  /* ---------------- 3 — Preis ---------------- */
+  {
+    const s=q('#s3'), lt=t-11.80;
+    steig(q('.lab',s),lt,0.08,0.8,22);
+    /* Zahl zählt hoch und setzt sich */
+    const zp=eExp(pr(lt,0.30,1.95));
+    q('.zz',s).textContent = Math.round(250*zp);
+    const zh=q('.zahl',s);
+    put(zh,{o:cl(pr(lt,0.25,0.5)),y:(1-eOut(pr(lt,0.25,1.2)))*30*k});
+    steig(q('.zahl + .lead',s),lt,1.85,0.9,24);
+    qa('.dabei li',s).forEach((li,i)=>steig(li,lt,0.95+i*0.19,0.85,26));
+  }
+
+  /* ---------------- 4 — Ablauf ---------------- */
+  {
+    const s=q('#s4'), lt=t-17.60;
+    steig(q('.lab',s),lt,0.08,0.8,22);
+    zeilen(q('h2',s),lt,0.24,0.1,1.0);
+    /* Schiene zieht durch, Punkte füllen sich im Vorbeilaufen */
+    const sp=eIO(pr(lt,0.70,4.40));
+    q('.fuell',s).style.width=(sp*100)+'%';
+    qa('.stufe',s).forEach((st,i)=>{
+      const an=0.95+i*0.62;
+      steig(st,lt,an,0.95,32);
+      const p=q('.punkt',st), erreicht=sp>=(i/3.6);
+      p.style.background=erreicht?'var(--ink)':'var(--paper)';
+      p.style.borderColor=erreicht?'var(--ink)':'var(--linie)';
+      p.style.transform=`scale(${erreicht?1.08:1})`;
+      /* Hochformat: die Oberkante jeder Stufe zieht sich selbst durch */
+      st.style.setProperty('--kante', eOut(pr(lt,an+0.12,an+0.85)));
+    });
+  }
+
+  /* ---------------- 5 — Demo ---------------- */
+  {
+    const s=q('#s5'), lt=t-25.20;
+    const f=q('.fenster',s);
+    const e=eOut(pr(lt,0.05,1.1));
+    put(f,{o:cl(e*1.4),y:(1-e)*44*k,s:0.985+0.015*e});
+    /* Inhalt baut sich auf – wie beim echten Bauen */
+    wachs(q('.held .t',s), lt,0.55,0.55,'x');
+    wachs(q('.held .t2',s),lt,0.68,0.55,'x');
+    wachs(q('.held .s',s), lt,0.82,0.55,'x');
+    wachs(q('.held .knopf',s),lt,0.98,0.5,'x');
+    qa('.reihe span',s).forEach((c,i)=>wachs(c,lt,1.18+i*0.12,0.5,'y'));
+    /* Handy fährt ein, Fenster macht Platz */
+    const hp=eSpr(pr(lt,1.95,2.9));
+    const h=q('.handy',s);
+    put(h,{o:cl(pr(lt,1.95,2.3)),x:(1-hp)*280*k,y:0});
+    const weg=eIO(pr(lt,1.95,2.9));
+    put(f,{o:1,x:-weg*180*k,y:(1-e)*44*k,s:(0.985+0.015*e)*(1-weg*0.085)});
+    /* Text unten */
+    zeilen(q('.fuss',s),lt,2.55,0.1,1.0);
+    steig(q('.fuss .lead',s),lt,2.95,0.9,24);
+  }
+
+  /* ---------------- 6 — Wer ---------------- */
+  {
+    const s=q('#s6'), lt=t-31.40;
+    steig(q('.lab',s),lt,0.08,0.8,22);
+    zeilen(q('h2',s),lt,0.24,0.1,1.0);
+    const le=qa('.lead',s);
+    steig(le[0],lt,0.70,1.0,28);
+    steig(le[1],lt,1.05,1.0,24);
+  }
+
+  /* ---------------- 7 — Kontakt ---------------- */
+  {
+    const s=q('#s7'), lt=t-35.80;
+    steig(q('.lab',s),lt,0.10,0.8,22);
+    zeilen(q('h2',s),lt,0.26,0.1,0.95);
+    zeilen(q('.tel',s),lt,0.56,0.1,1.1);
+    steig(q('.pad .lead',s),lt,1.00,1.0,26);
+    /* Marke setzt sich zuletzt */
+    const m=q('.marke',s), me=eSpr(pr(lt,1.35,2.3));
+    put(m,{o:cl(pr(lt,1.35,1.7)),y:(1-me)*24*k});
+    q('.marke .w',s).style.transform=`scale(${0.8+0.2*eSpr(pr(lt,1.45,2.4))})`;
+    steig(q('.klein',s),lt,1.75,1.0,18);
+  }
+};
+
+/* Startbild */
+window.render(0);
+</script>
+</body>
+</html>

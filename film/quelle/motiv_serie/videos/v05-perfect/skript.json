@@ -1,0 +1,39 @@
+{
+ "tonart": "moll",
+ "bpm": 84,
+ "stumm_bass": -3.0,
+ "drop_stil": true,
+ "laut_db": -15,
+ "marken": [
+  [
+   0,
+   "drums"
+  ],
+  [
+   8.1,
+   "peak"
+  ],
+  [
+   10.5,
+   "drop"
+  ],
+  [
+   12.2,
+   "end"
+  ]
+ ],
+ "szenen": [
+  {
+   "typ": "duell",
+   "h": "",
+   "pill": "",
+   "links": "WAITS FOR PERFECT",
+   "rechts": "STARTS UGLY",
+   "blase1": "NOT READY",
+   "blase2": "NOT READY",
+   "m": "drums",
+   "dauer": 14.0
+  }
+ ],
+ "titel": "v05-perfect"
+}

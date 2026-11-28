@@ -1,0 +1,88 @@
+{
+ "name": "v05-pov",
+ "szenen": {
+  "n6": {
+   "bild": "/tmp/claude-0/-home-user-WebWerk-Design/21ce08ea-274b-522f-8718-d96f1cd65571/scratchpad/film/neu/roh2/n6.png",
+   "grade": "warm",
+   "fig": {
+    "K": {
+     "kopf": [
+      480,
+      430,
+      380
+     ],
+     "mund": [
+      450,
+      670,
+      60
+     ],
+     "auge": [
+      430,
+      500,
+      170,
+      50
+     ]
+    }
+   },
+   "zahlen": [
+    {
+     "t": "970",
+     "x": 480,
+     "y": 260,
+     "fs": 130,
+     "wer": "K",
+     "cls": "flare"
+    }
+   ]
+  }
+ },
+ "titel": [
+  {
+   "t": "POV: Du sitzt neben der 970.",
+   "von": 0.05,
+   "bis": "drop"
+  }
+ ],
+ "shots": [
+  {
+   "sz": "n6",
+   "cx": 450,
+   "cy": 600,
+   "z0": 1.27,
+   "z1": 1.4,
+   "min": 7
+  },
+  {
+   "sz": "n6",
+   "cx": 440,
+   "cy": 480,
+   "z0": 1.62,
+   "z1": 1.76,
+   "min": 3,
+   "rede": {
+    "w": "K",
+    "t": "Du hast meinen Stift.",
+    "hall": false
+   },
+   "mark": "drop"
+  },
+  {
+   "sz": "n6",
+   "cx": 440,
+   "cy": 470,
+   "z0": 1.8,
+   "z1": 1.95,
+   "min": 3,
+   "rede": {
+    "w": "K",
+    "t": "Gib ihn zurück.",
+    "hall": false
+   }
+  }
+ ],
+ "ende": {
+  "gr1": "Würdest du",
+  "gr2": "ihn zurückgeben?",
+  "kl": "Ehrlich jetzt 👇"
+ }
+}

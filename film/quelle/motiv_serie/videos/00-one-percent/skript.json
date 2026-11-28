@@ -1,0 +1,74 @@
+{
+ "titel": "00-one-percent",
+ "tonart": "moll",
+ "bpm": 110,
+ "szenen": [
+  {
+   "typ": "stopp",
+   "h": "STOP.",
+   "pill": "WAITING",
+   "vo": "[shouting] Stop waiting, bro! [intense] The perfect moment is never coming.",
+   "m": "ruhig"
+  },
+  {
+   "typ": "berg",
+   "h": "ALL AT ONCE?",
+   "pill": "YOUR WHOLE LIFE",
+   "vo": "[intense] You don't need to fix your whole life tonight. You just need one percent."
+  },
+  {
+   "typ": "prozent",
+   "h": "ONE PERCENT.",
+   "pill": "EVERY SINGLE DAY",
+   "vo": "[intense] One percent better, every single day. That's it.",
+   "m": "drums"
+  },
+  {
+   "typ": "punkt",
+   "h": "SOUNDS LIKE NOTHING?",
+   "pill": "THAT'S THE POINT",
+   "vo": "[intense] Sounds like nothing? Good. That's exactly why nobody does it."
+  },
+  {
+   "typ": "kalender",
+   "h": "365 DAYS",
+   "pill": "ONE YEAR",
+   "vo": "[intense] But stack that one percent for one full year."
+  },
+  {
+   "typ": "hoch",
+   "h": "37× BETTER",
+   "pill": "1.01 TO THE POWER OF 365",
+   "vo": "[shouting] And you're thirty-seven times better than the person you are right now!",
+   "m": "peak"
+  },
+  {
+   "typ": "runter",
+   "h": "THE OTHER WAY?",
+   "pill": "0.99 TO THE POWER OF 365",
+   "vo": "[intense] Lose one percent a day, and there's almost nothing left of you."
+  },
+  {
+   "typ": "talent",
+   "h": "NOT TALENT.",
+   "pill": "NEVER WAS",
+   "vo": "[intense] It was never about talent. Never.",
+   "m": "drop"
+  },
+  {
+   "typ": "heute",
+   "h": "TODAY.",
+   "pill": "DAY ONE",
+   "vo": "[intense] It's about what you do today.",
+   "m": "build"
+  },
+  {
+   "typ": "ende",
+   "h": "START NOW.",
+   "pill": "FOLLOW FOR MORE",
+   "vo": "[shouting] So get up and start. Right now!",
+   "m": "end",
+   "pause": 4.5
+  }
+ ]
+}

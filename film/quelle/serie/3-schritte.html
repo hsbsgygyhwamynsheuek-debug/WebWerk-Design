@@ -1,0 +1,60 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Vier Schritte</title>
+<link rel="stylesheet" href="kern.css">
+<style>
+.st .nr{font-family:"Inter Display","Inter",sans-serif;font-weight:800;
+  font-size:calc(200px * var(--k));line-height:.84;letter-spacing:-.06em;color:var(--akzent);
+  font-variant-numeric:tabular-nums}
+.st h2{margin-top:calc(26px * var(--k))}
+.st .lead{margin-top:calc(24px * var(--k))}
+.fort{position:absolute;left:calc(150px * var(--k));right:calc(150px * var(--k));
+  bottom:calc(96px * var(--k));height:calc(4px * var(--k));background:var(--linie)}
+#stage.port .fort{left:calc(88px * var(--k));right:calc(88px * var(--k));bottom:calc(150px * var(--k))}
+.fort span{position:absolute;left:0;top:0;height:100%;background:var(--ink)}
+#stage.port .st .nr{font-size:calc(250px * var(--k))}
+#stage.port .st h2{font-size:calc(84px * var(--k))}
+#stage.port .st .lead{font-size:calc(38px * var(--k))}
+#stage.port #s0 h1{font-size:calc(104px * var(--k))}
+</style></head><body>
+<div id="stage" class="land">
+  <div class="scene sand" id="s0"><div class="pad">
+    <p class="lab">Ablauf</p>
+    <h1 class="h-l" style="margin-top:calc(26px * var(--k))"><span class="ln"><i>In vier Schritten</i></span><span class="ln"><i>zur eigenen Seite.</i></span></h1>
+  </div><div class="korn"></div></div>
+  <div class="scene st" id="s1"><div class="pad"><div class="nr">01</div>
+    <h2 class="h-m"><span class="ln"><i>Wir telefonieren</i></span></h2>
+    <p class="lead">Zehn Minuten. Was macht Ihr Betrieb, wen wollen Sie erreichen, was soll draufstehen.</p></div>
+    <div class="fort"><span></span></div><div class="korn"></div></div>
+  <div class="scene st" id="s2"><div class="pad"><div class="nr">02</div>
+    <h2 class="h-m"><span class="ln"><i>Ich baue den Entwurf</i></span></h2>
+    <p class="lead">Zwei bis drei Tage. Sie bekommen einen Link und sehen die fertige Seite.</p></div>
+    <div class="fort"><span></span></div><div class="korn"></div></div>
+  <div class="scene st" id="s3"><div class="pad"><div class="nr">03</div>
+    <h2 class="h-m"><span class="ln"><i>Sie sagen, was anders soll</i></span></h2>
+    <p class="lead">So oft Sie wollen. Farben, Texte, Reihenfolge. Änderungen am selben Tag.</p></div>
+    <div class="fort"><span></span></div><div class="korn"></div></div>
+  <div class="scene st" id="s4"><div class="pad"><div class="nr">04</div>
+    <h2 class="h-m"><span class="ln"><i>Die Seite geht online</i></span></h2>
+    <p class="lead">Erst wenn Sie ja sagen. Vorher sieht sie niemand außer Ihnen.</p></div>
+    <div class="fort"><span></span></div><div class="korn"></div></div>
+</div>
+<script src="kern.js"></script>
+<script>
+stage.insertAdjacentHTML('beforeend', ABSPANN_HTML);
+const D=3.4, A=2.9;
+const SZ=[{id:'s0',a:0,b:A},
+  {id:'s1',a:A,b:A+D},{id:'s2',a:A+D,b:A+2*D},{id:'s3',a:A+2*D,b:A+3*D},{id:'s4',a:A+3*D,b:A+4*D},
+  {id:'abspann',a:A+4*D,b:A+4*D+5}];
+starteFilm(SZ,(id,lt)=>{
+  if(id==='s0'){ steig(q('#s0 .lab'),lt,0.1,0.8,20); zeilen(q('#s0 h1'),lt,0.28,0.12,1.0); }
+  if(/^s[1-4]$/.test(id)){
+    const n=+id[1], s=q('#'+id);
+    steig(q('.nr',s),lt,0.08,0.85,30);
+    zeilen(q('h2',s),lt,0.3,0.1,0.95);
+    steig(q('.lead',s),lt,0.62,0.95,26);
+    /* Fortschritt läuft über alle vier Schritte durch */
+    const vor=(n-1)/4, bis=n/4;
+    q('.fort span',s).style.width=((vor+(bis-vor)*eIO(pr(lt,0.1,D)))*100)+'%';
+  }
+  if(id==='abspann') malAbspann(lt);
+},{abspann:0.3});
+</script></body></html>

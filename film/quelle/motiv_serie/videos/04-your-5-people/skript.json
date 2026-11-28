@@ -1,0 +1,73 @@
+{
+ "titel": "04-your-5-people",
+ "tonart": "dunkel",
+ "bpm": 110,
+ "szenen": [
+  {
+   "typ": "gruppe",
+   "h": "YOUR 5 PEOPLE",
+   "pill": "LOOK AROUND YOU",
+   "vo": "[intense] Look at the five people you spend the most time with. Really look at them.",
+   "m": "ruhig",
+   "modus": "zaehlen"
+  },
+  {
+   "typ": "gruppe",
+   "h": "THAT'S YOU.",
+   "pill": "IN 5 YEARS",
+   "vo": "[intense] Because that's who you're becoming, whether you like it or not.",
+   "modus": "du"
+  },
+  {
+   "typ": "akku",
+   "h": "THEY DRAIN YOU?",
+   "pill": "ENERGY: LOW",
+   "vo": "[intense] If they laugh at your goals and drain your energy, you'll end up empty.",
+   "m": "drums",
+   "von": 90,
+   "bis": 5
+  },
+  {
+   "typ": "graph",
+   "h": "THEY PUSH YOU?",
+   "pill": "ENERGY: HIGH",
+   "vo": "[intense] If they push you, you'll go further than you ever thought you could.",
+   "zeige": "treppe",
+   "t2": "YOU",
+   "x1": "TODAY",
+   "x2": "5 YEARS"
+  },
+  {
+   "typ": "zweiwege",
+   "h": "CHOOSE.",
+   "pill": "YOUR CIRCLE",
+   "vo": "[shouting] So choose your circle like your future depends on it. Because it does!",
+   "m": "peak",
+   "t1": "COMFORT",
+   "t2": "GROWTH"
+  },
+  {
+   "typ": "allein",
+   "h": "ALONE FOR A WHILE?",
+   "pill": "THAT'S OK",
+   "vo": "[intense] And if that means being alone for a while? That's okay.",
+   "m": "drop"
+  },
+  {
+   "typ": "zahl",
+   "h": "BETTER",
+   "pill": "THAN HELD BACK",
+   "vo": "[intense] Better alone than held back.",
+   "m": "build",
+   "gross": "ALONE"
+  },
+  {
+   "typ": "ende",
+   "h": "LEVEL UP.",
+   "pill": "FOLLOW FOR MORE",
+   "vo": "[shouting] Find the people who make you better, and level up!",
+   "m": "end",
+   "pause": 4.5
+  }
+ ]
+}

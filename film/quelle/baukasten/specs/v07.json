@@ -1,0 +1,139 @@
+{
+ "name": "v07-mensa",
+ "szenen": {
+  "n4": {
+   "bild": "/tmp/claude-0/-home-user-WebWerk-Design/21ce08ea-274b-522f-8718-d96f1cd65571/scratchpad/film/neu/roh2/n4.png",
+   "grade": "warm",
+   "fig": {
+    "K": {
+     "kopf": [
+      242,
+      380,
+      180
+     ],
+     "mund": [
+      226,
+      486,
+      30
+     ],
+     "auge": [
+      226,
+      400,
+      90,
+      30
+     ]
+    },
+    "P": {
+     "kopf": [
+      548,
+      380,
+      130
+     ],
+     "mund": [
+      548,
+      464,
+      20
+     ],
+     "auge": [
+      553,
+      400,
+      55,
+      22
+     ]
+    },
+    "A": {
+     "kopf": [
+      765,
+      370,
+      120
+     ],
+     "mund": [
+      753,
+      464,
+      20
+     ],
+     "auge": [
+      753,
+      400,
+      55,
+      22
+     ]
+    }
+   },
+   "zahlen": [
+    {
+     "t": "970",
+     "x": 230,
+     "y": 265,
+     "fs": 64,
+     "wer": "K",
+     "cls": "flare"
+    },
+    {
+     "t": "67",
+     "x": 548,
+     "y": 300,
+     "fs": 50,
+     "wer": "P"
+    },
+    {
+     "t": "88",
+     "x": 755,
+     "y": 310,
+     "fs": 46,
+     "wer": "A"
+    }
+   ]
+  }
+ },
+ "titel": [
+  {
+   "t": "Wer in der Mensa zuerst Essen bekommt:",
+   "von": 0.05,
+   "bis": "drop",
+   "pos": "unten"
+  }
+ ],
+ "shots": [
+  {
+   "sz": "n4",
+   "cx": 432,
+   "cy": 720,
+   "z0": 1.27,
+   "z1": 1.38,
+   "min": 7
+  },
+  {
+   "sz": "n4",
+   "cx": 250,
+   "cy": 430,
+   "z0": 2.0,
+   "z1": 2.14,
+   "min": 3,
+   "rede": {
+    "w": "K",
+    "t": "Nachschlag.",
+    "hall": false
+   },
+   "mark": "drop"
+  },
+  {
+   "sz": "n4",
+   "cx": 650,
+   "cy": 420,
+   "z0": 2.0,
+   "z1": 2.12,
+   "min": 3,
+   "rede": {
+    "w": "A",
+    "t": "Wir essen dann morgen.",
+    "hall": false
+   }
+  }
+ ],
+ "ende": {
+  "gr1": "Wie ist es",
+  "gr2": "an eurer Schule?",
+  "kl": "Erzähl mal 👇"
+ }
+}

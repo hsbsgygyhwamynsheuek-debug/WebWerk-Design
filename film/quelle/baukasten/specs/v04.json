@@ -1,0 +1,151 @@
+{
+ "name": "v04-test-morgen",
+ "szenen": {
+  "n7": {
+   "bild": "/tmp/claude-0/-home-user-WebWerk-Design/21ce08ea-274b-522f-8718-d96f1cd65571/scratchpad/film/neu/roh2/n7.png",
+   "grade": "warm",
+   "fig": {
+    "K": {
+     "kopf": [
+      430,
+      300,
+      200
+     ],
+     "mund": [
+      436,
+      380,
+      35
+     ],
+     "auge": [
+      426,
+      300,
+      100,
+      30
+     ]
+    },
+    "P": {
+     "kopf": [
+      200,
+      800,
+      220
+     ],
+     "mund": [
+      206,
+      930,
+      45
+     ],
+     "auge": [
+      196,
+      800,
+      100,
+      40
+     ]
+    },
+    "A": {
+     "kopf": [
+      690,
+      800,
+      210
+     ],
+     "mund": [
+      716,
+      930,
+      45
+     ],
+     "auge": [
+      716,
+      810,
+      100,
+      40
+     ]
+    }
+   },
+   "zahlen": [
+    {
+     "t": "970",
+     "x": 436,
+     "y": 185,
+     "fs": 80,
+     "wer": "K"
+    },
+    {
+     "t": "67",
+     "x": 196,
+     "y": 670,
+     "fs": 70,
+     "wer": "P",
+     "wechsel": [
+      [
+       "drop",
+       "12"
+      ]
+     ]
+    },
+    {
+     "t": "88",
+     "x": 712,
+     "y": 690,
+     "fs": 66,
+     "wer": "A",
+     "wechsel": [
+      [
+       "drop",
+       "3"
+      ]
+     ]
+    }
+   ]
+  }
+ },
+ "titel": [
+  {
+   "t": "Wenn der Lehrer sagt: Test morgen.",
+   "von": 0.05,
+   "bis": "drop",
+   "pos": "unten"
+  },
+  {
+   "t": "Ihre Zahlen:",
+   "von": "drop",
+   "bis": "drop+1.6",
+   "pos": "unten"
+  }
+ ],
+ "shots": [
+  {
+   "sz": "n7",
+   "cx": 432,
+   "cy": 700,
+   "z0": 1.27,
+   "z1": 1.36,
+   "min": 8
+  },
+  {
+   "sz": "n7",
+   "cx": 432,
+   "cy": 720,
+   "z0": 1.36,
+   "z1": 1.46,
+   "min": 4,
+   "mark": "drop"
+  },
+  {
+   "sz": "n7",
+   "cx": 430,
+   "cy": 340,
+   "z0": 1.95,
+   "z1": 2.12,
+   "min": 3,
+   "rede": {
+    "w": "K",
+    "t": "Ich hab ihn geschrieben.",
+    "hall": false
+   }
+  }
+ ],
+ "ende": {
+  "gr1": "Wer ist die 970",
+  "gr2": "in deiner Klasse?",
+  "kl": "Markier sie 👇"
+ }
+}

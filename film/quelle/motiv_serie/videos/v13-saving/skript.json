@@ -1,0 +1,35 @@
+{
+ "hell": true,
+ "tonart": "heroisch",
+ "bpm": 100,
+ "stumm_bass": -6.0,
+ "drop_stil": true,
+ "laut_db": -15,
+ "marken": [
+  [
+   0,
+   "drums"
+  ],
+  [
+   9.6,
+   "peak"
+  ],
+  [
+   10.6,
+   "end"
+  ]
+ ],
+ "szenen": [
+  {
+   "typ": "baelle",
+   "h": "",
+   "pill": "",
+   "oben": "saving when you remember",
+   "unten": "saving 1 euro every day",
+   "extra": "plus interest",
+   "m": "drums",
+   "dauer": 12.5
+  }
+ ],
+ "titel": "v13-saving"
+}

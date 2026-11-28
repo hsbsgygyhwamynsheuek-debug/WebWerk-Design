@@ -1,0 +1,41 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Loop</title>
+<link rel="stylesheet" href="tt.css">
+<style>
+#s1{background:var(--ink)}
+#gitter{position:absolute;inset:-90px;display:grid;
+  grid-template-columns:repeat(6,180px);grid-auto-rows:180px}
+#gitter .z{display:flex;align-items:center;justify-content:center}
+#gitter .z i{display:block;width:124px;height:124px;border-radius:26px}
+</style></head><body>
+<div id="stage">
+  <div class="scene" id="s1"><div id="gitter"></div></div>
+</div>
+<script src="tt.js"></script>
+<script>
+/* Nahtlose Schleife: nach genau DAUER Sekunden ist jedes Feld wieder
+   im Ausgangszustand. Dadurch zählt TikTok das Weiterlaufen als
+   erneutes Ansehen – das ist der eigentliche Trick an dem Format. */
+const SP=6, ZE=12, DAUER=8.0;
+const g=document.getElementById('gitter');
+for(let r=0;r<ZE;r++) for(let c=0;c<SP;c++){
+  const d=document.createElement('div'); d.className='z';
+  d.innerHTML='<i></i>'; d.dataset.n=String(r+c); g.appendChild(d);
+}
+const FELD=[...g.children].map(d=>({el:d.firstChild, n:+d.dataset.n}));
+const MAXN=SP+ZE-2;
+function misch(a,b,k){ return a.map((v,i)=>Math.round(v+(b[i]-v)*k)); }
+const A=[194,65,12], B=[250,249,246], C=[26,26,27];
+starte([{id:'s1',a:0,b:DAUER}],(id,lt)=>{
+  FELD.forEach(f=>{
+    const ph=(lt/DAUER + f.n/(MAXN+1)) % 1;          /* 0..1, periodisch */
+    const w=2*Math.PI*ph;
+    const dreh=360*ph;
+    const puls=(1+Math.cos(w))/2;                     /* 1 -> 0 -> 1 */
+    const gr=0.42+0.58*puls;
+    const farbe = puls>0.5 ? misch(A,B,(puls-0.5)*2) : misch(C,A,puls*2);
+    f.el.style.transform=`rotate(${dreh}deg) scale(${gr.toFixed(3)})`;
+    f.el.style.borderRadius=(8+34*(1-puls)).toFixed(1)+'px';
+    f.el.style.background=`rgb(${farbe[0]},${farbe[1]},${farbe[2]})`;
+  });
+});
+</script></body></html>

@@ -1,0 +1,35 @@
+{
+ "titel": "b2-study",
+ "hell": true,
+ "tonart": "heroisch",
+ "bpm": 100,
+ "stumm_bass": -6.0,
+ "drop_stil": true,
+ "laut_db": -15,
+ "marken": [
+  [
+   0,
+   "drums"
+  ],
+  [
+   9.6,
+   "peak"
+  ],
+  [
+   10.6,
+   "end"
+  ]
+ ],
+ "szenen": [
+  {
+   "typ": "baelle",
+   "h": "",
+   "pill": "",
+   "oben": "studying the night before",
+   "unten": "studying 20 min a day",
+   "extra": "and actually remembering it",
+   "m": "drums",
+   "dauer": 12.5
+  }
+ ]
+}

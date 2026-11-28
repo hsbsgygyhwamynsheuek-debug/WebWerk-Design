@@ -1,0 +1,11 @@
+@import url("kino.css");
+/* Dialogfassung: Sprecher-Kennzeichnung und Untertitel */
+#rede{position:absolute;left:52px;right:52px;top:1300px;text-align:center}
+#rede .tag{display:inline-block;font-size:30px;font-weight:800;letter-spacing:.14em;
+  text-transform:uppercase;padding:9px 20px;border-radius:999px;margin-bottom:18px;
+  color:#1A1008}
+#rede .satz{font-size:62px;font-weight:800;line-height:1.14;color:#fff;letter-spacing:-.022em;
+  text-shadow:0 4px 0 rgba(0,0,0,.92),0 0 18px rgba(0,0,0,.9),0 0 48px rgba(0,0,0,.7)}
+#rede .satz span{display:inline-block;margin:0 .12em;opacity:0}
+/* Wer spricht, dessen Zahl brennt heller */
+.z.laut{text-shadow:0 0 6px #fff,0 0 20px #fff,0 0 46px #FFD08A,0 0 96px #FF9F43,0 0 160px #FF7A1A}

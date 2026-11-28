@@ -1,0 +1,28 @@
+/* Kino-Bausteine: aus einem Standbild mehrere Einstellungen schneiden. */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#000;overflow:hidden}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:#000;
+  font-family:"Inter Display","Inter",sans-serif;-webkit-font-smoothing:antialiased}
+#rahmen{position:absolute;left:0;top:0;width:1360px;height:1712px;transform-origin:0 0}
+#rahmen img{display:block;width:1360px;height:1712px}
+.z{position:absolute;transform:translate(-50%,-50%);font-weight:800;letter-spacing:-.02em;
+  color:#fff;font-variant-numeric:tabular-nums;
+  text-shadow:0 0 4px #fff,0 0 14px #fff,0 0 34px #FFD08A,0 0 70px #FF9F43,0 0 120px #FF7A1A}
+#staub{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+#staub i{position:absolute;display:block;border-radius:99px;background:#FFF3DC;filter:blur(.6px)}
+#vig{position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(118% 84% at 50% 44%,transparent 44%,rgba(0,0,0,.6) 100%)}
+/* Bildunterschriften im TikTok-Stil */
+.tx{position:absolute;left:58px;right:58px;text-align:center;font-weight:800;
+  color:#fff;letter-spacing:-.022em;line-height:1.16;
+  text-shadow:0 4px 0 rgba(0,0,0,.92),0 0 18px rgba(0,0,0,.9),0 0 48px rgba(0,0,0,.65)}
+.tx.oben{top:230px;font-size:66px}
+.tx.unten{top:1380px;font-size:60px}
+.tx span{display:inline-block;margin:0 .13em;opacity:0}
+/* Schlusskarte */
+#ende{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:40px;padding:0 70px 300px;text-align:center;opacity:0;
+  background:rgba(8,6,4,.82)}
+#ende .gr{font-size:124px;font-weight:800;letter-spacing:-.045em;color:#fff;line-height:1.02}
+#ende .kl{font-size:46px;font-weight:700;color:#FFC893}
+#ende .pfeil{font-size:72px}

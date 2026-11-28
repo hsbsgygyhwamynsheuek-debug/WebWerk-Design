@@ -1,0 +1,47 @@
+{
+ "titel": "w3-team",
+ "grau": true,
+ "tonart": "heroisch",
+ "bpm": 94,
+ "drop_stil": true,
+ "laut_db": -15,
+ "stumm_bass": 2.0,
+ "marken": [
+  [
+   0,
+   "drums"
+  ],
+  [
+   9.4,
+   "peak"
+  ],
+  [
+   17.0,
+   "end"
+  ]
+ ],
+ "szenen": [
+  {
+   "typ": "wege",
+   "h": "",
+   "pill": "",
+   "ende": "BUILD YOUR CIRCLE.",
+   "helden": [
+    {
+     "name": "me",
+     "deko": "band"
+    },
+    {
+     "name": "bro",
+     "deko": "muetze"
+    },
+    {
+     "name": "bro 2",
+     "deko": "kappe"
+    }
+   ],
+   "m": "drums",
+   "dauer": 20.0
+  }
+ ]
+}

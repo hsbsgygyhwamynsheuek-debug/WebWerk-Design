@@ -1,0 +1,501 @@
+{
+ "zeilen": [
+  {
+   "i": 0,
+   "w": "P",
+   "t": "Dreh dich nicht um.",
+   "datei": "zeilen/00.wav",
+   "dauer": 1.203,
+   "pause": 0.55,
+   "a": 1.2
+  },
+  {
+   "i": 1,
+   "w": "A",
+   "t": "Warum denn?",
+   "datei": "zeilen/01.wav",
+   "dauer": 0.824,
+   "pause": 0.4,
+   "a": 2.953
+  },
+  {
+   "i": 2,
+   "w": "P",
+   "t": "Wegen der Zahl hinter dir.",
+   "datei": "zeilen/02.wav",
+   "dauer": 1.579,
+   "pause": 0.7,
+   "a": 4.177
+  },
+  {
+   "i": 3,
+   "w": "A",
+   "t": "Welche Zahl?",
+   "datei": "zeilen/03.wav",
+   "dauer": 1.058,
+   "pause": 0.4,
+   "a": 6.456
+  },
+  {
+   "i": 4,
+   "w": "P",
+   "t": "Du hast sie doch gesehen.",
+   "datei": "zeilen/04.wav",
+   "dauer": 1.302,
+   "pause": 0.45,
+   "a": 7.914
+  },
+  {
+   "i": 5,
+   "w": "A",
+   "t": "Ich hab nur ganz kurz hingeguckt.",
+   "datei": "zeilen/05.wav",
+   "dauer": 1.976,
+   "pause": 0.45,
+   "a": 9.666
+  },
+  {
+   "i": 6,
+   "w": "P",
+   "t": "Das reicht schon.",
+   "datei": "zeilen/06.wav",
+   "dauer": 1.292,
+   "pause": 1.6,
+   "a": 12.092
+  },
+  {
+   "i": 7,
+   "w": "P",
+   "t": "Hier hat jeder eine Zahl auf der Stirn.",
+   "datei": "zeilen/07.wav",
+   "dauer": 2.255,
+   "pause": 0.55,
+   "a": 14.984
+  },
+  {
+   "i": 8,
+   "w": "P",
+   "t": "Ich hab siebenundsechzig.",
+   "datei": "zeilen/08.wav",
+   "dauer": 1.407,
+   "pause": 0.45,
+   "a": 17.789
+  },
+  {
+   "i": 9,
+   "w": "A",
+   "t": "Und ich achtundachtzig. Ist das gut?",
+   "datei": "zeilen/09.wav",
+   "dauer": 2.563,
+   "pause": 0.45,
+   "a": 19.646
+  },
+  {
+   "i": 10,
+   "w": "P",
+   "t": "Das ist gar nichts.",
+   "datei": "zeilen/10.wav",
+   "dauer": 1.127,
+   "pause": 0.5,
+   "a": 22.659
+  },
+  {
+   "i": 11,
+   "w": "A",
+   "t": "Was ist denn viel?",
+   "datei": "zeilen/11.wav",
+   "dauer": 0.998,
+   "pause": 0.4,
+   "a": 24.286
+  },
+  {
+   "i": 12,
+   "w": "P",
+   "t": "Dreistellig.",
+   "datei": "zeilen/12.wav",
+   "dauer": 0.935,
+   "pause": 0.6,
+   "a": 25.684
+  },
+  {
+   "i": 13,
+   "w": "A",
+   "t": "Hat hier jemand dreistellig?",
+   "datei": "zeilen/13.wav",
+   "dauer": 1.821,
+   "pause": 1.4,
+   "a": 27.219
+  },
+  {
+   "i": 14,
+   "w": "P",
+   "t": "Die hinten hat neunhundertsiebzig.",
+   "datei": "zeilen/14.wav",
+   "dauer": 2.069,
+   "pause": 0.8,
+   "a": 30.44
+  },
+  {
+   "i": 15,
+   "w": "A",
+   "t": "Das geht doch gar nicht.",
+   "datei": "zeilen/15.wav",
+   "dauer": 1.267,
+   "pause": 0.45,
+   "a": 33.309
+  },
+  {
+   "i": 16,
+   "w": "P",
+   "t": "Doch.",
+   "datei": "zeilen/16.wav",
+   "dauer": 0.671,
+   "pause": 0.7,
+   "a": 35.026
+  },
+  {
+   "i": 17,
+   "w": "A",
+   "t": "Seit wann ist die hier?",
+   "datei": "zeilen/17.wav",
+   "dauer": 1.437,
+   "pause": 0.45,
+   "a": 36.397
+  },
+  {
+   "i": 18,
+   "w": "P",
+   "t": "Das weiß keiner.",
+   "datei": "zeilen/18.wav",
+   "dauer": 1.207,
+   "pause": 0.55,
+   "a": 38.284
+  },
+  {
+   "i": 19,
+   "w": "P",
+   "t": "Sie war schon da, bevor es die Zahlen gab.",
+   "datei": "zeilen/19.wav",
+   "dauer": 2.434,
+   "pause": 0.9,
+   "a": 40.041
+  },
+  {
+   "i": 20,
+   "w": "A",
+   "t": "Woher kommen die Zahlen überhaupt?",
+   "datei": "zeilen/20.wav",
+   "dauer": 2.155,
+   "pause": 0.5,
+   "a": 43.375
+  },
+  {
+   "i": 21,
+   "w": "P",
+   "t": "Die kommen über Nacht.",
+   "datei": "zeilen/21.wav",
+   "dauer": 1.218,
+   "pause": 0.6,
+   "a": 46.03
+  },
+  {
+   "i": 22,
+   "w": "A",
+   "t": "Und wenn man sie abwischt?",
+   "datei": "zeilen/22.wav",
+   "dauer": 1.3,
+   "pause": 0.5,
+   "a": 47.848
+  },
+  {
+   "i": 23,
+   "w": "P",
+   "t": "Das hat auch mal einer probiert.",
+   "datei": "zeilen/23.wav",
+   "dauer": 1.743,
+   "pause": 0.7,
+   "a": 49.648
+  },
+  {
+   "i": 24,
+   "w": "A",
+   "t": "Und dann?",
+   "datei": "zeilen/24.wav",
+   "dauer": 0.919,
+   "pause": 0.45,
+   "a": 52.091
+  },
+  {
+   "i": 25,
+   "w": "P",
+   "t": "Seine Zahl war am nächsten Tag kleiner.",
+   "datei": "zeilen/25.wav",
+   "dauer": 2.207,
+   "pause": 0.8,
+   "a": 53.46
+  },
+  {
+   "i": 26,
+   "w": "A",
+   "t": "Ist das schlimm?",
+   "datei": "zeilen/26.wav",
+   "dauer": 0.927,
+   "pause": 0.9,
+   "a": 56.467
+  },
+  {
+   "i": 27,
+   "w": "P",
+   "t": "Bei null geht das Licht aus.",
+   "datei": "zeilen/27.wav",
+   "dauer": 1.619,
+   "pause": 1.6,
+   "a": 58.294
+  },
+  {
+   "i": 28,
+   "w": "A",
+   "t": "Und wenn man sie einfach fragt?",
+   "datei": "zeilen/28.wav",
+   "dauer": 1.83,
+   "pause": 0.5,
+   "a": 61.513
+  },
+  {
+   "i": 29,
+   "w": "P",
+   "t": "Das hat mal einer gemacht.",
+   "datei": "zeilen/29.wav",
+   "dauer": 1.334,
+   "pause": 0.6,
+   "a": 63.843
+  },
+  {
+   "i": 30,
+   "w": "A",
+   "t": "Und?",
+   "datei": "zeilen/30.wav",
+   "dauer": 0.545,
+   "pause": 0.5,
+   "a": 65.777
+  },
+  {
+   "i": 31,
+   "w": "P",
+   "t": "Der saß genau da, wo du sitzt.",
+   "datei": "zeilen/31.wav",
+   "dauer": 1.759,
+   "pause": 1.7,
+   "a": 66.822
+  },
+  {
+   "i": 32,
+   "w": "A",
+   "t": "Das ist nicht lustig.",
+   "datei": "zeilen/32.wav",
+   "dauer": 1.152,
+   "pause": 0.45,
+   "a": 70.281
+  },
+  {
+   "i": 33,
+   "w": "P",
+   "t": "Ich lache auch nicht.",
+   "datei": "zeilen/33.wav",
+   "dauer": 1.241,
+   "pause": 1.3,
+   "a": 71.883
+  },
+  {
+   "i": 34,
+   "w": "A",
+   "t": "Pfirsich.",
+   "datei": "zeilen/34.wav",
+   "dauer": 0.721,
+   "pause": 0.45,
+   "a": 74.424
+  },
+  {
+   "i": 35,
+   "w": "P",
+   "t": "Was.",
+   "datei": "zeilen/35.wav",
+   "dauer": 0.691,
+   "pause": 0.4,
+   "a": 75.595
+  },
+  {
+   "i": 36,
+   "w": "A",
+   "t": "Sie bewegt sich.",
+   "datei": "zeilen/36.wav",
+   "dauer": 0.995,
+   "pause": 0.5,
+   "a": 76.686
+  },
+  {
+   "i": 37,
+   "w": "P",
+   "t": "Nicht umdrehen.",
+   "datei": "zeilen/37.wav",
+   "dauer": 1.235,
+   "pause": 0.45,
+   "a": 78.181
+  },
+  {
+   "i": 38,
+   "w": "A",
+   "t": "Sie steht auf.",
+   "datei": "zeilen/38.wav",
+   "dauer": 0.962,
+   "pause": 0.45,
+   "a": 79.866
+  },
+  {
+   "i": 39,
+   "w": "P",
+   "t": "Nicht. Umdrehen.",
+   "datei": "zeilen/39.wav",
+   "dauer": 1.644,
+   "pause": 1.8,
+   "a": 81.278
+  },
+  {
+   "i": 40,
+   "w": "K",
+   "t": "Sieben. Und. Sechzig.",
+   "datei": "zeilen/40.wav",
+   "dauer": 3.064,
+   "pause": 1.1,
+   "a": 84.722
+  },
+  {
+   "i": 41,
+   "w": "P",
+   "t": "Sie weiß meine Zahl.",
+   "datei": "zeilen/41.wav",
+   "dauer": 1.462,
+   "pause": 0.55,
+   "a": 88.886
+  },
+  {
+   "i": 42,
+   "w": "K",
+   "t": "Du hast meine gesagt.",
+   "datei": "zeilen/42.wav",
+   "dauer": 1.621,
+   "pause": 0.9,
+   "a": 90.898
+  },
+  {
+   "i": 43,
+   "w": "P",
+   "t": "Tut mir leid.",
+   "datei": "zeilen/43.wav",
+   "dauer": 0.952,
+   "pause": 0.7,
+   "a": 93.419
+  },
+  {
+   "i": 44,
+   "w": "K",
+   "t": "Dreh dich um.",
+   "datei": "zeilen/44.wav",
+   "dauer": 1.354,
+   "pause": 0.7,
+   "a": 95.071
+  },
+  {
+   "i": 45,
+   "w": "P",
+   "t": "Nein.",
+   "datei": "zeilen/45.wav",
+   "dauer": 0.778,
+   "pause": 0.6,
+   "a": 97.125
+  },
+  {
+   "i": 46,
+   "w": "P",
+   "t": "Paprika. Guck du nach.",
+   "datei": "zeilen/46.wav",
+   "dauer": 1.973,
+   "pause": 0.5,
+   "a": 98.503
+  },
+  {
+   "i": 47,
+   "w": "A",
+   "t": "Ich?",
+   "datei": "zeilen/47.wav",
+   "dauer": 0.468,
+   "pause": 0.45,
+   "a": 100.976
+  },
+  {
+   "i": 48,
+   "w": "P",
+   "t": "Bitte.",
+   "datei": "zeilen/48.wav",
+   "dauer": 0.684,
+   "pause": 1.7,
+   "a": 101.894
+  },
+  {
+   "i": 49,
+   "w": "K",
+   "t": "Dreh dich um.",
+   "datei": "zeilen/49.wav",
+   "dauer": 1.35,
+   "pause": 1.7,
+   "a": 104.278
+  },
+  {
+   "i": 50,
+   "w": "A",
+   "t": "Pfirsich. Deine Zahl.",
+   "datei": "zeilen/50.wav",
+   "dauer": 1.811,
+   "pause": 0.6,
+   "a": 107.328
+  },
+  {
+   "i": 51,
+   "w": "P",
+   "t": "Was ist damit?",
+   "datei": "zeilen/51.wav",
+   "dauer": 0.983,
+   "pause": 0.7,
+   "a": 109.739
+  },
+  {
+   "i": 52,
+   "w": "A",
+   "t": "Gestern war die noch achtundsechzig.",
+   "datei": "zeilen/52.wav",
+   "dauer": 2.239,
+   "pause": 1.1,
+   "a": 111.422
+  },
+  {
+   "i": 53,
+   "w": "P",
+   "t": "Das heißt...",
+   "datei": "zeilen/53.wav",
+   "dauer": 0.861,
+   "pause": 0.8,
+   "a": 114.761
+  },
+  {
+   "i": 54,
+   "w": "A",
+   "t": "Ja.",
+   "datei": "zeilen/54.wav",
+   "dauer": 0.455,
+   "pause": 1.6,
+   "a": 116.422
+  }
+ ],
+ "dauer": 123.08,
+ "ende": 118.78
+}

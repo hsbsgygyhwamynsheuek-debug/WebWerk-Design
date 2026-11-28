@@ -1,0 +1,124 @@
+{
+ "name": "v08-laecheln",
+ "szenen": {
+  "s4": {
+   "bild": "/tmp/claude-0/-home-user-WebWerk-Design/21ce08ea-274b-522f-8718-d96f1cd65571/scratchpad/film/neu/roh/szene4.png",
+   "grade": "neutral",
+   "fig": {
+    "K": {
+     "kopf": [
+      392,
+      500,
+      420
+     ],
+     "mund": [
+      402,
+      720,
+      80
+     ],
+     "auge": [
+      427,
+      590,
+      190,
+      60
+     ]
+    }
+   },
+   "zahlen": [
+    {
+     "t": "970",
+     "x": 410,
+     "y": 320,
+     "fs": 150,
+     "wer": "K"
+    }
+   ]
+  },
+  "n1": {
+   "bild": "/tmp/claude-0/-home-user-WebWerk-Design/21ce08ea-274b-522f-8718-d96f1cd65571/scratchpad/film/neu/roh2/n1.png",
+   "grade": "warm",
+   "fig": {
+    "K": {
+     "kopf": [
+      433,
+      580,
+      400
+     ],
+     "mund": [
+      430,
+      832,
+      90
+     ],
+     "auge": [
+      420,
+      702,
+      190,
+      55
+     ]
+    }
+   },
+   "zahlen": [
+    {
+     "t": "970",
+     "x": 430,
+     "y": 360,
+     "fs": 150,
+     "wer": "K",
+     "cls": "flare"
+    }
+   ]
+  }
+ },
+ "titel": [
+  {
+   "t": "Die 970 hat noch nie gelächelt.",
+   "von": 0.05,
+   "bis": "bis",
+   "pos": "unten"
+  },
+  {
+   "t": "Bis heute.",
+   "von": "bis",
+   "bis": "drop",
+   "pos": "unten"
+  }
+ ],
+ "shots": [
+  {
+   "sz": "s4",
+   "cx": 410,
+   "cy": 560,
+   "z0": 1.42,
+   "z1": 1.3,
+   "min": 5
+  },
+  {
+   "sz": "s4",
+   "cx": 410,
+   "cy": 600,
+   "z0": 1.32,
+   "z1": 1.46,
+   "min": 3,
+   "mark": "bis"
+  },
+  {
+   "sz": "n1",
+   "cx": 432,
+   "cy": 640,
+   "z0": 1.27,
+   "z1": 1.44,
+   "min": 4,
+   "rede": {
+    "w": "K",
+    "t": "Hallo, Pfirsich.",
+    "hall": false
+   },
+   "mark": "drop"
+  }
+ ],
+ "ende": {
+  "gr1": "Lauf,",
+  "gr2": "Pfirsich.",
+  "kl": "Was passiert jetzt? 👇"
+ }
+}

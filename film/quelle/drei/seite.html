@@ -1,0 +1,12 @@
+<!doctype html><html><head><meta charset="utf-8"><title>3D</title>
+<style>html,body{margin:0;background:#000;overflow:hidden}canvas{display:block}</style></head><body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script src="three.min.js"></script><script src="szene3d.js"></script>
+<script>
+const P=JSON.parse(document.currentScript.dataset.p||'{}');
+window.FILM_DAUER=18.25;
+const r=new THREE.WebGLRenderer({canvas:document.getElementById('c'),antialias:true,preserveDrawingBuffer:true});
+r.setPixelRatio(1); r.setSize(1080,1920,false);
+const s=baueSzene(THREE,r,1080,1920,{dauer:18});
+window.render=t=>s.render(t); s.render(0); window.bereit=true;
+</script></body></html>

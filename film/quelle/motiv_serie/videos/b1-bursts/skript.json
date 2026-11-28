@@ -1,0 +1,35 @@
+{
+ "titel": "b1-bursts",
+ "hell": true,
+ "tonart": "hell",
+ "bpm": 100,
+ "stumm_bass": -6.0,
+ "drop_stil": true,
+ "laut_db": -15,
+ "marken": [
+  [
+   0,
+   "drums"
+  ],
+  [
+   9.6,
+   "peak"
+  ],
+  [
+   10.6,
+   "end"
+  ]
+ ],
+ "szenen": [
+  {
+   "typ": "baelle",
+   "h": "",
+   "pill": "",
+   "oben": "big bursts of motivation",
+   "unten": "small steps every day",
+   "extra": "that compound",
+   "m": "drums",
+   "dauer": 12.5
+  }
+ ]
+}

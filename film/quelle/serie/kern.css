@@ -1,0 +1,65 @@
+/* =====================================================================
+   WebWerk – gemeinsamer Kern für alle Filme
+   Markenfarben und Schrift wie auf docs/index.html. Alles lokal.
+   ===================================================================== */
+:root{
+  --paper:#FAF9F6; --ink:#1A1A1B; --grau:#5C5A57; --linie:#E2DFD9;
+  --akzent:#C2410C; --glut:#FF8A5B; --sand:#F3F1EC; --nacht:#121213;
+  --k:1;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#000;overflow:hidden}
+#stage{position:relative;width:1920px;height:1080px;overflow:hidden;background:var(--paper);
+  font-family:"Inter","Inter Display",sans-serif;color:var(--ink);
+  -webkit-font-smoothing:antialiased;text-rendering:geometricPrecision;
+  font-feature-settings:"ss01","cv11","calt"}
+#stage.port{width:1080px;height:1920px;--k:.80}
+
+.scene{position:absolute;inset:0;display:none}
+.scene.dark{background:var(--nacht);color:var(--paper)}
+.scene.sand{background:var(--sand)}
+.pad{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;
+  padding:0 calc(150px * var(--k))}
+#stage.port .pad{padding:0 calc(88px * var(--k));padding-bottom:calc(200px * var(--k))}
+.mitte{align-items:center;text-align:center}
+
+h1,h2,h3,.gross{font-family:"Inter Display","Inter",sans-serif;font-weight:700;
+  letter-spacing:-.038em;line-height:1.03}
+.h-xl{font-size:calc(126px * var(--k))}
+.h-l{font-size:calc(96px * var(--k))}
+.h-m{font-size:calc(68px * var(--k))}
+.h-s{font-size:calc(46px * var(--k));font-weight:650;letter-spacing:-.028em}
+.lead{font-size:calc(34px * var(--k));line-height:1.45;color:var(--grau);
+  max-width:calc(1060px * var(--k));font-weight:400;letter-spacing:-.011em}
+.dark .lead{color:#C9C4BB}
+.lab{font-size:calc(20px * var(--k));letter-spacing:.22em;text-transform:uppercase;
+  font-weight:700;color:var(--akzent)}
+.dark .lab{color:var(--glut)}
+.num{font-variant-numeric:tabular-nums}
+
+.ln{overflow:hidden;display:block;padding-bottom:.09em}
+.ln > i{display:block;font-style:normal;will-change:transform}
+
+.vig{position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(130% 95% at 50% 42%,transparent 38%,rgba(0,0,0,.55) 100%)}
+.korn{position:absolute;inset:0;pointer-events:none;opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ---------- Abspann: in jedem Film gleich ---------- */
+#abspann .mitte{gap:calc(10px * var(--k))}
+#abspann .wz{display:flex;align-items:center;gap:calc(24px * var(--k));
+  margin-bottom:calc(46px * var(--k))}
+#abspann .w{width:calc(82px * var(--k));height:calc(82px * var(--k));
+  border-radius:calc(19px * var(--k));background:var(--akzent);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-family:"Inter Display","Inter",sans-serif;font-weight:800;font-size:calc(48px * var(--k))}
+#abspann .n{font-size:calc(40px * var(--k));font-weight:650;letter-spacing:-.022em}
+#abspann .tel{font-family:"Inter Display","Inter",sans-serif;font-weight:700;
+  font-size:calc(124px * var(--k));letter-spacing:-.045em;font-variant-numeric:tabular-nums}
+#stage.port #abspann .tel{font-size:calc(104px * var(--k))}
+#abspann .zeit{font-size:calc(30px * var(--k));color:#C9C4BB;margin-top:calc(16px * var(--k))}
+#abspann .ki{position:absolute;left:0;right:0;bottom:calc(74px * var(--k));text-align:center;
+  font-size:calc(20px * var(--k));color:#807B74;letter-spacing:.02em}
+
+.caret{display:inline-block;width:calc(3px * var(--k));height:calc(46px * var(--k));
+  background:var(--glut);vertical-align:-9px;margin-left:calc(5px * var(--k))}

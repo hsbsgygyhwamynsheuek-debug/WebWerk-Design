@@ -1,0 +1,39 @@
+{
+ "tonart": "dunkel",
+ "bpm": 75,
+ "stumm_bass": -3.0,
+ "drop_stil": true,
+ "laut_db": -15,
+ "marken": [
+  [
+   0,
+   "drums"
+  ],
+  [
+   8.1,
+   "peak"
+  ],
+  [
+   10.5,
+   "drop"
+  ],
+  [
+   12.2,
+   "end"
+  ]
+ ],
+ "szenen": [
+  {
+   "typ": "duell",
+   "h": "",
+   "pill": "",
+   "links": "CHASES MOTIVATION",
+   "rechts": "BUILDS HABITS",
+   "blase1": "NOT FEELING IT",
+   "blase2": "NOT FEELING IT",
+   "m": "drums",
+   "dauer": 14.0
+  }
+ ],
+ "titel": "v02-habits"
+}

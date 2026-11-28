@@ -1,0 +1,65 @@
+{
+ "titel": "Scroller vs Builder",
+ "tonart": "dunkel",
+ "bpm": 110,
+ "szenen": [
+  {
+   "typ": "duell",
+   "h": "",
+   "pill": "",
+   "links": "SCROLLER",
+   "rechts": "BUILDER",
+   "blase1": "5 MORE MIN",
+   "blase2": "5 MORE MIN",
+   "m": "ruhig",
+   "vo": "[intense] Same age, same phone, same twenty-four hours, but watch what they do with them, bro."
+  },
+  {
+   "typ": "duell",
+   "h": "",
+   "pill": "",
+   "links": "SCROLLER",
+   "rechts": "BUILDER",
+   "blase1": "5 MORE MIN",
+   "blase2": "5 MORE MIN",
+   "m": "drums",
+   "vo": "[intense] This guy keeps saying just five more minutes, and those five minutes turn into a whole year."
+  },
+  {
+   "typ": "duell",
+   "h": "",
+   "pill": "",
+   "links": "SCROLLER",
+   "rechts": "BUILDER",
+   "blase1": "5 MORE MIN",
+   "blase2": "5 MORE MIN",
+   "m": "build",
+   "vo": "[intense] This guy puts the phone away and builds something small every single day."
+  },
+  {
+   "typ": "duell",
+   "h": "",
+   "pill": "",
+   "links": "SCROLLER",
+   "rechts": "BUILDER",
+   "blase1": "5 MORE MIN",
+   "blase2": "5 MORE MIN",
+   "m": "peak",
+   "silvester": true,
+   "vo": "[shouting] One year later! One of them built a life, and the other one watched other people live theirs!"
+  },
+  {
+   "typ": "duell",
+   "h": "",
+   "pill": "",
+   "links": "SCROLLER",
+   "rechts": "BUILDER",
+   "blase1": "5 MORE MIN",
+   "blase2": "5 MORE MIN",
+   "m": "end",
+   "neustart": true,
+   "pause": 3.0,
+   "vo": "[intense] And he still says, just five more minutes. [shouting] Put the phone down and go!"
+  }
+ ]
+}

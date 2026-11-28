@@ -1,0 +1,10 @@
+@import url("kino.css");
+#rahmen canvas{display:block;width:1360px;height:1712px}
+/* Hook-Text im TikTok-Stil: sofort da, gross, hoher Kontrast */
+.tx{position:absolute;left:54px;right:54px;text-align:center;font-weight:800;
+  color:#fff;letter-spacing:-.024em;line-height:1.14;
+  font-family:"Inter Display","Inter",sans-serif;
+  text-shadow:0 5px 0 rgba(0,0,0,.92),0 0 20px rgba(0,0,0,.92),0 0 56px rgba(0,0,0,.7)}
+.tx.oben{top:210px;font-size:76px}
+.tx.unten{top:1290px;font-size:68px}
+.tx span{display:inline-block;margin:0 .12em;opacity:0}

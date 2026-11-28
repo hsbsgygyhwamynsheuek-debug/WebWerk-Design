@@ -1,0 +1,35 @@
+{
+ "hell": true,
+ "tonart": "hell",
+ "bpm": 102,
+ "stumm_bass": -6.0,
+ "drop_stil": true,
+ "laut_db": -15,
+ "marken": [
+  [
+   0,
+   "drums"
+  ],
+  [
+   9.6,
+   "peak"
+  ],
+  [
+   10.6,
+   "end"
+  ]
+ ],
+ "szenen": [
+  {
+   "typ": "baelle",
+   "h": "",
+   "pill": "",
+   "oben": "50 words in one night",
+   "unten": "5 words every day",
+   "extra": "and you still know them",
+   "m": "drums",
+   "dauer": 12.5
+  }
+ ],
+ "titel": "v14-words"
+}
