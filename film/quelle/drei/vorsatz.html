@@ -1,0 +1,112 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Vorsatz</title>
+<style>html,body{margin:0;background:#000;overflow:hidden}#w{position:relative;width:1080px;height:1920px}canvas{display:block}
+.l{position:absolute;top:250px;width:540px;text-align:center;font:900 52px "Inter Display",Inter,Arial;letter-spacing:.04em;color:#fff;text-shadow:0 4px 18px rgba(0,0,0,.7)}
+#l1{left:0;color:#ff6b6b}#l2{left:540px;color:#7dffb0}</style></head><body>
+<div id="w"><canvas id="c" width="1080" height="1920"></canvas><div class="l" id="l1">FÄNGT<br>MONTAG AN</div><div class="l" id="l2">FÄNGT<br>HEUTE AN</div></div>
+<script src="three.min.js"></script><script>
+/* 3D-Duell "Fängt Montag an" vs "Fängt heute an": ein Jahr im Zeitraffer, Silvester-Pointe, Schleife zurueck zum 1. Januar.
+   render(t) ist rein zeitabhaengig -> Bild fuer Bild renderbar. */
+const D=15; window.FILM_DAUER=D;
+const r=new THREE.WebGLRenderer({canvas:document.getElementById('c'),antialias:true,preserveDrawingBuffer:true});
+r.setPixelRatio(1); r.setSize(1080,1920,false); r.outputEncoding=THREE.sRGBEncoding; r.toneMapping=THREE.ACESFilmicToneMapping; r.toneMappingExposure=1.0;
+r.shadowMap.enabled=true; r.shadowMap.type=THREE.PCFSoftShadowMap;
+const sz=new THREE.Scene(); sz.background=new THREE.Color(0x0e0d10);
+const cam=new THREE.PerspectiveCamera(36,1080/1920,0.1,60);
+/* Raum */
+const wandMat=new THREE.MeshStandardMaterial({color:0x2a2622,roughness:.95}), bodenMat=new THREE.MeshStandardMaterial({color:0x1b1714,roughness:.8});
+const wand=new THREE.Mesh(new THREE.PlaneGeometry(14,10),wandMat); wand.position.set(0,4,-1.6); wand.receiveShadow=true; sz.add(wand);
+const boden=new THREE.Mesh(new THREE.PlaneGeometry(14,10),bodenMat); boden.rotation.x=-Math.PI/2; boden.receiveShadow=true; sz.add(boden);
+const trenn=new THREE.Mesh(new THREE.BoxGeometry(.04,10,.04),new THREE.MeshBasicMaterial({color:0x000000})); trenn.position.set(0,4,-1.55); sz.add(trenn);
+sz.add(new THREE.HemisphereLight(0xffe6c8,0x120e0c,0.35));
+const lampe=new THREE.SpotLight(0xffd9a8,2.2,16,0.75,0.6,1.3); lampe.position.set(0,6.5,3.5); lampe.target.position.set(0,1,0); lampe.castShadow=true; lampe.shadow.mapSize.set(2048,2048); sz.add(lampe); sz.add(lampe.target);
+/* Fenster (rechts oben): Himmel wechselt Tag/Nacht im Zeitraffer */
+const himmel=new THREE.Mesh(new THREE.PlaneGeometry(1.5,1.2),new THREE.MeshBasicMaterial({color:0x223355})); himmel.position.set(1.35,3.55,-1.58); sz.add(himmel);
+const rahmenMat=new THREE.MeshStandardMaterial({color:0x111111,roughness:.6});
+[[1.35,3.55,1.62,.07],[1.35,3.55,.07,1.32],[1.35,4.17,1.62,.07],[1.35,2.93,1.62,.07],[.55,3.55,.07,1.32],[2.15,3.55,.07,1.32]].forEach(([x,y,w,h])=>{const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,.05),rahmenMat); m.position.set(x,y,-1.56); sz.add(m);});
+const fensterLicht=new THREE.PointLight(0xbfd8ff,0,6,2); fensterLicht.position.set(1.35,3,-0.8); sz.add(fensterLicht);
+/* Kalender (links oben) als Canvas-Textur */
+const kc=document.createElement('canvas'); kc.width=256; kc.height=300; const kg=kc.getContext('2d'); const kt=new THREE.CanvasTexture(kc); kt.encoding=THREE.sRGBEncoding;
+const kal=new THREE.Mesh(new THREE.PlaneGeometry(1.0,1.17),new THREE.MeshStandardMaterial({map:kt,roughness:.7})); kal.position.set(-1.35,3.55,-1.57); sz.add(kal);
+const MON=['JAN','FEB','MÄR','APR','MAI','JUN','JUL','AUG','SEP','OKT','NOV','DEZ'], ML=[31,28,31,30,31,30,31,31,30,31,30,31];
+let kalAlt='';
+function kalender(tag,rot){ let m=0,rest=tag; while(rest>ML[m]){rest-=ML[m];m++;} const key=m+'-'+rest+'-'+rot; if(key===kalAlt) return; kalAlt=key;
+  kg.fillStyle='#f3efe6'; kg.fillRect(0,0,256,300); kg.fillStyle=rot?'#e5484d':'#2b2b2b'; kg.fillRect(0,0,256,78);
+  kg.fillStyle='#fff'; kg.font='900 54px Inter, Arial'; kg.textAlign='center'; kg.textBaseline='middle'; kg.fillText(MON[m],128,42);
+  kg.fillStyle=rot?'#e5484d':'#1d1d1d'; kg.font='900 150px Inter, Arial'; kg.fillText(String(rest),128,192); kt.needsUpdate=true; }
+/* Moebel */
+const holz=new THREE.MeshStandardMaterial({color:0x6b4a32,roughness:.7}), dunkel=new THREE.MeshStandardMaterial({color:0x222222,roughness:.6});
+function tisch(x){ const g=new THREE.Group(); g.position.x=x;
+  const p=new THREE.Mesh(new THREE.BoxGeometry(1.9,.08,.95),holz); p.position.y=1.05; p.castShadow=p.receiveShadow=true; g.add(p);
+  [[-.85,-.4],[.85,-.4],[-.85,.4],[.85,.4]].forEach(([a,b])=>{const b2=new THREE.Mesh(new THREE.BoxGeometry(.07,1.05,.07),holz); b2.position.set(a,.52,b); b2.castShadow=true; g.add(b2);});
+  sz.add(g); return g; }
+tisch(-1.3); tisch(1.3);
+/* Figuren (sitzend, schauen zur Kamera) */
+function figur(x,farbe){ const mat=new THREE.MeshStandardMaterial({color:farbe,roughness:.5}); const w=new THREE.Group(); w.position.set(x,0,-.62);
+  const kap=(rad,l)=>{const m=new THREE.Mesh(new THREE.CapsuleGeometry(rad,l,6,12),mat); m.castShadow=true; return m;};
+  const rumpf=kap(.2,.42); rumpf.position.y=1.42; w.add(rumpf);
+  const kopfG=new THREE.Group(); kopfG.position.y=1.9; w.add(kopfG); const kopf=new THREE.Mesh(new THREE.SphereGeometry(.21,24,18),mat); kopf.castShadow=true; kopfG.add(kopf);
+  const auge=new THREE.MeshBasicMaterial({color:0x111111}); [-.07,.07].forEach(e=>{const a=new THREE.Mesh(new THREE.SphereGeometry(.025,8,8),auge); a.position.set(e,.02,.19); kopfG.add(a);});
+  const arm=s=>{const a=new THREE.Group(); a.position.set(s*.27,1.62,0); const o=kap(.07,.3); o.position.y=-.2; a.add(o); const u=new THREE.Group(); u.position.y=-.38; a.add(u); const uu=kap(.065,.28); uu.position.y=-.18; u.add(uu); w.add(a); return [a,u];};
+  const A=[arm(-1),arm(1)]; const stuhl=new THREE.Mesh(new THREE.BoxGeometry(.7,.08,.6),dunkel); stuhl.position.set(0,.72,-.05); w.add(stuhl);
+  const lehne=new THREE.Mesh(new THREE.BoxGeometry(.7,.8,.06),dunkel); lehne.position.set(0,1.15,-.36); w.add(lehne);
+  sz.add(w); return {w,kopfG,A,mat}; }
+const links=figur(-1.3,0xf1ece6), rechts=figur(1.3,0xf1ece6);
+/* Handy links (leuchtet blaeulich), Laptop rechts (leuchtet) */
+const handy=new THREE.Mesh(new THREE.BoxGeometry(.13,.24,.02),new THREE.MeshStandardMaterial({color:0x111111,emissive:0x5aa8ff,emissiveIntensity:1.3})); sz.add(handy);
+const handyLicht=new THREE.PointLight(0x6aa8ff,1.4,1.6,2); sz.add(handyLicht);
+const lap=new THREE.Group(); lap.position.set(1.3,1.1,-.12); sz.add(lap);
+const basis=new THREE.Mesh(new THREE.BoxGeometry(.7,.03,.45),dunkel); lap.add(basis);
+const schirm=new THREE.Mesh(new THREE.BoxGeometry(.6,.36,.02),new THREE.MeshStandardMaterial({color:0x111111,emissive:0xcfe6ff,emissiveIntensity:.9})); schirm.position.set(0,.19,-.18); schirm.rotation.x=-0.25; lap.add(schirm);
+const lapLicht=new THREE.PointLight(0xcfe6ff,1.0,2.2,2); lapLicht.position.set(1.3,1.5,-.6); sz.add(lapLicht);
+/* Buecherstapel rechts waechst */
+const buchFarben=[0x3b82f6,0xef4444,0x10b981,0xf59e0b,0x8b5cf6,0xec4899,0x14b8a6,0xf97316,0x6366f1,0x84cc16,0x06b6d4,0xeab308];
+const buecher=buchFarben.map((c,i)=>{const b=new THREE.Mesh(new THREE.BoxGeometry(.5,.07,.34),new THREE.MeshStandardMaterial({color:c,roughness:.6})); b.position.set(1.95,1.13+i*.075,.12); b.rotation.y=(i%3-1)*.12; b.castShadow=true; sz.add(b); return b;});
+const einBuch=new THREE.Mesh(new THREE.BoxGeometry(.5,.07,.34),new THREE.MeshStandardMaterial({color:0x888888})); einBuch.position.set(-1.95,1.13,.12); sz.add(einBuch);
+/* Wolke + Regen links, Pokal-Stern rechts */
+const wolke=new THREE.Group(); [[-.25,0,.28],[.1,.1,.34],[.42,0,.26]].forEach(([x,y,s])=>{const k=new THREE.Mesh(new THREE.SphereGeometry(s,16,12),new THREE.MeshStandardMaterial({color:0x55595f,roughness:1})); k.position.set(x,y,0); wolke.add(k);}); wolke.position.set(-1.3,2.55,-.3); sz.add(wolke);
+const tropfen=[]; for(let i=0;i<26;i++){const d=new THREE.Mesh(new THREE.CylinderGeometry(.008,.008,.12,4),new THREE.MeshBasicMaterial({color:0x9fc3ff,transparent:true,opacity:.8})); sz.add(d); tropfen.push(d);}
+const sternForm=new THREE.Shape(); for(let i=0;i<10;i++){const a=i/10*Math.PI*2-Math.PI/2, rr=i%2?.12:.3; i?sternForm.lineTo(Math.cos(a)*rr,-Math.sin(a)*rr):sternForm.moveTo(Math.cos(a)*rr,-Math.sin(a)*rr);}
+const stern=new THREE.Mesh(new THREE.ExtrudeGeometry(sternForm,{depth:.06,bevelEnabled:true,bevelSize:.02,bevelThickness:.02}),new THREE.MeshStandardMaterial({color:0xffd23f,emissive:0xffb000,emissiveIntensity:.8,metalness:.6,roughness:.3})); sz.add(stern);
+const sternLicht=new THREE.PointLight(0xffd27a,0,3,2); sz.add(sternLicht);
+/* Denkblase links als Sprite mit zwei Texten */
+function blase(text){ const c=document.createElement('canvas'); c.width=512; c.height=220; const g=c.getContext('2d');
+  g.fillStyle='#fff'; g.beginPath(); g.ellipse(256,95,240,85,0,0,Math.PI*2); g.fill(); g.beginPath(); g.arc(120,190,16,0,7); g.fill(); g.beginPath(); g.arc(80,212,9,0,7); g.fill();
+  g.fillStyle='#111'; g.font='900 62px Inter, Arial'; g.textAlign='center'; g.textBaseline='middle'; g.fillText(text,256,98);
+  const t=new THREE.CanvasTexture(c); t.encoding=THREE.sRGBEncoding; const s=new THREE.Sprite(new THREE.SpriteMaterial({map:t,transparent:true,depthTest:false})); s.scale.set(1.25,.54,1); s.position.set(-.75,2.55,-.1); sz.add(s); return s; }
+const blMontag=blase('MONTAG!'), blJahr=blase('DIESES JAHR!');
+const kl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)), pr=(t,a,b)=>kl((t-a)/(b-a)), eOut=x=>1-Math.pow(1-x,3), eIO=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const eSpr=x=>{if(x>=1)return 1;const w=11,z=.55;return 1-Math.exp(-z*w*x)*Math.cos(w*Math.sqrt(1-z*z)*x);};
+const T_SIL=9.0, T_NEU=12.0;
+window.render=function(t){
+  const jahr=pr(t,0.25,T_SIL-0.15), tag = t<T_SIL ? Math.max(1,Math.round(1+364*eIO(jahr))) : (t<T_NEU?365:1);
+  const silvester = t>=T_SIL && t<T_NEU; kalender(tag,silvester);
+  /* Tag/Nacht im Fenster: schneller Wechsel waehrend das Jahr laeuft */
+  const zyklus = t<T_SIL ? Math.sin(tag*0.9) : (silvester?-1:-0.3), hell=(zyklus+1)/2;
+  himmel.material.color.setRGB(0.08+0.45*hell,0.12+0.55*hell,0.25+0.6*hell); fensterLicht.intensity=0.8*hell;
+  /* links: Handy, Kopf gesenkt; Blase "MONTAG!" taucht immer wieder auf; Wolke waechst; Silvester: Panik */
+  const kL=links, panik=silvester?1:0;
+  kL.kopfG.rotation.x = panik? -0.1+Math.sin(t*18)*.05 : 0.45;
+  kL.A[0][0].rotation.x = panik? -2.6+Math.sin(t*20)*.3 : -1.2; kL.A[1][0].rotation.x = panik? -2.6+Math.cos(t*20)*.3 : -1.2;
+  kL.A[0][1].rotation.x = panik? 0 : -0.9; kL.A[1][1].rotation.x = panik? 0 : -0.9;
+  kL.w.position.y = panik? 0.18+Math.abs(Math.sin(t*16))*.05 : 0;
+  handy.position.set(-1.3,1.55,-0.28); handy.rotation.x=-0.9; handy.visible=!panik; handyLicht.position.set(-1.3,1.7,-0.15); handyLicht.intensity=panik?0:1.2+0.3*Math.sin(t*9);
+  const montag = t<T_SIL && t>0.6 && (Math.floor((t-0.6)/1.5)%2===0) && ((t-0.6)%1.5)<1.1;
+  blMontag.material.opacity = montag? eSpr(pr(((t-0.6)%1.5),0,.25)):0; blMontag.scale.set(1.25*(montag?1:.8),.54*(montag?1:.8),1);
+  const jahrBl = t>=T_NEU+0.35; blJahr.material.opacity = jahrBl? 1:0; blJahr.scale.set(1.25*eSpr(pr(t,T_NEU+0.35,T_NEU+0.75)),.54*eSpr(pr(t,T_NEU+0.35,T_NEU+0.75)),1);
+  const wg = t<T_NEU ? 0.25+0.85*kl(jahr) : 0.25; wolke.scale.setScalar(wg); wolke.children.forEach(k=>k.material.color.setScalar(t<T_NEU?0.45-0.25*kl(jahr):0.45));
+  einBuch.visible = silvester;
+  tropfen.forEach((d,i)=>{ const f=((t*1.8+i*.137)%1); d.visible=silvester; d.position.set(-1.35-0.55+((i*37)%110)/100, 2.35-f*1.3, -0.5+((i*13)%5)*.05); });
+  /* rechts: tippt, Stapel waechst, Silvester: lehnt sich zurueck, Stern */
+  const kR=rechts, fertig = t>=T_SIL;
+  kR.kopfG.rotation.x = silvester? -0.25 : 0.25;
+  kR.A[0][0].rotation.x = silvester? -2.9 : -1.15+Math.sin(t*14)*.08; kR.A[1][0].rotation.x = silvester? -2.9 : -1.15+Math.sin(t*14+1.6)*.08;
+  kR.A[0][1].rotation.x = silvester? -0.3 : -0.6; kR.A[1][1].rotation.x = silvester? -0.3 : -0.6;
+  const nb = t<T_SIL ? Math.floor(kl(jahr)*12.99) : 12; buecher.forEach((b,i)=>b.visible=i<nb);
+  const sg = silvester? eSpr(pr(t,T_SIL+0.2,T_SIL+0.9)) : 0; stern.scale.setScalar(Math.max(.001,sg)); stern.position.set(1.3,2.75+0.05*Math.sin(t*3),-0.4); stern.rotation.y=t*2.2; sternLicht.position.set(1.3,2.6,-0.2); sternLicht.intensity=2.2*sg;
+  /* Kamera: langsames Heranfahren, kurzer Ruck an Silvester */
+  const ruck = silvester? Math.exp(-(t-T_SIL)*6)*Math.sin((t-T_SIL)*50)*0.05 : 0;
+  cam.position.set(Math.sin(t*0.4)*0.2+ruck, 2.7, 11.6-0.7*kl(t/D)); cam.lookAt(0,2.3,0);
+  r.render(sz,cam);
+};
+window.render(0); window.bereit=true;
+</script></body></html>
