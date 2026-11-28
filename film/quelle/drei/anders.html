@@ -1,0 +1,59 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Different</title>
+<style>html,body{margin:0;background:#000;overflow:hidden}#w{position:relative;width:1080px;height:1920px}canvas{display:block}
+#t{position:absolute;left:0;right:0;top:250px;text-align:center;font:600 34px Inter,Arial;letter-spacing:.42em;color:rgba(255,255,255,.72)}</style></head><body>
+<div id="w"><canvas id="c" width="1080" height="1920"></canvas><div id="t">GO YOUR OWN WAY</div></div>
+<script src="three.min.js"></script><script>
+/* Kinoreifes 3D: Masse kommt auf die Kamera zu, einer geht in die andere Richtung, ins Licht. Nahtlose Schleife. */
+const DAUER=14; window.FILM_DAUER=DAUER;
+const r=new THREE.WebGLRenderer({canvas:document.getElementById('c'),antialias:true,preserveDrawingBuffer:true});
+r.setPixelRatio(1); r.setSize(1080,1920,false); r.outputEncoding=THREE.sRGBEncoding; r.toneMapping=THREE.ACESFilmicToneMapping; r.toneMappingExposure=1.0;
+const sz=new THREE.Scene(); sz.background=new THREE.Color(0x07080a); sz.fog=new THREE.FogExp2(0x07080a,0.055);
+const cam=new THREE.PerspectiveCamera(40,1080/1920,0.1,120);
+sz.add(new THREE.HemisphereLight(0xb8c4d6,0x050505,0.42));
+const mond=new THREE.DirectionalLight(0xdfe8ff,0.7); mond.position.set(-3,8,-20); sz.add(mond);
+/* Strasse: dunkel, leicht spiegelnd, mit leuchtenden Kanten */
+const strasse=new THREE.Mesh(new THREE.PlaneGeometry(7,200),new THREE.MeshStandardMaterial({color:0x060607,roughness:.95,metalness:0,transparent:true,opacity:.9}));
+strasse.rotation.x=-Math.PI/2; strasse.position.z=-60; sz.add(strasse);
+[-3.5,3.5].forEach(x=>{const k=new THREE.Mesh(new THREE.BoxGeometry(.05,.02,200),new THREE.MeshBasicMaterial({color:0xcfd8e6})); k.position.set(x,.01,-60); sz.add(k);});
+/* Licht am Ende des Weges */
+const gc=document.createElement('canvas'); gc.width=gc.height=256; const g=gc.getContext('2d'); const rg=g.createRadialGradient(128,128,0,128,128,128);
+rg.addColorStop(0,'rgba(255,248,230,1)'); rg.addColorStop(.18,'rgba(255,240,210,.55)'); rg.addColorStop(1,'rgba(255,240,210,0)'); g.fillStyle=rg; g.fillRect(0,0,256,256);
+const licht=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(gc),transparent:true,depthWrite:false,fog:false,blending:THREE.AdditiveBlending}));
+licht.position.set(0,6,-70); licht.scale.set(30,30,1); sz.add(licht);
+/* Figur mit Gehbewegung; Spiegelbild darunter fuer den nassen Boden */
+const matGrau=new THREE.MeshStandardMaterial({color:0x50535a,roughness:.7}), matWeiss=new THREE.MeshStandardMaterial({color:0xffffff,roughness:.4,emissive:0x3a3a3a}),
+      matAnzug=new THREE.MeshStandardMaterial({color:0xf2f2f2,roughness:.45,emissive:0x2a2a2a}), matRot=new THREE.MeshStandardMaterial({color:0xd0202a,emissive:0x400000});
+function figur(held){ const w=new THREE.Group();
+  const kap=(rad,l,m)=>new THREE.Mesh(new THREE.CapsuleGeometry(rad,l,4,10),m);
+  const rumpf=kap(.17,.42,held?matAnzug:matGrau); rumpf.position.y=1.12; w.add(rumpf);
+  const kopf=new THREE.Mesh(new THREE.SphereGeometry(.17,18,14),held?matWeiss:matGrau); kopf.position.y=1.62; w.add(kopf);
+  if(held){ const kr=new THREE.Mesh(new THREE.BoxGeometry(.06,.3,.02),matRot); kr.position.set(0,1.2,.17); w.add(kr); }
+  const bein=z=>{const p=new THREE.Group(); p.position.set(z,.78,0); const b=kap(.075,.6,held?matAnzug:matGrau); b.position.y=-.38; p.add(b); w.add(p); return p;};
+  const arm=z=>{const p=new THREE.Group(); p.position.set(z,1.38,0); const a=kap(.06,.48,held?matAnzug:matGrau); a.position.y=-.3; p.add(a); w.add(p); return p;};
+  const L=[bein(-.1),bein(.1),arm(-.23),arm(.23)];
+  w.gehen=ph=>{L[0].rotation.x=.55*Math.sin(ph); L[1].rotation.x=-.55*Math.sin(ph); L[2].rotation.x=-.45*Math.sin(ph); L[3].rotation.x=.45*Math.sin(ph); w.children[0].position.y=1.12+.03*Math.abs(Math.cos(ph));};
+  const sp=w.clone(true); sp.scale.y=-1; sp.traverse(o=>{ if(o.material){ o.material=o.material.clone(); o.material.transparent=true; o.material.opacity=.22; } });
+  sz.add(w); sz.add(sp); return {w,sp,L,spL:[sp.children[sp.children.length-4],sp.children[sp.children.length-3],sp.children[sp.children.length-2],sp.children[sp.children.length-1]]};
+}
+/* Masse: Reihen kommen auf die Kamera zu (Schleife ueber eine feste Strecke) */
+const STRECKE=56, V=1.35, masse=[];
+for(let i=0;i<84;i++){ const f=figur(false); masse.push({f,x:-2.9+((i*37)%12)*0.53+((i*13)%5)*0.05, z0:-(i*STRECKE/84), ph:(i*1.7)%6.28}); }
+const held=figur(true);
+const kl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)), eIO=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+function setze(f,x,z,rot,ph){ f.w.position.set(x,0,z); f.w.rotation.y=rot; f.sp.position.set(x,0,z); f.sp.rotation.y=rot; f.w.gehen(ph);
+  const s=Math.sin(ph); f.spL[0].rotation.x=.55*s; f.spL[1].rotation.x=-.55*s; f.spL[2].rotation.x=-.45*s; f.spL[3].rotation.x=.45*s; }
+window.render=function(t){
+  const u=t/DAUER;
+  /* Masse laeuft zur Kamera (+z), in einer Schleife */
+  masse.forEach(m=>{ let z=m.z0+V*t; z=((z+STRECKE)%STRECKE)-STRECKE+6; setze(m.f,m.x,z,0,m.ph+t*6.2); });
+  /* Held geht dagegen (-z), mitten durch, Richtung Licht */
+  const hz=2-1.25*t; setze(held,0.15,hz,Math.PI,t*6.6);
+  /* Kamera: Start tief in der Masse hinter dem Helden -> steigt auf -> zeigt ihn allein vor dem Licht; Ende = Anfang (Schleife) */
+  const a=Math.sin(Math.PI*u);                       /* 0 -> 1 -> 0 */
+  cam.position.set(0.5-0.3*a, 2.3+3.0*eIO(kl(u*1.6)) * (u<0.62?1:1-eIO(kl((u-0.62)/0.38))), hz+6.2+2.5*a);
+  cam.lookAt(0.15, 1.2+0.5*a, hz-6-4*a);
+  licht.material.opacity=.75+.25*Math.sin(t*1.3);
+  r.render(sz,cam);
+};
+window.render(0); window.bereit=true;
+</script></body></html>
